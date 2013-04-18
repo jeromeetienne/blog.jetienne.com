@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Debug.js: assertWhichStop.js"
-date: 2012-12-08 15:15
+date: 2013-04-18 15:15
 comments: true
 published: true
 categories: [debugjs]
