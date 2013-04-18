@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: three.js | Jerome Etienne.js Blog]]></title>
+  <link href="http://jeromeetienne.github.com/blog/blog/categories/three-js/atom.xml" rel="self"/>
+  <link href="http://jeromeetienne.github.com/blog/"/>
+  <updated>2013-04-18T14:00:23+02:00</updated>
+  <id>http://jeromeetienne.github.com/blog/</id>
+  <author>
+    <name><![CDATA[Jerome Etienne]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Pacmaze Update]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/09/10/pacmaze-update/"/>
+    <updated>2011-09-10T12:12:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/09/10/pacmaze-update</id>
+    <content type="html"><![CDATA[<p>Pacmaze just got an <a href="http://pacmaze.com">update</a>.
+it was long overdue, i admit, other matters distracted me from it.
+It is good to be back on it tho.
+It is version 5 now. It is a major performance update, <strong>5 time faster</strong> in some cases.
+The game is now embeddable in external pages.
+Additionnaly, Packy has been renamed Pucky as a reference to the original name of pacman,
+<a href="http://www.google.com/search?tbm=isch&amp;hl=en&amp;source=hp&amp;biw=1280&amp;bih=644&amp;q=puckman&amp;gbv=2&amp;oq=puckman&amp;aq=f&amp;aqi=&amp;aql=&amp;gs_sm=s&amp;gs_upl=0l0l0l4562l0l0l0l0l0l0l0l0ll0l0">'Puck-Man'</a>.
+You can read all about the history of pacman in the <a href="http://home.comcast.net/~jpittman2/pacman/pacmandossier.html">pacman dossier</a>.</p>
+
+<h2>Embedded game</h2>
+
+<p>See an embedded version below.
+Use AWSD
+keys to play or play the <a href="http://pacmaze.com">full page version</a>.</p>
+
+<center><iframe src='http://pacmaze.com' width='480px' height='360px'></iframe></center>
+
+
+
+
+<!-- more -->
+
+
+<p>The game is now embeddable in external page.
+To embed the game in your own page, just do the following and tune the css to own taste.</p>
+
+<p>```html</p>
+
+<pre><code>&lt;iframe src='http://pacmaze.com' width='480px' height='360px'&gt;&lt;/iframe&gt;
+</code></pre>
+
+<p>```</p>
+
+<h2>Performance boost</h2>
+
+<p><em>Pacmaze v5</em> is a major performance update, especially for macbook.
+I got recently got a <a href="http://www.apple.com/macbookpro/specs-13inch.html">macbook</a>.
+I quickly noticed <a href="http://pacmaze">pacmaze</a> wasn't too good on it, to say the least.
+So i optimized the WebGL on this plateform.  The performance are now much better.
+For Chrome, the performance went from 10fps to more than 50fps.
+On Firefox, the old version got bugs and 7fps... ouch. Now known bugs are removed
+and the average fps is close to 45fps.</p>
+
+<p>So <a href="http://en.wikipedia.org/wiki/Frame_rate">fps</a> on macbook is now
+5 time faster! Quite a boost! Next update i plan to focus on visual effets.</p>
+]]></content>
+  </entry>
+  
+</feed>

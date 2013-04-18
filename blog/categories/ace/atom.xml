@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ace | Jerome Etienne.js Blog]]></title>
+  <link href="http://jeromeetienne.github.com/blog/blog/categories/ace/atom.xml" rel="self"/>
+  <link href="http://jeromeetienne.github.com/blog/"/>
+  <updated>2013-04-18T14:00:23+02:00</updated>
+  <id>http://jeromeetienne.github.com/blog/</id>
+  <author>
+    <name><![CDATA[Jerome Etienne]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[jquery.acewidget - a jQuery plugin to easily embed ace]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/04/15/jquery.acewidget-a-jquery-plugin-to-easily-embed-ace/"/>
+    <updated>2011-04-15T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/04/15/jquery.acewidget-a-jquery-plugin-to-easily-embed-ace</id>
+    <content type="html"><![CDATA[<h1>AceWidget jQuery Plugin</h1>
+
+<p><a href="https://github.com/jeromeetienne/acewidget/tree/master/contrib/jquery.acewidget">jquery.acewidget.js</a> is a
+jQuery plugin for <a href="https://github.com/jeromeetienne/acewidget">acewidget</a>.
+AceWidget is a widget which make <a href="http://mozillalabs.com/skywriter/2011/01/18/mozilla-skywriter-has-been-merged-into-ace/">ace</a>
+/<a href="https://mozillalabs.com/blog/2009/02/introducing-bespin/">bespin</a> trivial to embed in your pages. The Vision is to be
+super simple to embed and have no server to setup. It provides the whole official embeded api. The
+code is available on github under MIT license. That's it. No fuss no muss.</p>
+
+<p>Show dont tell, a <a href="http://jeromeetienne.github.com/acewidget/demo.html">demo of acewidget</a> and a
+<a href="http://jeromeetienne.github.com/acewidget/contrib/jquery.acewidget/test.html">example of jquery.acewidget</a></p>
+
+<h2>How to use it</h2>
+
+<p>First you include the plugin itself in a usual script</p>
+
+<pre><code>&lt;script type="text/javascript" src='jquery.acewidget.js'&gt;&lt;/script&gt; 
+</code></pre>
+
+<p>Then create a DOM element which gonna contains ace widget, say a div</p>
+
+<pre><code>&lt;div id="editor"&gt;&lt;/div&gt;
+</code></pre>
+
+<p>Then you create the ace widget in this container by</p>
+
+<pre><code>var acewidget = jQuery('#editor').acewidget();
+</code></pre>
+
+<!-- more -->
+
+
+<p>You wait until it is loaded in your DOM</p>
+
+<pre><code>acewidget.bind('load', function(){
+    /* you start using it here */
+})
+</code></pre>
+
+<p>After that you use it with the normal ace API</p>
+
+<h2>API</h2>
+
+<h3>to set a new text</h3>
+
+<pre><code>acewidget.setValue("foobar", function(){
+alert("setValue "+result.status)
+})
+</code></pre>
+
+<p>The callback is optional' and notified when the action is completed.
+It is <a href="http://labs.omniti.com/labs/jsend/wiki">jsend compatible</a>.</p>
+
+<h3>to get the current text</h3>
+
+<pre><code>acewidget.getValue(function(result){
+    alert("getValue "+result.status+" text:"+result.data.data)
+})
+</code></pre>
+
+<h3>to set the tab size</h3>
+
+<pre><code>acewidget.setTabSize(8, function(result){
+    alert("setTabSize "+result.status)
+})
+</code></pre>
+
+<h3>to be notified when the acewidget is loaded</h3>
+
+<pre><code>acewidget.bind('load', function(){
+    alert('acewidget is loaded')
+})
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

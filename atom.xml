@@ -1,0 +1,1268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Jerome Etienne.js Blog]]></title>
+  <link href="http://jeromeetienne.github.com/blog/atom.xml" rel="self"/>
+  <link href="http://jeromeetienne.github.com/blog/"/>
+  <updated>2013-04-18T14:00:23+02:00</updated>
+  <id>http://jeromeetienne.github.com/blog/</id>
+  <author>
+    <name><![CDATA[Jerome Etienne]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Debug.js: assertWhichStop.js]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2012/12/08/debug-dot-js-assertwhichstop-dot-js/"/>
+    <updated>2012-12-08T15:15:00+01:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2012/12/08/debug-dot-js-assertwhichstop-dot-js</id>
+    <content type="html"><![CDATA[<p>This is post presents <em>assertWhichStop.js</em>.
+<a href="https://github.com/jeromeetienne/debug.js/tree/master/src">assertWhichStop.js</a>
+is a simple library which provide an <code>assert()</code> which stops&#8230;
+who would have guessed :)
+You may find that surprising but in your browser,
+javascript&#8217;s
+<a href="https://getfirebug.com/wiki/index.php/Console_API#console.assert.28expression.5B.2C_object.2C_....5D.29">assert()</a>
+does not stop the execution of the code but it does in other languages.
+<a href="https://github.com/jeromeetienne/debug.js/tree/master/src">assertWhichStop.js</a>
+will make your assert stop even in your browser.</p>
+
+<p><a href="https://github.com/jeromeetienne/debug.js/tree/master/src">assertWhichStop.js</a>
+is a part of
+<a href="https://github.com/jeromeetienne/debug.js">debug.js</a> library,
+which we talked about in <a href="http://jeromeetienne.github.com/blog/blog/categories/debugjs/">previous posts</a>.
+This post will explain why it is usefull to stop and how to use <em>assertWhichStop.js</em>.
+This library is
+<a href="https://github.com/jeromeetienne/debug.js/blob/master/src/assertwhichstop.js">very small</a>
+, barely 10 lines full total at the time of writing.
+It is based on a little
+<a href="https://gist.github.com/2651899">gist</a>
+we did in collaboration with
+<a href="https://plus.google.com/118110542957297456336/posts">jens arp</a>.
+Ok now let&#8217;s see more deeply what is assert.</p>
+
+<!-- more -->
+
+
+<h3>What Is Assert() ?</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Assertion_(computing)">Assert</a>
+is a very usefull tool during developement.
+It is done to <strong>explicitly check internal consistency</strong>.
+In other words, it is a way to say <em>&#8220;ok here, this MUST be true. And if it isn&#8217;t, there is a bug&#8221;</em>.
+You explicitly describe the assertions you make in your code
+and
+get immediatly notified when one happened to be wrong.
+So you can fix the bug.</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Assertion_(computing)">Assert</a>
+is from
+<a href="http://en.wikipedia.org/wiki/C_(programming_language)">c</a>
+/
+<a href="http://en.wikipedia.org/wiki/C%2B%2B">c++</a>.
+It is available in many languages: in
+<a href="http://docs.python.org/3.3/reference/simple_stmts.html#the-assert-statement">python</a>,
+<a href="http://php.net/manual/en/function.assert.php">php</a>,
+or even done in
+<a href="http://search.cpan.org/~mschwern/Carp-Assert-0.20/lib/Carp/Assert.pm">perl</a>.
+In most language, the execution is stopped immediatly: thru exception for
+<a href="http://docs.python.org/3.3/reference/simple_stmts.html#the-assert-statement">python</a>
+or
+<a href="http://php.net/manual/en/function.assert.php">php</a>
+, or thru
+<a href="http://en.wikipedia.org/wiki/Unix_signal">unix signal</a>
++
+<a href="http://en.wikipedia.org/wiki/Core_dump">coredump</a>
+with
+<a href="http://en.wikipedia.org/wiki/C_(programming_language)">c</a>
+/
+<a href="http://en.wikipedia.org/wiki/C%2B%2B">c++</a>.
+Thus you get notified of the bugs early,
+study the situation and start fixing.</p>
+
+<h3>Let&#8217;s Get Started</h3>
+
+<p>You first need to get the files which contains the code.
+As for the rest of debug.js, the global detection works in browsers and in node.js.
+If you are in node.js, you do the usual <code>require()</code>
+(see <a href="http://nodejs.org/api/globals.html#globals_require">more</a>).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">GlobalDetector</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;assertwhichstop.js&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you are in a browser, just add a <code>&lt;script&gt;</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&#39;debug-bundle.js&#39;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>How To Use It ?</h3>
+
+<p>Now that we got the code included, let&#8217;s see how to use it.
+The typical usage will be like that</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">assertWhichStop</span><span class="p">(</span><span class="nx">condition</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If the asserted condition is true, nothing will happen.
+If it is false, the message will be displayed and it will try to stop the execution of the programm.
+Suppose you got a variable <code>foo</code> which is supposed to always be a number greater than 0.
+You will typically do something like that.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">assertWhichStop</span><span class="p">(</span> <span class="nx">foo</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;foo MUST be greater than 0&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will stop the execution if <code>foo</code> isn&#8217;t greater than 0. Simple enougth :)
+Sure but how does it try to stop ? Let&#8217;s look at that.</p>
+
+<h3>How To Stop ?</h3>
+
+<p>assertWhichStop can stop in 2 ways:
+The first one is by throwing an exception with <a href="http://example.com/mdn">Error</a>
+It is the most natural way.
+So it is the default behavior.</p>
+
+<p>Additionnaly it is possible to stop by triggering the js debugger itself.
+This generate a total halt. Nothing will happen anymore in the page.
+It uses <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Statements/debugger"><code>debugger;</code> javascript statement</a>
+It isn&#8217;t a well known part of javascript but it is
+<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-12.15">standard javascript</a>.
+Unfortunatly it seems to be implemented only on chrome at the moment.
+When the virtual machine hits it, it will popup the
+<a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Statements/debugger">javascript debugger</a>,
+so you can get the call stack, get the local variables,
+set up conditions to watch or many other things. Usefull stuff to debug.</p>
+
+<h3>Overloading Console API for Backward Compatibility</h3>
+
+<p>If you wish, you can overload the <code>console.assert</code> with the following line.
+Thanks to that, you can easily take advantage of
+assertWhichStop.js without changing your code, a nice feature :)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">assertWhichStop</span><span class="p">.</span><span class="nx">overloadConsole</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After this, any <code>console.assert()</code> will use assertWhichStop and will be able to stop as
+soon as an assertion is found wrong.</p>
+
+<h2>Conclusion</h2>
+
+<p>If this post, we talked about
+why assert is usefull during  developement to keep your code running as you expect.
+We have seen
+how to use <a href="https://github.com/jeromeetienne/debug.js/tree/master/src">assertWhichStop.js</a>
+to immediatly stop when one of your assertion happened to be wrong.
+Thus then you can fix the bug as soon as possible.
+We got various ways to stop: exception or <code>debugger;</code> statement, a part of standard javascript.
+All that in a backward compatible fashion&#8230; rather cool if you ask me :)</p>
+
+<p>That&#8217;s all folks, have fun!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[console4Worker - console API for worker]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/09/12/console4worker/"/>
+    <updated>2011-09-12T09:17:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/09/12/console4worker</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/jeromeetienne/console4Worker">console4Worker</a> is console API for WebWorkers.
+WebWorkers are hard to debug. On top of that, <a href="http://getfirebug.com/wiki/index.php/Console_API">console API</a>
+is unavailable
+in WebWorkers. It doesn&#8217;t help.</p>
+
+<p><a href="https://github.com/jeromeetienne/console4Worker">console4Worker</a>
+is a simple library which tries to fill this gap.
+It provides the <a href="http://getfirebug.com/wiki/index.php/Console_API">console API</a>
+, the same api you are used to.
+It implemented in most browser, node.js, even part of
+<a href="http://wiki.commonjs.org/wiki/Console">commonjs</a>.
+See the <a href="https://github.com/jeromeetienne/console4Worker/blob/master/examples/index.html">demo</a>
+in the examples/ directory.</p>
+
+<h2>On the Worker Side</h2>
+
+<p>First you include the script with this line.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">importScripts</span><span class="p">(</span><span class="s1">&#39;console4Worker-worker.js&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And you are <strong>done</strong>! Now you can console API as you would normally do, even if you are in a
+<a href="http://www.whatwg.org/specs/web-apps/current-work/complete/workers.html">webworker</a>.
+Lets say something like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;console call made from inside a webworker&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<h2>On the Page Side</h2>
+
+<p>On the page side, you need to add 3 lines.
+<em>First</em> to include the script, simply do</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;console4Worker-page.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>Then</em> you bind console4Worker to your worker with another line.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// init the worker</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">worker</span>    <span class="o">=</span> <span class="k">new</span> <span class="nx">Worker</span><span class="p">(</span><span class="s2">&quot;worker.js&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">// bind the console4Worker to get console API from worker</span>
+</span><span class='line'><span class="nx">console4Worker</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">worker</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>If</em> you got your own message event listener, add <code>console4Worker.filterEvent()</code> in it.
+This line will filter out messages coming from console4Worker.
+So you should have something like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">worker</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+</span><span class='line'>    <span class="c1">// filter this event if it is from console4Worker</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span> <span class="nx">console4Worker</span><span class="p">.</span><span class="nx">filterEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// ... here handle your own events</span>
+</span><span class='line'><span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Motivation</h2>
+
+<p>Another project of mine is <a href="http://pacmaze.com">pacmaze</a>.
+It uses webworkers to provide smoother animations.
+This is important for high fps game.
+The worst which can happen is to have 50fps most of the time
+but with short period at 30fps.
+People want the animation to be smooth.</p>
+
+<p>Webworker allows to spread the load on 2 cpu core.
+Thus the pick of grabage collection is distributed, and you got twice more
+cpu power. So all in all, i found myself spending quite some time debugging webworker, so i
+wrote console4Worker to spend less time next time :)</p>
+
+<h2>Conclusion</h2>
+
+<p>How does it work ? a console object is declared in the worker. It intercepts
+all console calls and pass them to the page thread. a direct approach.
+I plan to add stacktrace and thus provide more accurate informations about the
+location of the call.</p>
+
+<p>The code is available on <a href="https://github.com/jeromeetienne/console4Worker">github</a>
+under MIT license.
+If you hit bugs, fill issues on github. Feel free to fork, modify and have fun with it :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Pacmaze Update]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/09/10/pacmaze-update/"/>
+    <updated>2011-09-10T12:12:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/09/10/pacmaze-update</id>
+    <content type="html"><![CDATA[<p>Pacmaze just got an <a href="http://pacmaze.com">update</a>.
+it was long overdue, i admit, other matters distracted me from it.
+It is good to be back on it tho.
+It is version 5 now. It is a major performance update, <strong>5 time faster</strong> in some cases.
+The game is now embeddable in external pages.
+Additionnaly, Packy has been renamed Pucky as a reference to the original name of pacman,
+<a href="http://www.google.com/search?tbm=isch&amp;hl=en&amp;source=hp&amp;biw=1280&amp;bih=644&amp;q=puckman&amp;gbv=2&amp;oq=puckman&amp;aq=f&amp;aqi=&amp;aql=&amp;gs_sm=s&amp;gs_upl=0l0l0l4562l0l0l0l0l0l0l0l0ll0l0">&#8216;Puck-Man&#8217;</a>.
+You can read all about the history of pacman in the <a href="http://home.comcast.net/~jpittman2/pacman/pacmandossier.html">pacman dossier</a>.</p>
+
+<h2>Embedded game</h2>
+
+<p>See an embedded version below.
+Use AWSD
+keys to play or play the <a href="http://pacmaze.com">full page version</a>.</p>
+
+<center><iframe src='http://pacmaze.com' width='480px' height='360px'></iframe></center>
+
+
+
+
+<!-- more -->
+
+
+<p>The game is now embeddable in external page.
+To embed the game in your own page, just do the following and tune the css to own taste.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;iframe</span> <span class="na">src=</span><span class="s">&#39;http://pacmaze.com&#39;</span> <span class="na">width=</span><span class="s">&#39;480px&#39;</span> <span class="na">height=</span><span class="s">&#39;360px&#39;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Performance boost</h2>
+
+<p><em>Pacmaze v5</em> is a major performance update, especially for macbook.
+I got recently got a <a href="http://www.apple.com/macbookpro/specs-13inch.html">macbook</a>.
+I quickly noticed <a href="http://pacmaze">pacmaze</a> wasn&#8217;t too good on it, to say the least.
+So i optimized the WebGL on this plateform.  The performance are now much better.
+For Chrome, the performance went from 10fps to more than 50fps.
+On Firefox, the old version got bugs and 7fps&#8230; ouch. Now known bugs are removed
+and the average fps is close to 45fps.</p>
+
+<p>So <a href="http://en.wikipedia.org/wiki/Frame_rate">fps</a> on macbook is now
+5 time faster! Quite a boost! Next update i plan to focus on visual effets.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MicroCache.js - Cache Micro Library]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/09/05/microcache.js/"/>
+    <updated>2011-09-05T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/09/05/microcache.js</id>
+    <content type="html"><![CDATA[<p><strong>microcache.js</strong> is a micro library to handle in-memory cache. It is less than
+20 lines and works in node and browser.
+It is available on github <a href='https://github.com/jeromeetienne/microcache.js'>here</a>
+under <a href='https://github.com/jeromeetienne/microcache.js/blob/master/MIT-LICENSE.txt'>MIT license</a>.
+If you hit bugs, fill issues on github. Feel free to fork, modify and have fun with it :)</p>
+
+<h2>Install it</h2>
+
+<p>To install it on node</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>npm install microcache
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To install the browser version, download it and include it like that</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;microcache.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<h2>API</h2>
+
+<p>To instanciate a cache, do the following. You can have as many instances you want.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">microcache</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MicroCache</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>.get(key)</h3>
+
+<p>To get a cached asset which is in the cache. Each cached element has a unique
+key to identify it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">microcache</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>.set(key, value)</h3>
+
+<p>To set a element value in the cache.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">microcache</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>.contains(key)</h3>
+
+<p>To know if a given asset is currently in the cache.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">microcache</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>.values()</h3>
+
+<p>To return all the elements currently in the cache</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">microcache</span><span class="p">.</span><span class="nx">values</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>.getSet(key, value)</h3>
+
+<p>To get an element from the cache, if it isnt already present, store it then return it</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">microcache</span><span class="p">.</span><span class="nx">getSet</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>FAQ</h2>
+
+<ul>
+<li><strong>Q.</strong> what about plain <code>var microcache = {}</code> ? isnt this wrapper overengineering ?</li>
+<li><strong>A.</strong>  i was thinking so too at first. but the syntax of a .getSet() without wrapper was too ugly for my taste :)
+<code>var a = cache[key] = (cache[key] || value)</code> from @floriancargoet</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[GoWithTheFlow.js - async flow control with a zen touch]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch/"/>
+    <updated>2011-07-17T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch</id>
+    <content type="html"><![CDATA[<p>GoWithTheFlow.js is a javascript asynchronous flow-control micro library which works <strong>in
+node.js and in browser</strong>. It allow to control how your
+asynchronous code is executed, sequentially or in parallel.
+Flow() is only 30lines.</p>
+
+<h1>How to use it</h1>
+
+<p>Let start with a basic example. 2 jobs run in sequence. The first job is a timeout
+so the result is delivered asynchronously, and a second job is run only <em>after</em> the
+completion of the first.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Flow</span><span class="p">().</span><span class="nx">seq</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">next</span><span class="p">){</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;step 1: started, it will last 1sec&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;step 1: 1sec expired. Step 1 completed&quot;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">next</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+</span><span class='line'><span class="p">}).</span><span class="nx">seq</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">next</span><span class="p">){</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;step 2: run after step1 has been completed&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It will display the following</p>
+
+<pre><code>step 1: started, it will last 1sec
+step 1: 1sec expired. Step 1 completed
+step 2: run after step1 has been completed
+</code></pre>
+
+<!-- more -->
+
+
+<h1>Methods</h1>
+
+<p>In order to keep it as simple as possible, Flow has only 2 methods.</p>
+
+<h2>.seq(callback) to execute job sequentially</h2>
+
+<p> <code>.seq()</code> is used to execute functions sequentially. The <em>callback</em> parameter
+will be executed only after all previous jobs are completed.
+The callback signature is <code>callback(next, error, result)</code></p>
+
+<ul>
+<li><p><code>next(error, result)</code> is the function to call when the job is completed. <em>error</em> is to notify an error
+to the next job. <em>result</em> to notify a result. <em>error</em> and <em>result</em> may be omitted, if so they are considered
+equal to <code>undefined</code></p></li>
+<li><p><code>error</code> is the error send by previous jobs</p></li>
+<li><p><code>result</code> is the result send by previous jobs</p></li>
+</ul>
+
+
+<p>for example</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Flow</span><span class="p">().</span><span class="nx">seq</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">next</span><span class="p">){</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;first job&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">next</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;result1&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}).</span><span class="nx">seq</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">next</span><span class="p">,</span> <span class="nx">error</span><span class="p">,</span> <span class="nx">result</span><span class="p">){</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;second job. run *after* first job&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">next</span><span class="p">();</span>
+</span><span class='line'><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>.par(callback) to execute job in parallel</h2>
+
+<p> <code>.par()</code> is used to execute functions in parallel. The <em>callback</em> parameter is the same as for <code>.seq()</code>.
+If multiple .par() are declared one after another, they are run in parallel. The first <code>.seq()</code> after them
+will receive all the <em>error</em> and <em>result</em> in Array. One array item per previous <code>.par()</code></p>
+
+<p>for example</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Flow</span><span class="p">().</span><span class="nx">par</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">next</span><span class="p">){</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;job foo&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">next</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}).</span><span class="nx">par</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">next</span><span class="p">){</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;job bar&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">next</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}).</span><span class="nx">seq</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">next</span><span class="p">,</span> <span class="nx">errors</span><span class="p">,</span> <span class="nx">results</span><span class="p">){</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;job run *after* the completion of foo and bar&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">assert</span><span class="p">(</span><span class="nx">errors</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="nx">errors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="nx">errors</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">assert</span><span class="p">(</span><span class="nx">results</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="nx">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;foo&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">results</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">next</span><span class="p">();</span>
+</span><span class='line'><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s it</p>
+
+<h1>Conclusion</h1>
+
+<p>GoWithTheFlow.js is available on github <a href='https://github.com/jeromeetienne/gowiththeflow.js'>here</a>
+under <a href='https://github.com/jeromeetienne/gowiththeflow.js/blob/master/MIT-LICENSE.txt'>MIT license</a>.
+If you hit bugs, fill issues on github.
+Feel free to fork, modify and have fun with it :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Javascript Class Inheritance ala vapor.js in 3 lines]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/07/10/javascript-class-inheritance-ala-vaporjs-in-3-lines/"/>
+    <updated>2011-07-10T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/07/10/javascript-class-inheritance-ala-vaporjs-in-3-lines</id>
+    <content type="html"><![CDATA[<p>This post describes a standalone way to add class inheritance in your javascript code.
+We will do that ala <a href="https://github.com/madrobby/vapor.js">vapor.js</a>, so no
+dependancy or external framework. A vaporjs inheritance is only 3 lines!</p>
+
+<p>Lets get started, say you got a class <em>animal</em>. It gonna have a constructor and a
+method <em>talk</em>.</p>
+
+<pre><code>var Animal = function(opts){}
+Animal.prototype.talk   = function(){ return 'mumble';  }
+Animal.prototype.sleep  = function(){ return 'zzzzz';   }
+</code></pre>
+
+<!-- more -->
+
+
+<h1>How to write the inheritance</h1>
+
+<p>Now let write a <em>Cat</em> class which inherits from <em>Animal</em>. It will override the animal
+method <em>talk</em>.</p>
+
+<pre><code>var Cat = function(opts){
+    // call the parent class constructor (one line)
+    Animal.call(this, opts)
+}
+
+// inherit from Animal methods (two lines)
+Cat.prototype = new Animal();
+Cat.prototype.constructor = Animal;
+
+// override talk method
+Cat.prototype.talk = function(){
+    return "maow"
+}
+</code></pre>
+
+<p>So a vaporjs inheritance is only 3 lines!</p>
+
+<h1>Lets test methods override</h1>
+
+<p>Now lets test the result of all this</p>
+
+<pre><code>var cat = new Cat()
+console.log("cat sleep as ", cat.sleep());
+console.log("cat talk as ", cat.talk());
+</code></pre>
+
+<p>This will display</p>
+
+<pre><code>cat sleep as zzzzz
+cat talk as maow
+</code></pre>
+
+<p>So <code>.talk()</code> is actually overridden, and .sleep() is properly passed to the parent class <em>Animal</em>.</p>
+
+<h1>Lets test instanceOf semantic</h1>
+
+<p>Last but not least, the <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/instanceof">instanceOf</a>
+operator which is so important for javascript</p>
+
+<pre><code>console.log("Cat instanceof Cat", cat instanceof Cat);
+console.log("Cat instanceof Animal", cat instanceof Animal);
+</code></pre>
+
+<p>will display</p>
+
+<pre><code>Cat instanceof Cat true
+Cat instanceof Animal true
+</code></pre>
+
+<p>So <code>cat</code> object is an instance of the class <em>Cat</em> and of the class <em>Animal</em> which is the good
+semantic for <em>instanceOf</em>.</p>
+
+<p>That&#8217;s all folks. have fun.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Parisjs 7 slides]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/05/26/Parisjs-7-slides/"/>
+    <updated>2011-05-26T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/05/26/Parisjs-7-slides</id>
+    <content type="html"><![CDATA[<p><a href="http://parisjs.org">parisjs #7</a> was fun as always. I did a flash talk
+on <a href="https://github.com/jeromeetienne/shorttag.js">shorttag.js</a> and presented what
+i did on <a href="http://pacmaze.com">pacmaze</a> <a href="http://buddymaze.com">experiment</a> this month. Here
+are the slides i used.</p>
+
+<center>
+    <iframe src="https://docs.google.com/present/embed?id=dhng4bgf_66dbnvxjch" frameborder="0" width="410" height="342"></iframe>
+</center>
+
+
+<p>Btw ryah is coming to paris on june 8th, <a href="http://parisnodemeetup.eventbrite.com/">register</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Webgl London Meeting]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/05/25/Webgl-london-meeting/"/>
+    <updated>2011-05-25T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/05/25/Webgl-london-meeting</id>
+    <content type="html"><![CDATA[<p>Yesterday, the first london webgl meeting happened!
+people interested in webgl all in a same place and time, it was nice.
+see reports <a href="http://learningwebgl.com/blog/?p=3770">here</a>
+and <a href="http://mozillalabs.com/blog/2011/05/london-webgl-meetup-yesterday/">here</a>.</p>
+
+<p>I talked about <a href="http://pacmaze.com">pacmaze</a> <a href="http://buddymaze.com">experiment</a>, here
+are the slides i used.</p>
+
+<center>
+    <iframe src="https://docs.google.com/present/embed?id=dhng4bgf_65dcvz5hfd" frameborder="0" width="410" height="342"></iframe>
+</center>
+
+
+<p>A nice picture from <a href="http://twitter.com/#!/tbx">@tbx</a>. I love the packy checking on me while im presenting him to
+audience :) reccursive gamification ftw!</p>
+
+<center>
+    <a href="http://www.flickr.com/photos/tobimcfly/5758181812/" title="Jerome Etienne showing pacmaze.com by tobimcfly, on Flickr"><img src="http://farm4.static.flickr.com/3229/5758181812_76c5ecee80.jpg" width="500" height="375" alt="Jerome Etienne showing pacmaze.com"></a>
+</center>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[cancelRequestAnimationFrame() For Paul Irish requestAnimationFrame()]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/05/18/cancelRequestAnimFrame-for-paul-irish-requestAnimFrame/"/>
+    <updated>2011-05-18T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/05/18/cancelRequestAnimFrame-for-paul-irish-requestAnimFrame</id>
+    <content type="html"><![CDATA[<p><a href="http://paulirish.com/">Paul Irish</a> recently
+wrote <a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/">requestAnimationFrame for smart animating</a>.
+It is a polyfill so people can start use requestAnimationFrame() today and still be future proof.</p>
+
+<p>This post is about its counterpart,
+<a href="http://webstuff.nfshost.com/anim-timing/Overview.html#cancelRequestAnimationFrame">cancelRequestAnimFrame()</a>.
+It cancels a <a href="http://webstuff.nfshost.com/anim-timing/Overview.html#requestAnimationFrame">requestAnimationFrame()</a>,
+like <a href="https://developer.mozilla.org/en/DOM/window.clearTimeout">clearTimeout</a>
+cancels a <a href="https://developer.mozilla.org/en/DOM/window.setTimeout">setTimeout</a>.</p>
+
+<!-- more -->
+
+
+<h2>Step 1: how to get the code</h2>
+
+<p>First include the <code>cancelRequestAnimFrame()</code> code in your page.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">cancelRequestAnimFrame</span> <span class="o">=</span> <span class="p">(</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nb">window</span><span class="p">.</span><span class="nx">cancelAnimationFrame</span>            <span class="o">||</span>
+</span><span class='line'>      <span class="nb">window</span><span class="p">.</span><span class="nx">webkitCancelRequestAnimationFrame</span> <span class="o">||</span>
+</span><span class='line'>      <span class="nb">window</span><span class="p">.</span><span class="nx">mozCancelRequestAnimationFrame</span>        <span class="o">||</span>
+</span><span class='line'>      <span class="nb">window</span><span class="p">.</span><span class="nx">oCancelRequestAnimationFrame</span>      <span class="o">||</span>
+</span><span class='line'>      <span class="nb">window</span><span class="p">.</span><span class="nx">msCancelRequestAnimationFrame</span>     <span class="o">||</span>
+</span><span class='line'>      <span class="nx">clearTimeout</span>
+</span><span class='line'><span class="p">}</span> <span class="p">)();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add <code>requestAnimFrame()</code> too. It is a slightly modified version of
+<a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/">paul&#8217;s</a>
+to return setTimeout() handle.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">requestAnimFrame</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="k">return</span>  <span class="nb">window</span><span class="p">.</span><span class="nx">requestAnimationFrame</span>       <span class="o">||</span>
+</span><span class='line'>      <span class="nb">window</span><span class="p">.</span><span class="nx">webkitRequestAnimationFrame</span> <span class="o">||</span>
+</span><span class='line'>      <span class="nb">window</span><span class="p">.</span><span class="nx">mozRequestAnimationFrame</span>    <span class="o">||</span>
+</span><span class='line'>      <span class="nb">window</span><span class="p">.</span><span class="nx">oRequestAnimationFrame</span>      <span class="o">||</span>
+</span><span class='line'>      <span class="nb">window</span><span class="p">.</span><span class="nx">msRequestAnimationFrame</span>     <span class="o">||</span>
+</span><span class='line'>      <span class="kd">function</span><span class="p">(</span><span class="cm">/* function */</span> <span class="nx">callback</span><span class="p">,</span> <span class="cm">/* DOMElement */</span> <span class="nx">element</span><span class="p">){</span>
+</span><span class='line'>          <span class="k">return</span> <span class="nb">window</span><span class="p">.</span><span class="nx">setTimeout</span><span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="mi">1000</span> <span class="o">/</span> <span class="mi">60</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">};</span>
+</span><span class='line'><span class="p">})();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Step 2: how to use it</h2>
+
+<p>Here is a possible way to use it.
+<strong><em>Show, dont tell</em></strong>, here is a <a href="http://jsfiddle.net/ghjKC/3/">live demo</a> on jsfiddle</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// to store the request</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">request</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// start and run the animloop</span>
+</span><span class='line'><span class="p">(</span><span class="kd">function</span> <span class="nx">animloop</span><span class="p">(){</span>
+</span><span class='line'>  <span class="nx">render</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">request</span> <span class="o">=</span> <span class="nx">requestAnimFrame</span><span class="p">(</span><span class="nx">animloop</span><span class="p">,</span> <span class="nx">element</span><span class="p">);</span>
+</span><span class='line'><span class="p">})();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// cancelRequestAnimFrame to stop the loop in 1 second</span>
+</span><span class='line'><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="nx">cancelRequestAnimFrame</span><span class="p">(</span><span class="nx">request</span><span class="p">);</span>                
+</span><span class='line'><span class="p">},</span> <span class="mi">1</span><span class="o">*</span><span class="mi">1000</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>About requestAnimationFrame</h2>
+
+<p>In the past months, much has been done for web graphics. Among them,
+<a href="http://webstuff.nfshost.com/anim-timing/Overview.html">requestAnimationFrame()</a>
+is used to make smoother animation while not wasting useless
+rescources when not visible.
+The <a href="http://webstuff.nfshost.com/anim-timing/Overview.html">spec</a> is making good
+progress, and <a href="http://dev.chromium.org/developers/design-documents/requestanimationframe-implementation">several</a>
+<a href="https://developer.mozilla.org/en/DOM/window.mozRequestAnimationFrame">implementations</a> are already deployed.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[a trip to html5 and game - talk at parisjs]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/04/28/trip-to-html5-and-game-talk-at-parisjs-6/"/>
+    <updated>2011-04-28T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/04/28/trip-to-html5-and-game-talk-at-parisjs-6</id>
+    <content type="html"><![CDATA[<p>Yesterday i was at <a href="http://parisjs.org">parisjs</a> talking about html5 and game.
+I presented games from the <a href="http://jeromeetienne.github.com/blog/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html">Pacmaze</a>
+<a href="http://jeromeetienne.github.com/blog/2011/04/13/pacmaze-v1-release.html">Experiment</a> and talked about html5 technology in it.
+Here are the slides i used.</p>
+
+<center>
+<iframe src="https://docs.google.com/present/embed?id=dhng4bgf_63gks3skcf" frameborder="0" width="410" height="342"></iframe>
+</center>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Buddymaze - First Personn Shooter in WebGL]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/04/28/buddymaze-fps-in-webgl/"/>
+    <updated>2011-04-28T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/04/28/buddymaze-fps-in-webgl</id>
+    <content type="html"><![CDATA[<p><a href="http://buddymaze.com">Buddymaze</a> is a clone of
+<a href="http://en.wikipedia.org/wiki/MIDI_Maze">midimaze</a>, an old game
+where people shoot at each other.
+You can find it as <a href="http://buddymaze.com">standalone webapp</a> or in
+<a href="https://chrome.google.com/webstore/detail/hpplggoofiffhijgnmnbgcppfafcmljp">chrome web store</a>.
+This is the second game in the <a href="http://jeromeetienne.github.com/blog/2011/04/13/pacmaze-v1-release.html">pacmaze experiment announced here</a></a>,
+the first one being <a href="http://pacmaze.com">pacmaze</a>.
+This version is rather rought, i will keep you updated. Considere it as a early beta.</p>
+
+<center>
+<iframe width="425" height="349" src="http://www.youtube.com/embed/OvmuNhkV5aQ" frameborder="0" allowfullscreen></iframe>
+</center>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Pacmaze v2 - Event More WebGL in Pacman]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman/"/>
+    <updated>2011-04-20T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman</id>
+    <content type="html"><![CDATA[<p><a href='http://pacmaze.com' target='_blank'>Pacmaze</a> v2 is the second version of pacmaze
+in the <a href='http://jeromeetienne.github.com/blog/2011/04/13/pacmaze-v1-release.html'>pacmaze experiment announced here</a>.</p>
+
+<p>Compared to <a href='http://pacmaze1.jetienne.com' target='_blank'>pacmaze v1</a>, it provides <strong>much nicer 3D effects</strong> with
+lot of camera moves. Use <em>pageUp/pageDown</em> or <em>C/V</em> keys to change the camera positions. It is a little easier
+on the user too. In case you dont have WebGL, you may watch a screencast&#8230; better than the original
+with a alert(), couch :) Show, dont tell, here is the screencast</p>
+
+<center>
+<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/9_ZtsK4rU4g" frameborder="0" allowfullscreen></iframe>
+</center>
+
+
+<p>Other improvements were done this week, but they were either not yet ready or not visible on the screen&#8230;
+According to <em>pacmaze experiment</em> <a href='http://jeromeetienne.github.com/blog/2011/04/13/pacmaze-v1-release.html'>schedule</a>, i should
+release a new game every 2 weeks, so another game is due next wednesday.
+<a href='http://pacmaze.com' target='_blank'>Pacmaze</a> v2 is just an improvement of last week
+release.</p>
+
+<h2>tl;dr;</h2>
+
+<p>Pacmaze is a pacman in WebGL. You are a pacman trapped in a maze.
+You need to eat all the pills to get out, and avoid the ghosts in the
+process. Well&#8230; you known pacman.
+You can find it as <a href="http://pacmaze.com">standalone webapp</a> or in
+<a href="https://chrome.google.com/webstore/detail/ggeliggglgbhachnoljoieibaneidchi">chrome web store</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[wget thinks github.com is a threat]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/04/15/wget-thinks-github.com-is-a-threat/"/>
+    <updated>2011-04-15T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/04/15/wget-thinks-github.com-is-a-threat</id>
+    <content type="html"><![CDATA[<p>This is just a little post on a oddity. As a coder, i use <a href="http://github.com">github</a>
+and <a href="http://www.gnu.org/software/wget/">wget</a> everyday or close. When i do, i
+see this message.</p>
+
+<pre><code>$ wget https://github.com/jeromeetienne/nmod/raw/master/nmod
+...
+ERROR: certificate common name `*.github.com' doesn't match requested
+host name `github.com'.
+To connect to github.com insecurely, use `--no-check-certificate'.
+</code></pre>
+
+<p>This message puzzles me quite a bit&#8230;
+<a href="http://www.gnu.org/software/wget/">wget</a>
+thinks
+<strong><em><a href="http://github.com">github</a>
+is a threat</em></strong> &#8230; and requires an explicit action
+from you (adding <code>--no-check-certificate</code>) to be sure you are willing to take this <strong><em>risk</em></strong> .
+The risk of downloading files from github&#8230; ok lets admit it, <strong><em>this is ridiculous</em></strong>.
+<a href="http://www.gnu.org/software/wget/">wget</a> distrusting <a href="http://github.com">github</a> is
+like &#8230; <a href="http://en.wikipedia.org/wiki/Ls">ls</a> distrusting <a href="http://en.wikipedia.org/wiki/Cd_(command)">cd</a> :)</p>
+
+<p>According to github, <a href="http://support.github.com/discussions/site/2507-error-certificate-common-name-githubcom-doesnt-match-requested-host-name-githubcom">this is actually a wget bug which has been reported and fixed but not release</a>
+, and point to a <a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=409938">bug from 2007</a>!!!!
+Dunno if this is true, or who is at the best place to fix the issue&#8230; and the purpose of this post
+is not to do finger pointing.</p>
+
+<p>Lets note that everybody is from open source world here.
+wget is from gnu, not only under gpl, but
+<a href="http://en.wikipedia.org/wiki/Wget#Authors_and_copyright">even got his copyright assigned to fsf</a>.
+What to say about github and opensource ? well they got <a href="https://github.com/blog/685-one-million-repositories">millions of
+repositories</a>
+and most of them are open source software.</p>
+
+<p>This post is not meant to be a rant. More to put the light on an oddity. something that i see
+as a <code>symptom of communication issue</code> in the opensource community.</p>
+
+<p>Let do better! :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jquery.acewidget - a jQuery plugin to easily embed ace]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/04/15/jquery.acewidget-a-jquery-plugin-to-easily-embed-ace/"/>
+    <updated>2011-04-15T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/04/15/jquery.acewidget-a-jquery-plugin-to-easily-embed-ace</id>
+    <content type="html"><![CDATA[<h1>AceWidget jQuery Plugin</h1>
+
+<p><a href="https://github.com/jeromeetienne/acewidget/tree/master/contrib/jquery.acewidget">jquery.acewidget.js</a> is a
+jQuery plugin for <a href="https://github.com/jeromeetienne/acewidget">acewidget</a>.
+AceWidget is a widget which make <a href="http://mozillalabs.com/skywriter/2011/01/18/mozilla-skywriter-has-been-merged-into-ace/">ace</a>
+/<a href="https://mozillalabs.com/blog/2009/02/introducing-bespin/">bespin</a> trivial to embed in your pages. The Vision is to be
+super simple to embed and have no server to setup. It provides the whole official embeded api. The
+code is available on github under MIT license. That&#8217;s it. No fuss no muss.</p>
+
+<p>Show dont tell, a <a href="http://jeromeetienne.github.com/acewidget/demo.html">demo of acewidget</a> and a
+<a href="http://jeromeetienne.github.com/acewidget/contrib/jquery.acewidget/test.html">example of jquery.acewidget</a></p>
+
+<h2>How to use it</h2>
+
+<p>First you include the plugin itself in a usual script</p>
+
+<pre><code>&lt;script type="text/javascript" src='jquery.acewidget.js'&gt;&lt;/script&gt; 
+</code></pre>
+
+<p>Then create a DOM element which gonna contains ace widget, say a div</p>
+
+<pre><code>&lt;div id="editor"&gt;&lt;/div&gt;
+</code></pre>
+
+<p>Then you create the ace widget in this container by</p>
+
+<pre><code>var acewidget = jQuery('#editor').acewidget();
+</code></pre>
+
+<!-- more -->
+
+
+<p>You wait until it is loaded in your DOM</p>
+
+<pre><code>acewidget.bind('load', function(){
+    /* you start using it here */
+})
+</code></pre>
+
+<p>After that you use it with the normal ace API</p>
+
+<h2>API</h2>
+
+<h3>to set a new text</h3>
+
+<pre><code>acewidget.setValue("foobar", function(){
+alert("setValue "+result.status)
+})
+</code></pre>
+
+<p>The callback is optional&#8217; and notified when the action is completed.
+It is <a href="http://labs.omniti.com/labs/jsend/wiki">jsend compatible</a>.</p>
+
+<h3>to get the current text</h3>
+
+<pre><code>acewidget.getValue(function(result){
+    alert("getValue "+result.status+" text:"+result.data.data)
+})
+</code></pre>
+
+<h3>to set the tab size</h3>
+
+<pre><code>acewidget.setTabSize(8, function(result){
+    alert("setTabSize "+result.status)
+})
+</code></pre>
+
+<h3>to be notified when the acewidget is loaded</h3>
+
+<pre><code>acewidget.bind('load', function(){
+    alert('acewidget is loaded')
+})
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Pacmaze V1 - a Pacman in WebGL]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/04/13/pacmaze-v1-release/"/>
+    <updated>2011-04-13T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/04/13/pacmaze-v1-release</id>
+    <content type="html"><![CDATA[<h2>tl;dr;</h2>
+
+<p>Pacmaze v1 is a pacman in WebGL. You are a pacman trapped in a maze.
+You need to eat all the pills to get out, and avoid the ghosts in the
+process. Well&#8230; you known pacman.
+You can find it as <a href="http://pacmaze.com">standalone webapp</a> or in
+<a href="https://chrome.google.com/webstore/detail/ggeliggglgbhachnoljoieibaneidchi">chrome web store</a>.
+Pacmaze v1 is the first game of <em>the pacmaze experiment</em>. Show, dont tell, here is a screencast</p>
+
+<center>
+<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/9_ZtsK4rU4g" frameborder="0" allowfullscreen></iframe>
+</center>
+
+
+<h2>Pacmaze Experiment</h2>
+
+<p>What is it ?
+<strong>The pacmaze experiment</strong> is the fancy name for <em>my trip discovering gamedev field</em>.
+It is an experiment i wish to try. The rule is simple.
+During 4 months, i am commited to work in a <em>publish early, publish often</em> mode.
+Twice a month, i will publish a new game, or a significant improvement of a
+previous one, on the second and the fourth wednesday of each month.
+Pacmaze V1 being the first of the serie.</p>
+
+<p>This is the current plan&#8230; I know the schedule is tight, but this
+is part of the challenge. We will see how it goes along the road.</p>
+
+<!-- more -->
+
+
+<h2>Pacmaze Experiment Origin</h2>
+
+<p><a href="http://pacmaze0.jetienne.com">Pacmaze v0</a> was the first
+<a href="http://en.wikipedia.org/wiki/First-person_shooter#Multiplayer">multi-player first person shooter</a>
+using html5 power with <a href="http://en.wikipedia.org/wiki/WebGL">WebGL</a>
+and <a href="http://en.wikipedia.org/wiki/WebSockets">WebSockets</a>.
+It started on 14 march 2011 with a <a href="http://jeromeetienne.github.com/blog/Pacmaze%20Experiment/2011/03/21/pacmaze-v0-origin.html">36h code rush</a>.
+It was a <a href="http://en.wikipedia.org/wiki/Proof_of_concept">proof-of-concept</a>.
+Its purpose was to know if the needed technology was available on today browsers.
+<em>Good news! it is</em> :)</p>
+
+<p>Obviously to code a <a href="http://en.wikipedia.org/wiki/First-person_shooter">multiplayer fps</a> in 36h,
+you have to cut a lot of corners.
+<a href="http://pacmaze0.jetienne.com">Pacmaze v0</a> is ugly and got a crappy gameplay.
+Additionnaly, a code rush was nice and fancy but it doesnt produce a stable code base.
+I ended with a program which has been hacked rapidely. On top i was a beginner in
+the <a href="http://en.wikipedia.org/wiki/Video_game_development">gamedev</a> field.
+So i spent some time to refactor the code from 36h hack to something more stable.</p>
+
+<p>I did many visual enhancements, improved the gameplay quite a bit&#8230; and then
+you got <a href="http://pacmaze.com">Pacmaze v1</a>. have fun :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jquery.qrcode - jquery plugin for pure browser qrcode generation]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/04/07/jquery-qrcode/"/>
+    <updated>2011-04-07T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/04/07/jquery-qrcode</id>
+    <content type="html"><![CDATA[<p><a href='http://jeromeetienne.github.com/jquery-qrcode'>jquery.qrcode.js</a>
+is <em>jquery plugin for a pure browser qrcode generation</em>.
+It allow you to easily add qrcode to your webpages.
+It is standalone, less than 4k after minify+gzip, no image download.
+It doesnt rely on external services which go on and off, or add latency while loading.
+It is based on a <a href='http://www.d-project.com/qrcode/index.html'>library</a>
+which build qrcode in various language. <a href='http://jeromeetienne.github.com/jquery-qrcode'>jquery.qrcode.js</a> wraps
+it to make it easy to include in your own code.</p>
+
+<p>Show, dont tell, here is a <a href='http://jeromeetienne.github.com/jquery-qrcode/examples/basic.html'>example</a></p>
+
+<!-- more -->
+
+
+<h2>How to Use It</h2>
+
+<p>Let me walk you thru it. First include it in your webpage with the usual script tag</p>
+
+<pre><code>&lt;script type="text/javascript" src="jquery.qrcode.min.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>Then create a DOM element which gonna contains the generated qrcode image. Lets say
+a div</p>
+
+<pre><code>&lt;div id="qrcode"&gt;&lt;/div&gt;
+</code></pre>
+
+<p>Then you add the <em>qrcode</em> in this container by</p>
+
+<pre><code>jquery('#qrcode').qrcode("this plugin is great");
+</code></pre>
+
+<p>This is it. see it <a href='http://jeromeetienne.github.com/jquery-qrcode/examples/basic.html'>live</a>.</p>
+
+<h2>Conclusion</h2>
+
+<p><a href='http://jeromeetienne.github.com/jquery-qrcode'>jquery.qrcode.js</a> is available on github
+<a href='https://github.com/jeromeetienne/jquery-qrcode'>here</a>
+under <a href='https://github.com/jeromeetienne/jquery-qrcode/blob/master/MIT-LICENSE.txt'>MIT license</a>.
+If you hit bugs, fill issues on github.
+Feel free to fork, modify and have fun with it :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MicroEvent.js - micro event emitter in 20 lines]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/03/22/microeventjs/"/>
+    <updated>2011-03-22T00:00:00+01:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/03/22/microeventjs</id>
+    <content type="html"><![CDATA[<p><em>MicroEvent.js</em> is a event emitter library which provides the
+<a href="http://en.wikipedia.org/wiki/Observer_pattern">observer pattern</a> to javascript objects.
+It works on node.js and browser. It is a single .js file containing
+a <a href="https://github.com/jeromeetienne/microevent.js/blob/master/microevent.js#L12-31">20 lines class</a>
+for a total of 321-bytes after minification+gzip.</p>
+
+<h2>How to Use It</h2>
+
+<p>You need a single file <a href="https://github.com/jeromeetienne/microevent.js/raw/master/microevent.js">microevent.js</a>.
+Include it in a webpage via the usual script tag.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;microevent.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To include it in a nodejs code isnt much harder</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">MicroEvent</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./microevent.js&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now suppose you got a class <code>Foobar</code>, and you wish it to support the observer partern. do</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MicroEvent</span><span class="p">.</span><span class="nx">mixin</span><span class="p">(</span><span class="nx">Foobar</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<p>That&#8217;s it. The repository contains an <a href="https://github.com/jeromeetienne/microevent.js/blob/master/examples/example.html">example in browser</a>
+and an <a href="https://github.com/jeromeetienne/microevent.js/blob/master/examples/example.js">example in nodejs</a>.
+Both use the same code in different contexts. Let me walk you thru it.</p>
+
+<h2>Example</h2>
+
+<p>First we define the class which going to use MicroEvent.js. This is a ticker, it is
+triggering &#8216;tick&#8217; events every second, and add the current date as parameter</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">Ticker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="nx">self</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;tick&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">());</span>
+</span><span class='line'>    <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We mixin <em>MicroEvent</em> into <em>Ticker</em> and we are all set.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MicroEvent</span><span class="p">.</span><span class="nx">mixin</span><span class="p">(</span><span class="nx">Ticker</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now lets actually use the <em>Ticker</em> Class. First, create the object.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">ticker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Ticker</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and bind our <em>tick</em> event with its data parameter</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">ticker</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s1">&#39;tick&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">date</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;notified date&#39;</span><span class="p">,</span> <span class="nx">date</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And you will see this output:</p>
+
+<pre><code>notified date Tue, 22 Mar 2011 14:43:41 GMT
+notified date Tue, 22 Mar 2011 14:43:42 GMT
+...
+</code></pre>
+
+<h2>Motivation</h2>
+
+<p>I needed a event emitter in js&#8230; something generic which works on browser and server, cross browser. The solutions i
+found were too complex for my taste.</p>
+
+<p>When i have seen John Resig <a href="http://ejohn.org/blog/javascript-micro-templating/">micro templating</a>
+or <a href='http://ejohn.org/blog/simple-javascript-inheritance/'>simple inheritance</a>, i loved it. It is
+simple, short, self contained, easy to understand&#8230; so <strong>elegant</strong>. i thought &#8220;this is no more a dependancy
+because i could maintain it if needed&#8221;. Now i try to apply those principles to my own work.</p>
+
+<h2>Conclusion</h2>
+
+<p>MicroEvent.js is available on github <a href='https://github.com/jeromeetienne/microevent.js'>here</a>
+under <a href='https://github.com/jeromeetienne/microevent.js/blob/master/MIT-LICENSE.txt'>MIT license</a>.
+If you hit bugs, fill issues on github.
+Feel free to fork, modify and have fun with it :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Pacmaze V0 - First multi-player first person shooter on html5]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/03/21/pacmaze-v0-origin/"/>
+    <updated>2011-03-21T00:00:00+01:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/03/21/pacmaze-v0-origin</id>
+    <content type="html"><![CDATA[<p>Last week, i started to do gamedev.
+During a code rush, i did pacmaze v0 in <em>36h!!!</em> Then i slept a lot and published it as
+<a href="https://chrome.google.com/webstore/detail/ggeliggglgbhachnoljoieibaneidchi">chrome application</a>
+(This way, i didnt have to care about cross-browser compatbility out of time and lazyness i admit :)</p>
+
+<p>Pacmaze v0 is a <a href="http://en.wikipedia.org/wiki/First-person_shooter">multi-player first person shooter</a>.
+Everybody joins in the same maze, and they shoot at each other. Lets the best win&#8230; except
+that nobody dies because i forgot to code death :)</p>
+
+<p>To my knowledge, Pacmaze v0 is the first
+<a href="http://en.wikipedia.org/wiki/First-person_shooter#Multiplayer">multi-player first person shooter</a>
+using html5 power with <a href="http://en.wikipedia.org/wiki/WebGL">WebGL</a>
+and <a href="http://en.wikipedia.org/wiki/WebSockets">WebSockets</a>.
+You can find the game as standalone <a href="http://pacmaze0.jetienne.com">here</a>. have fun. I certainly
+had fun writing it :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Initial Post]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/03/10/initial-post/"/>
+    <updated>2011-03-10T00:00:00+01:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/03/10/initial-post</id>
+    <content type="html"><![CDATA[<p>Trying to blog again. Here is my first post.</p>
+
+<p>Up to now i didnt considere my blogging seriously. My blog posts were kinda PostIts to me, some random texts
+that i have written not to forget. So the targeted reader was me, and if it helps people outthere, all for
+the best, but not the primary purpose.</p>
+
+<p>This blog is using <a href="http://jekyllrb.com/">jekyll</a> and will be hosted at <a href="http://notes.jetienne.com">notes.jetienne.com</a></p>
+]]></content>
+  </entry>
+  
+</feed>

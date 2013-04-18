@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: flowcontrol | Jerome Etienne.js Blog]]></title>
+  <link href="http://jeromeetienne.github.com/blog/blog/categories/flowcontrol/atom.xml" rel="self"/>
+  <link href="http://jeromeetienne.github.com/blog/"/>
+  <updated>2013-04-18T14:00:23+02:00</updated>
+  <id>http://jeromeetienne.github.com/blog/</id>
+  <author>
+    <name><![CDATA[Jerome Etienne]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[GoWithTheFlow.js - async flow control with a zen touch]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch/"/>
+    <updated>2011-07-17T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch</id>
+    <content type="html"><![CDATA[<p>GoWithTheFlow.js is a javascript asynchronous flow-control micro library which works <strong>in
+node.js and in browser</strong>. It allow to control how your
+asynchronous code is executed, sequentially or in parallel.
+Flow() is only 30lines.</p>
+
+<h1>How to use it</h1>
+
+<p>Let start with a basic example. 2 jobs run in sequence. The first job is a timeout
+so the result is delivered asynchronously, and a second job is run only <em>after</em> the
+completion of the first.</p>
+
+<p>```javascript</p>
+
+<pre><code>Flow().seq(function(next){
+    console.log("step 1: started, it will last 1sec");
+    setTimeout(function(){
+        console.log("step 1: 1sec expired. Step 1 completed");
+        next();
+    }, 1000);
+}).seq(function(next){
+    console.log("step 2: run after step1 has been completed");
+})
+</code></pre>
+
+<p>```</p>
+
+<p>It will display the following</p>
+
+<pre><code>step 1: started, it will last 1sec
+step 1: 1sec expired. Step 1 completed
+step 2: run after step1 has been completed
+</code></pre>
+
+<!-- more -->
+
+
+<h1>Methods</h1>
+
+<p>In order to keep it as simple as possible, Flow has only 2 methods.</p>
+
+<h2>.seq(callback) to execute job sequentially</h2>
+
+<p> <code>.seq()</code> is used to execute functions sequentially. The <em>callback</em> parameter
+will be executed only after all previous jobs are completed.
+The callback signature is <code>callback(next, error, result)</code></p>
+
+<ul>
+<li><p><code>next(error, result)</code> is the function to call when the job is completed. <em>error</em> is to notify an error
+to the next job. <em>result</em> to notify a result. <em>error</em> and <em>result</em> may be omitted, if so they are considered
+equal to <code>undefined</code></p></li>
+<li><p><code>error</code> is the error send by previous jobs</p></li>
+<li><p><code>result</code> is the result send by previous jobs</p></li>
+</ul>
+
+
+<p>for example</p>
+
+<p>```javascript</p>
+
+<pre><code>Flow().seq(function(next){
+    console.log("first job");
+    next(null, "result1");
+}).seq(function(next, error, result){    
+    console.log("second job. run *after* first job");
+    next();
+})
+</code></pre>
+
+<p>```</p>
+
+<h2>.par(callback) to execute job in parallel</h2>
+
+<p> <code>.par()</code> is used to execute functions in parallel. The <em>callback</em> parameter is the same as for <code>.seq()</code>.
+If multiple .par() are declared one after another, they are run in parallel. The first <code>.seq()</code> after them
+will receive all the <em>error</em> and <em>result</em> in Array. One array item per previous <code>.par()</code></p>
+
+<p>for example</p>
+
+<p>```javascript</p>
+
+<pre><code>Flow().par(function(next){
+    console.log("job foo");
+    next(null, "foo");
+}).par(function(next){
+    console.log("job bar");
+    next(null, "bar");
+}).seq(function(next, errors, results){
+    console.log("job run *after* the completion of foo and bar");
+    console.assert(errors.length == 2 &amp;&amp; errors[0] === null &amp;&amp; errors[1] == null)
+    console.assert(results.length == 2 &amp;&amp; results[0] === 'foo' &amp;&amp; results[1] == 'bar')
+    next();
+})
+</code></pre>
+
+<p>```</p>
+
+<p>That's it</p>
+
+<h1>Conclusion</h1>
+
+<p>GoWithTheFlow.js is available on github <a href='https://github.com/jeromeetienne/gowiththeflow.js'>here</a>
+under <a href='https://github.com/jeromeetienne/gowiththeflow.js/blob/master/MIT-LICENSE.txt'>MIT license</a>.
+If you hit bugs, fill issues on github.
+Feel free to fork, modify and have fun with it :)</p>
+]]></content>
+  </entry>
+  
+</feed>

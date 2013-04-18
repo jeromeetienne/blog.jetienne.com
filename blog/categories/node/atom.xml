@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: node | Jerome Etienne.js Blog]]></title>
+  <link href="http://jeromeetienne.github.com/blog/blog/categories/node/atom.xml" rel="self"/>
+  <link href="http://jeromeetienne.github.com/blog/"/>
+  <updated>2013-04-18T14:00:23+02:00</updated>
+  <id>http://jeromeetienne.github.com/blog/</id>
+  <author>
+    <name><![CDATA[Jerome Etienne]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MicroCache.js - Cache Micro Library]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/09/05/microcache.js/"/>
+    <updated>2011-09-05T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/09/05/microcache.js</id>
+    <content type="html"><![CDATA[<p><strong>microcache.js</strong> is a micro library to handle in-memory cache. It is less than
+20 lines and works in node and browser.
+It is available on github <a href='https://github.com/jeromeetienne/microcache.js'>here</a>
+under <a href='https://github.com/jeromeetienne/microcache.js/blob/master/MIT-LICENSE.txt'>MIT license</a>.
+If you hit bugs, fill issues on github. Feel free to fork, modify and have fun with it :)</p>
+
+<h2>Install it</h2>
+
+<p>To install it on node</p>
+
+<p>```bash</p>
+
+<pre><code>npm install microcache
+</code></pre>
+
+<p>```</p>
+
+<p>To install the browser version, download it and include it like that</p>
+
+<p>```html</p>
+
+<pre><code>&lt;script src="microcache.js"&gt;&lt;/script&gt;   
+</code></pre>
+
+<p>```</p>
+
+<!-- more -->
+
+
+<h2>API</h2>
+
+<p>To instanciate a cache, do the following. You can have as many instances you want.</p>
+
+<p>```javascript</p>
+
+<pre><code>var microcache = new MicroCache();
+</code></pre>
+
+<p>```</p>
+
+<h3>.get(key)</h3>
+
+<p>To get a cached asset which is in the cache. Each cached element has a unique
+key to identify it.</p>
+
+<p>```javascript</p>
+
+<pre><code>microcache.get('foo');
+</code></pre>
+
+<p>```</p>
+
+<h3>.set(key, value)</h3>
+
+<p>To set a element value in the cache.</p>
+
+<p>```javascript</p>
+
+<pre><code>microcache.set('foo', 'bar');
+</code></pre>
+
+<p>```</p>
+
+<h3>.contains(key)</h3>
+
+<p>To know if a given asset is currently in the cache.</p>
+
+<p>```javascript</p>
+
+<pre><code>microcache.contains('foo');
+</code></pre>
+
+<p>```</p>
+
+<h3>.values()</h3>
+
+<p>To return all the elements currently in the cache</p>
+
+<p>```javascript</p>
+
+<pre><code>microcache.values();
+</code></pre>
+
+<p>```</p>
+
+<h3>.getSet(key, value)</h3>
+
+<p>To get an element from the cache, if it isnt already present, store it then return it</p>
+
+<p>```javascript</p>
+
+<pre><code>microcache.getSet(key, value);
+</code></pre>
+
+<p>```</p>
+
+<h2>FAQ</h2>
+
+<ul>
+<li><strong>Q.</strong> what about plain <code>var microcache = {}</code> ? isnt this wrapper overengineering ?</li>
+<li><strong>A.</strong>  i was thinking so too at first. but the syntax of a .getSet() without wrapper was too ugly for my taste :)
+<code>var a = cache[key] = (cache[key] || value)</code> from @floriancargoet</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[GoWithTheFlow.js - async flow control with a zen touch]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch/"/>
+    <updated>2011-07-17T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch</id>
+    <content type="html"><![CDATA[<p>GoWithTheFlow.js is a javascript asynchronous flow-control micro library which works <strong>in
+node.js and in browser</strong>. It allow to control how your
+asynchronous code is executed, sequentially or in parallel.
+Flow() is only 30lines.</p>
+
+<h1>How to use it</h1>
+
+<p>Let start with a basic example. 2 jobs run in sequence. The first job is a timeout
+so the result is delivered asynchronously, and a second job is run only <em>after</em> the
+completion of the first.</p>
+
+<p>```javascript</p>
+
+<pre><code>Flow().seq(function(next){
+    console.log("step 1: started, it will last 1sec");
+    setTimeout(function(){
+        console.log("step 1: 1sec expired. Step 1 completed");
+        next();
+    }, 1000);
+}).seq(function(next){
+    console.log("step 2: run after step1 has been completed");
+})
+</code></pre>
+
+<p>```</p>
+
+<p>It will display the following</p>
+
+<pre><code>step 1: started, it will last 1sec
+step 1: 1sec expired. Step 1 completed
+step 2: run after step1 has been completed
+</code></pre>
+
+<!-- more -->
+
+
+<h1>Methods</h1>
+
+<p>In order to keep it as simple as possible, Flow has only 2 methods.</p>
+
+<h2>.seq(callback) to execute job sequentially</h2>
+
+<p> <code>.seq()</code> is used to execute functions sequentially. The <em>callback</em> parameter
+will be executed only after all previous jobs are completed.
+The callback signature is <code>callback(next, error, result)</code></p>
+
+<ul>
+<li><p><code>next(error, result)</code> is the function to call when the job is completed. <em>error</em> is to notify an error
+to the next job. <em>result</em> to notify a result. <em>error</em> and <em>result</em> may be omitted, if so they are considered
+equal to <code>undefined</code></p></li>
+<li><p><code>error</code> is the error send by previous jobs</p></li>
+<li><p><code>result</code> is the result send by previous jobs</p></li>
+</ul>
+
+
+<p>for example</p>
+
+<p>```javascript</p>
+
+<pre><code>Flow().seq(function(next){
+    console.log("first job");
+    next(null, "result1");
+}).seq(function(next, error, result){    
+    console.log("second job. run *after* first job");
+    next();
+})
+</code></pre>
+
+<p>```</p>
+
+<h2>.par(callback) to execute job in parallel</h2>
+
+<p> <code>.par()</code> is used to execute functions in parallel. The <em>callback</em> parameter is the same as for <code>.seq()</code>.
+If multiple .par() are declared one after another, they are run in parallel. The first <code>.seq()</code> after them
+will receive all the <em>error</em> and <em>result</em> in Array. One array item per previous <code>.par()</code></p>
+
+<p>for example</p>
+
+<p>```javascript</p>
+
+<pre><code>Flow().par(function(next){
+    console.log("job foo");
+    next(null, "foo");
+}).par(function(next){
+    console.log("job bar");
+    next(null, "bar");
+}).seq(function(next, errors, results){
+    console.log("job run *after* the completion of foo and bar");
+    console.assert(errors.length == 2 &amp;&amp; errors[0] === null &amp;&amp; errors[1] == null)
+    console.assert(results.length == 2 &amp;&amp; results[0] === 'foo' &amp;&amp; results[1] == 'bar')
+    next();
+})
+</code></pre>
+
+<p>```</p>
+
+<p>That's it</p>
+
+<h1>Conclusion</h1>
+
+<p>GoWithTheFlow.js is available on github <a href='https://github.com/jeromeetienne/gowiththeflow.js'>here</a>
+under <a href='https://github.com/jeromeetienne/gowiththeflow.js/blob/master/MIT-LICENSE.txt'>MIT license</a>.
+If you hit bugs, fill issues on github.
+Feel free to fork, modify and have fun with it :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MicroEvent.js - micro event emitter in 20 lines]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/03/22/microeventjs/"/>
+    <updated>2011-03-22T00:00:00+01:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/03/22/microeventjs</id>
+    <content type="html"><![CDATA[<p><em>MicroEvent.js</em> is a event emitter library which provides the
+<a href="http://en.wikipedia.org/wiki/Observer_pattern">observer pattern</a> to javascript objects.
+It works on node.js and browser. It is a single .js file containing
+a <a href="https://github.com/jeromeetienne/microevent.js/blob/master/microevent.js#L12-31">20 lines class</a>
+for a total of 321-bytes after minification+gzip.</p>
+
+<h2>How to Use It</h2>
+
+<p>You need a single file <a href="https://github.com/jeromeetienne/microevent.js/raw/master/microevent.js">microevent.js</a>.
+Include it in a webpage via the usual script tag.</p>
+
+<p>```html</p>
+
+<pre><code>&lt;script src="microevent.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>```</p>
+
+<p>To include it in a nodejs code isnt much harder</p>
+
+<p>```javascript</p>
+
+<pre><code>var MicroEvent = require('./microevent.js')
+</code></pre>
+
+<p>```</p>
+
+<p>Now suppose you got a class <code>Foobar</code>, and you wish it to support the observer partern. do</p>
+
+<p>```javascript</p>
+
+<pre><code>MicroEvent.mixin(Foobar)
+</code></pre>
+
+<p>```</p>
+
+<!-- more -->
+
+
+<p>That's it. The repository contains an <a href="https://github.com/jeromeetienne/microevent.js/blob/master/examples/example.html">example in browser</a>
+and an <a href="https://github.com/jeromeetienne/microevent.js/blob/master/examples/example.js">example in nodejs</a>.
+Both use the same code in different contexts. Let me walk you thru it.</p>
+
+<h2>Example</h2>
+
+<p>First we define the class which going to use MicroEvent.js. This is a ticker, it is
+triggering 'tick' events every second, and add the current date as parameter</p>
+
+<p>```javascript</p>
+
+<pre><code>var Ticker = function(){
+    var self = this;
+    setInterval(function(){
+        self.trigger('tick', new Date());
+    }, 1000);
+};
+</code></pre>
+
+<p>```</p>
+
+<p>We mixin <em>MicroEvent</em> into <em>Ticker</em> and we are all set.</p>
+
+<p>```javascript</p>
+
+<pre><code>MicroEvent.mixin(Ticker);
+</code></pre>
+
+<p>```</p>
+
+<p>Now lets actually use the <em>Ticker</em> Class. First, create the object.</p>
+
+<p>```javascript</p>
+
+<pre><code>var ticker = new Ticker();
+</code></pre>
+
+<p>```</p>
+
+<p>and bind our <em>tick</em> event with its data parameter</p>
+
+<p>```javascript</p>
+
+<pre><code>ticker.bind('tick', function(date) {
+    console.log('notified date', date);
+});
+</code></pre>
+
+<p>```</p>
+
+<p>And you will see this output:</p>
+
+<pre><code>notified date Tue, 22 Mar 2011 14:43:41 GMT
+notified date Tue, 22 Mar 2011 14:43:42 GMT
+...
+</code></pre>
+
+<h2>Motivation</h2>
+
+<p>I needed a event emitter in js... something generic which works on browser and server, cross browser. The solutions i
+found were too complex for my taste.</p>
+
+<p>When i have seen John Resig <a href="http://ejohn.org/blog/javascript-micro-templating/">micro templating</a>
+or <a href='http://ejohn.org/blog/simple-javascript-inheritance/'>simple inheritance</a>, i loved it. It is
+simple, short, self contained, easy to understand... so <strong>elegant</strong>. i thought "this is no more a dependancy
+because i could maintain it if needed". Now i try to apply those principles to my own work.</p>
+
+<h2>Conclusion</h2>
+
+<p>MicroEvent.js is available on github <a href='https://github.com/jeromeetienne/microevent.js'>here</a>
+under <a href='https://github.com/jeromeetienne/microevent.js/blob/master/MIT-LICENSE.txt'>MIT license</a>.
+If you hit bugs, fill issues on github.
+Feel free to fork, modify and have fun with it :)</p>
+]]></content>
+  </entry>
+  
+</feed>

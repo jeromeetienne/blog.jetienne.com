@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Javascript Class Inheritance ala vapor.js in 3 lines - Jerome Etienne.js Blog</title>
+  <meta name="author" content="Jerome Etienne">
+
+  
+  <meta name="description" content="This post describes a standalone way to add class inheritance in your javascript code.
+We will do that ala vapor.js, so no
+dependancy or external &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jeromeetienne.github.com/blog/blog/2011/07/10/javascript-class-inheritance-ala-vaporjs-in-3-lines/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/blogjetiennecom" rel="alternate" title="Jerome Etienne.js Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Jerome Etienne.js Blog</a></h1>
+  
+    <h2>Around JavaScript, node.js, WebGL and cool HTML5 game stuff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/blogjetiennecom" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:jeromeetienne.github.com/blog" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Javascript Class Inheritance Ala vapor.js in 3 Lines</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-10T00:00:00+02:00" pubdate data-updated="true">Jul 10<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This post describes a standalone way to add class inheritance in your javascript code.
+We will do that ala <a href="https://github.com/madrobby/vapor.js">vapor.js</a>, so no
+dependancy or external framework. A vaporjs inheritance is only 3 lines!</p>
+
+<p>Lets get started, say you got a class <em>animal</em>. It gonna have a constructor and a
+method <em>talk</em>.</p>
+
+<pre><code>var Animal = function(opts){}
+Animal.prototype.talk   = function(){ return 'mumble';  }
+Animal.prototype.sleep  = function(){ return 'zzzzz';   }
+</code></pre>
+
+<!-- more -->
+
+
+<h1>How to write the inheritance</h1>
+
+<p>Now let write a <em>Cat</em> class which inherits from <em>Animal</em>. It will override the animal
+method <em>talk</em>.</p>
+
+<pre><code>var Cat = function(opts){
+    // call the parent class constructor (one line)
+    Animal.call(this, opts)
+}
+
+// inherit from Animal methods (two lines)
+Cat.prototype = new Animal();
+Cat.prototype.constructor = Animal;
+
+// override talk method
+Cat.prototype.talk = function(){
+    return "maow"
+}
+</code></pre>
+
+<p>So a vaporjs inheritance is only 3 lines!</p>
+
+<h1>Lets test methods override</h1>
+
+<p>Now lets test the result of all this</p>
+
+<pre><code>var cat = new Cat()
+console.log("cat sleep as ", cat.sleep());
+console.log("cat talk as ", cat.talk());
+</code></pre>
+
+<p>This will display</p>
+
+<pre><code>cat sleep as zzzzz
+cat talk as maow
+</code></pre>
+
+<p>So <code>.talk()</code> is actually overridden, and .sleep() is properly passed to the parent class <em>Animal</em>.</p>
+
+<h1>Lets test instanceOf semantic</h1>
+
+<p>Last but not least, the <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/instanceof">instanceOf</a>
+operator which is so important for javascript</p>
+
+<pre><code>console.log("Cat instanceof Cat", cat instanceof Cat);
+console.log("Cat instanceof Animal", cat instanceof Animal);
+</code></pre>
+
+<p>will display</p>
+
+<pre><code>Cat instanceof Cat true
+Cat instanceof Animal true
+</code></pre>
+
+<p>So <code>cat</code> object is an instance of the class <em>Cat</em> and of the class <em>Animal</em> which is the good
+semantic for <em>instanceOf</em>.</p>
+
+<p>That&#8217;s all folks. have fun.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jerome Etienne</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-10T00:00:00+02:00" pubdate data-updated="true">Jul 10<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jeromeetienne.github.com/blog/blog/2011/07/10/javascript-class-inheritance-ala-vaporjs-in-3-lines/" data-via="jerome_etienne" data-counturl="http://jeromeetienne.github.com/blog/blog/2011/07/10/javascript-class-inheritance-ala-vaporjs-in-3-lines/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/05/26/Parisjs-7-slides/" title="Previous Post: Parisjs 7 slides">&laquo; Parisjs 7 slides</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch/" title="Next Post: GoWithTheFlow.js - async flow control with a zen touch">GoWithTheFlow.js - async flow control with a zen touch &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/08/debug-dot-js-assertwhichstop-dot-js/">Debug.js: assertWhichStop.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/12/console4worker/">console4Worker - console API for worker</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/10/pacmaze-update/">Pacmaze Update</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/05/microcache.js/">MicroCache.js - Cache Micro Library</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch/">GoWithTheFlow.js - async flow control with a zen touch</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jerome_etienne", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jerome_etienne" class="twitter-follow-button" data-show-count="false">Follow @jerome_etienne</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Jerome Etienne -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'blogjetiennecom';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

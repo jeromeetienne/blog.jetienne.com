@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: parisjs | Jerome Etienne.js Blog]]></title>
+  <link href="http://jeromeetienne.github.com/blog/blog/categories/parisjs/atom.xml" rel="self"/>
+  <link href="http://jeromeetienne.github.com/blog/"/>
+  <updated>2013-04-18T14:00:23+02:00</updated>
+  <id>http://jeromeetienne.github.com/blog/</id>
+  <author>
+    <name><![CDATA[Jerome Etienne]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Parisjs 7 slides]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/05/26/Parisjs-7-slides/"/>
+    <updated>2011-05-26T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/05/26/Parisjs-7-slides</id>
+    <content type="html"><![CDATA[<p><a href="http://parisjs.org">parisjs #7</a> was fun as always. I did a flash talk
+on <a href="https://github.com/jeromeetienne/shorttag.js">shorttag.js</a> and presented what
+i did on <a href="http://pacmaze.com">pacmaze</a> <a href="http://buddymaze.com">experiment</a> this month. Here
+are the slides i used.</p>
+
+<center>
+    <iframe src="https://docs.google.com/present/embed?id=dhng4bgf_66dbnvxjch" frameborder="0" width="410" height="342"></iframe>
+</center>
+
+
+<p>Btw ryah is coming to paris on june 8th, <a href="http://parisnodemeetup.eventbrite.com/">register</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[a trip to html5 and game - talk at parisjs]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2011/04/28/trip-to-html5-and-game-talk-at-parisjs-6/"/>
+    <updated>2011-04-28T00:00:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2011/04/28/trip-to-html5-and-game-talk-at-parisjs-6</id>
+    <content type="html"><![CDATA[<p>Yesterday i was at <a href="http://parisjs.org">parisjs</a> talking about html5 and game.
+I presented games from the <a href="/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html">Pacmaze</a>
+<a href="/2011/04/13/pacmaze-v1-release.html">Experiment</a> and talked about html5 technology in it.
+Here are the slides i used.</p>
+
+<center>
+<iframe src="https://docs.google.com/present/embed?id=dhng4bgf_63gks3skcf" frameborder="0" width="410" height="342"></iframe>
+</center>
+
+]]></content>
+  </entry>
+  
+</feed>

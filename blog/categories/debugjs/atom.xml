@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: debugjs | Jerome Etienne.js Blog]]></title>
+  <link href="http://jeromeetienne.github.com/blog/blog/categories/debugjs/atom.xml" rel="self"/>
+  <link href="http://jeromeetienne.github.com/blog/"/>
+  <updated>2013-04-18T14:00:23+02:00</updated>
+  <id>http://jeromeetienne.github.com/blog/</id>
+  <author>
+    <name><![CDATA[Jerome Etienne]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Debug.js: assertWhichStop.js]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2012/12/08/debug-dot-js-assertwhichstop-dot-js/"/>
+    <updated>2012-12-08T15:15:00+01:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2012/12/08/debug-dot-js-assertwhichstop-dot-js</id>
+    <content type="html"><![CDATA[<p>This is post presents <em>assertWhichStop.js</em>.
+<a href="https://github.com/jeromeetienne/debug.js/tree/master/src">assertWhichStop.js</a>
+is a simple library which provide an <code>assert()</code> which stops...
+who would have guessed :)
+You may find that surprising but in your browser,
+javascript's
+<a href="https://getfirebug.com/wiki/index.php/Console_API#console.assert.28expression.5B.2C_object.2C_....5D.29">assert()</a>
+does not stop the execution of the code but it does in other languages.
+<a href="https://github.com/jeromeetienne/debug.js/tree/master/src">assertWhichStop.js</a>
+will make your assert stop even in your browser.</p>
+
+<p><a href="https://github.com/jeromeetienne/debug.js/tree/master/src">assertWhichStop.js</a>
+is a part of
+<a href="https://github.com/jeromeetienne/debug.js">debug.js</a> library,
+which we talked about in <a href="/blog/categories/debugjs/">previous posts</a>.
+This post will explain why it is usefull to stop and how to use <em>assertWhichStop.js</em>.
+This library is
+<a href="https://github.com/jeromeetienne/debug.js/blob/master/src/assertwhichstop.js">very small</a>
+, barely 10 lines full total at the time of writing.
+It is based on a little
+<a href="https://gist.github.com/2651899">gist</a>
+we did in collaboration with
+<a href="https://plus.google.com/118110542957297456336/posts">jens arp</a>.
+Ok now let's see more deeply what is assert.</p>
+
+<!-- more -->
+
+
+<h3>What Is Assert() ?</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Assertion_(computing)">Assert</a>
+is a very usefull tool during developement.
+It is done to <strong>explicitly check internal consistency</strong>.
+In other words, it is a way to say <em>"ok here, this MUST be true. And if it isn't, there is a bug"</em>.
+You explicitly describe the assertions you make in your code
+and
+get immediatly notified when one happened to be wrong.
+So you can fix the bug.</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Assertion_(computing)">Assert</a>
+is from
+<a href="http://en.wikipedia.org/wiki/C_(programming_language)">c</a>
+/
+<a href="http://en.wikipedia.org/wiki/C%2B%2B">c++</a>.
+It is available in many languages: in
+<a href="http://docs.python.org/3.3/reference/simple_stmts.html#the-assert-statement">python</a>,
+<a href="http://php.net/manual/en/function.assert.php">php</a>,
+or even done in
+<a href="http://search.cpan.org/~mschwern/Carp-Assert-0.20/lib/Carp/Assert.pm">perl</a>.
+In most language, the execution is stopped immediatly: thru exception for
+<a href="http://docs.python.org/3.3/reference/simple_stmts.html#the-assert-statement">python</a>
+or
+<a href="http://php.net/manual/en/function.assert.php">php</a>
+, or thru
+<a href="http://en.wikipedia.org/wiki/Unix_signal">unix signal</a>
++
+<a href="http://en.wikipedia.org/wiki/Core_dump">coredump</a>
+with
+<a href="http://en.wikipedia.org/wiki/C_(programming_language)">c</a>
+/
+<a href="http://en.wikipedia.org/wiki/C%2B%2B">c++</a>.
+Thus you get notified of the bugs early,
+study the situation and start fixing.</p>
+
+<h3>Let's Get Started</h3>
+
+<p>You first need to get the files which contains the code.
+As for the rest of debug.js, the global detection works in browsers and in node.js.
+If you are in node.js, you do the usual <code>require()</code>
+(see <a href="http://nodejs.org/api/globals.html#globals_require">more</a>).</p>
+
+<p><code>javascript
+var GlobalDetector = require('assertwhichstop.js');
+</code></p>
+
+<p>If you are in a browser, just add a <code>&lt;script&gt;</code></p>
+
+<p>```html</p>
+
+<script src='debug-bundle.js'></script>
+
+
+<p>```</p>
+
+<h3>How To Use It ?</h3>
+
+<p>Now that we got the code included, let's see how to use it.
+The typical usage will be like that</p>
+
+<p><code>javascript
+assertWhichStop(condition, message);
+</code></p>
+
+<p>If the asserted condition is true, nothing will happen.
+If it is false, the message will be displayed and it will try to stop the execution of the programm.
+Suppose you got a variable <code>foo</code> which is supposed to always be a number greater than 0.
+You will typically do something like that.</p>
+
+<p><code>javascript
+assertWhichStop( foo &gt; 0, "foo MUST be greater than 0");
+</code></p>
+
+<p>This will stop the execution if <code>foo</code> isn't greater than 0. Simple enougth :)
+Sure but how does it try to stop ? Let's look at that.</p>
+
+<h3>How To Stop ?</h3>
+
+<p>assertWhichStop can stop in 2 ways:
+The first one is by throwing an exception with <a href="http://example.com/mdn">Error</a>
+It is the most natural way.
+So it is the default behavior.</p>
+
+<p>Additionnaly it is possible to stop by triggering the js debugger itself.
+This generate a total halt. Nothing will happen anymore in the page.
+It uses <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Statements/debugger"><code>debugger;</code> javascript statement</a>
+It isn't a well known part of javascript but it is
+<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-12.15">standard javascript</a>.
+Unfortunatly it seems to be implemented only on chrome at the moment.
+When the virtual machine hits it, it will popup the
+<a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Statements/debugger">javascript debugger</a>,
+so you can get the call stack, get the local variables,
+set up conditions to watch or many other things. Usefull stuff to debug.</p>
+
+<h3>Overloading Console API for Backward Compatibility</h3>
+
+<p>If you wish, you can overload the <code>console.assert</code> with the following line.
+Thanks to that, you can easily take advantage of
+assertWhichStop.js without changing your code, a nice feature :)</p>
+
+<p><code>javascript
+assertWhichStop.overloadConsole();
+</code></p>
+
+<p>After this, any <code>console.assert()</code> will use assertWhichStop and will be able to stop as
+soon as an assertion is found wrong.</p>
+
+<h2>Conclusion</h2>
+
+<p>If this post, we talked about
+why assert is usefull during  developement to keep your code running as you expect.
+We have seen
+how to use <a href="https://github.com/jeromeetienne/debug.js/tree/master/src">assertWhichStop.js</a>
+to immediatly stop when one of your assertion happened to be wrong.
+Thus then you can fix the bug as soon as possible.
+We got various ways to stop: exception or <code>debugger;</code> statement, a part of standard javascript.
+All that in a backward compatible fashion... rather cool if you ask me :)</p>
+
+<p>That's all folks, have fun!</p>
+]]></content>
+  </entry>
+  
+</feed>

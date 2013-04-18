@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Debug.js: assertWhichStop.js - Jerome Etienne.js Blog</title>
+  <meta name="author" content="Jerome Etienne">
+
+  
+  <meta name="description" content="This is post presents assertWhichStop.js.
+assertWhichStop.js
+is a simple library which provide an assert() which stops&#8230;
+who would have guessed &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jeromeetienne.github.com/blog/blog/2012/12/08/debug-dot-js-assertwhichstop-dot-js/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/blogjetiennecom" rel="alternate" title="Jerome Etienne.js Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Jerome Etienne.js Blog</a></h1>
+  
+    <h2>Around JavaScript, node.js, WebGL and cool HTML5 game stuff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/blogjetiennecom" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:jeromeetienne.github.com/blog" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Debug.js: assertWhichStop.js</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-08T15:15:00+01:00" pubdate data-updated="true">Dec 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This is post presents <em>assertWhichStop.js</em>.
+<a href="https://github.com/jeromeetienne/debug.js/tree/master/src">assertWhichStop.js</a>
+is a simple library which provide an <code>assert()</code> which stops&#8230;
+who would have guessed :)
+You may find that surprising but in your browser,
+javascript&#8217;s
+<a href="https://getfirebug.com/wiki/index.php/Console_API#console.assert.28expression.5B.2C_object.2C_....5D.29">assert()</a>
+does not stop the execution of the code but it does in other languages.
+<a href="https://github.com/jeromeetienne/debug.js/tree/master/src">assertWhichStop.js</a>
+will make your assert stop even in your browser.</p>
+
+<p><a href="https://github.com/jeromeetienne/debug.js/tree/master/src">assertWhichStop.js</a>
+is a part of
+<a href="https://github.com/jeromeetienne/debug.js">debug.js</a> library,
+which we talked about in <a href="/blog/categories/debugjs/">previous posts</a>.
+This post will explain why it is usefull to stop and how to use <em>assertWhichStop.js</em>.
+This library is
+<a href="https://github.com/jeromeetienne/debug.js/blob/master/src/assertwhichstop.js">very small</a>
+, barely 10 lines full total at the time of writing.
+It is based on a little
+<a href="https://gist.github.com/2651899">gist</a>
+we did in collaboration with
+<a href="https://plus.google.com/118110542957297456336/posts">jens arp</a>.
+Ok now let&#8217;s see more deeply what is assert.</p>
+
+<!-- more -->
+
+
+<h3>What Is Assert() ?</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Assertion_(computing)">Assert</a>
+is a very usefull tool during developement.
+It is done to <strong>explicitly check internal consistency</strong>.
+In other words, it is a way to say <em>&#8220;ok here, this MUST be true. And if it isn&#8217;t, there is a bug&#8221;</em>.
+You explicitly describe the assertions you make in your code
+and
+get immediatly notified when one happened to be wrong.
+So you can fix the bug.</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Assertion_(computing)">Assert</a>
+is from
+<a href="http://en.wikipedia.org/wiki/C_(programming_language)">c</a>
+/
+<a href="http://en.wikipedia.org/wiki/C%2B%2B">c++</a>.
+It is available in many languages: in
+<a href="http://docs.python.org/3.3/reference/simple_stmts.html#the-assert-statement">python</a>,
+<a href="http://php.net/manual/en/function.assert.php">php</a>,
+or even done in
+<a href="http://search.cpan.org/~mschwern/Carp-Assert-0.20/lib/Carp/Assert.pm">perl</a>.
+In most language, the execution is stopped immediatly: thru exception for
+<a href="http://docs.python.org/3.3/reference/simple_stmts.html#the-assert-statement">python</a>
+or
+<a href="http://php.net/manual/en/function.assert.php">php</a>
+, or thru
+<a href="http://en.wikipedia.org/wiki/Unix_signal">unix signal</a>
++
+<a href="http://en.wikipedia.org/wiki/Core_dump">coredump</a>
+with
+<a href="http://en.wikipedia.org/wiki/C_(programming_language)">c</a>
+/
+<a href="http://en.wikipedia.org/wiki/C%2B%2B">c++</a>.
+Thus you get notified of the bugs early,
+study the situation and start fixing.</p>
+
+<h3>Let&#8217;s Get Started</h3>
+
+<p>You first need to get the files which contains the code.
+As for the rest of debug.js, the global detection works in browsers and in node.js.
+If you are in node.js, you do the usual <code>require()</code>
+(see <a href="http://nodejs.org/api/globals.html#globals_require">more</a>).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">GlobalDetector</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;assertwhichstop.js&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you are in a browser, just add a <code>&lt;script&gt;</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&#39;debug-bundle.js&#39;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>How To Use It ?</h3>
+
+<p>Now that we got the code included, let&#8217;s see how to use it.
+The typical usage will be like that</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">assertWhichStop</span><span class="p">(</span><span class="nx">condition</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If the asserted condition is true, nothing will happen.
+If it is false, the message will be displayed and it will try to stop the execution of the programm.
+Suppose you got a variable <code>foo</code> which is supposed to always be a number greater than 0.
+You will typically do something like that.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">assertWhichStop</span><span class="p">(</span> <span class="nx">foo</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;foo MUST be greater than 0&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will stop the execution if <code>foo</code> isn&#8217;t greater than 0. Simple enougth :)
+Sure but how does it try to stop ? Let&#8217;s look at that.</p>
+
+<h3>How To Stop ?</h3>
+
+<p>assertWhichStop can stop in 2 ways:
+The first one is by throwing an exception with <a href="http://example.com/mdn">Error</a>
+It is the most natural way.
+So it is the default behavior.</p>
+
+<p>Additionnaly it is possible to stop by triggering the js debugger itself.
+This generate a total halt. Nothing will happen anymore in the page.
+It uses <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Statements/debugger"><code>debugger;</code> javascript statement</a>
+It isn&#8217;t a well known part of javascript but it is
+<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-12.15">standard javascript</a>.
+Unfortunatly it seems to be implemented only on chrome at the moment.
+When the virtual machine hits it, it will popup the
+<a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Statements/debugger">javascript debugger</a>,
+so you can get the call stack, get the local variables,
+set up conditions to watch or many other things. Usefull stuff to debug.</p>
+
+<h3>Overloading Console API for Backward Compatibility</h3>
+
+<p>If you wish, you can overload the <code>console.assert</code> with the following line.
+Thanks to that, you can easily take advantage of
+assertWhichStop.js without changing your code, a nice feature :)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">assertWhichStop</span><span class="p">.</span><span class="nx">overloadConsole</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After this, any <code>console.assert()</code> will use assertWhichStop and will be able to stop as
+soon as an assertion is found wrong.</p>
+
+<h2>Conclusion</h2>
+
+<p>If this post, we talked about
+why assert is usefull during  developement to keep your code running as you expect.
+We have seen
+how to use <a href="https://github.com/jeromeetienne/debug.js/tree/master/src">assertWhichStop.js</a>
+to immediatly stop when one of your assertion happened to be wrong.
+Thus then you can fix the bug as soon as possible.
+We got various ways to stop: exception or <code>debugger;</code> statement, a part of standard javascript.
+All that in a backward compatible fashion&#8230; rather cool if you ask me :)</p>
+
+<p>That&#8217;s all folks, have fun!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jerome Etienne</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-08T15:15:00+01:00" pubdate data-updated="true">Dec 8<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/debugjs/'>debugjs</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jeromeetienne.github.com/blog/blog/2012/12/08/debug-dot-js-assertwhichstop-dot-js/" data-via="jerome_etienne" data-counturl="http://jeromeetienne.github.com/blog/blog/2012/12/08/debug-dot-js-assertwhichstop-dot-js/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/09/12/console4worker/" title="Previous Post: console4Worker - console API for worker">&laquo; console4Worker - console API for worker</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/08/debug-dot-js-assertwhichstop-dot-js/">Debug.js: assertWhichStop.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/12/console4worker/">console4Worker - console API for worker</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/10/pacmaze-update/">Pacmaze Update</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/05/microcache.js/">MicroCache.js - Cache Micro Library</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch/">GoWithTheFlow.js - async flow control with a zen touch</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jerome_etienne", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jerome_etienne" class="twitter-follow-button" data-show-count="false">Follow @jerome_etienne</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Jerome Etienne -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'blogjetiennecom';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jeromeetienne.github.com/blog/blog/2012/12/08/debug-dot-js-assertwhichstop-dot-js/';
+        var disqus_url = 'http://jeromeetienne.github.com/blog/blog/2012/12/08/debug-dot-js-assertwhichstop-dot-js/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>console4Worker - console API for worker - Jerome Etienne.js Blog</title>
+  <meta name="author" content="Jerome Etienne">
+
+  
+  <meta name="description" content="console4Worker is console API for WebWorkers.
+WebWorkers are hard to debug. On top of that, console API
+is unavailable
+in WebWorkers. It doesn&#8217; &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jeromeetienne.github.com/blog/blog/2011/09/12/console4worker/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/blogjetiennecom" rel="alternate" title="Jerome Etienne.js Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Jerome Etienne.js Blog</a></h1>
+  
+    <h2>Around JavaScript, node.js, WebGL and cool HTML5 game stuff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/blogjetiennecom" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:jeromeetienne.github.com/blog" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">console4Worker - Console API for Worker</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-12T09:17:00+02:00" pubdate data-updated="true">Sep 12<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="https://github.com/jeromeetienne/console4Worker">console4Worker</a> is console API for WebWorkers.
+WebWorkers are hard to debug. On top of that, <a href="http://getfirebug.com/wiki/index.php/Console_API">console API</a>
+is unavailable
+in WebWorkers. It doesn&#8217;t help.</p>
+
+<p><a href="https://github.com/jeromeetienne/console4Worker">console4Worker</a>
+is a simple library which tries to fill this gap.
+It provides the <a href="http://getfirebug.com/wiki/index.php/Console_API">console API</a>
+, the same api you are used to.
+It implemented in most browser, node.js, even part of
+<a href="http://wiki.commonjs.org/wiki/Console">commonjs</a>.
+See the <a href="https://github.com/jeromeetienne/console4Worker/blob/master/examples/index.html">demo</a>
+in the examples/ directory.</p>
+
+<h2>On the Worker Side</h2>
+
+<p>First you include the script with this line.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">importScripts</span><span class="p">(</span><span class="s1">&#39;console4Worker-worker.js&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And you are <strong>done</strong>! Now you can console API as you would normally do, even if you are in a
+<a href="http://www.whatwg.org/specs/web-apps/current-work/complete/workers.html">webworker</a>.
+Lets say something like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;console call made from inside a webworker&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<h2>On the Page Side</h2>
+
+<p>On the page side, you need to add 3 lines.
+<em>First</em> to include the script, simply do</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;console4Worker-page.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>Then</em> you bind console4Worker to your worker with another line.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// init the worker</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">worker</span>    <span class="o">=</span> <span class="k">new</span> <span class="nx">Worker</span><span class="p">(</span><span class="s2">&quot;worker.js&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">// bind the console4Worker to get console API from worker</span>
+</span><span class='line'><span class="nx">console4Worker</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">worker</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>If</em> you got your own message event listener, add <code>console4Worker.filterEvent()</code> in it.
+This line will filter out messages coming from console4Worker.
+So you should have something like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">worker</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+</span><span class='line'>    <span class="c1">// filter this event if it is from console4Worker</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span> <span class="nx">console4Worker</span><span class="p">.</span><span class="nx">filterEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// ... here handle your own events</span>
+</span><span class='line'><span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Motivation</h2>
+
+<p>Another project of mine is <a href="http://pacmaze.com">pacmaze</a>.
+It uses webworkers to provide smoother animations.
+This is important for high fps game.
+The worst which can happen is to have 50fps most of the time
+but with short period at 30fps.
+People want the animation to be smooth.</p>
+
+<p>Webworker allows to spread the load on 2 cpu core.
+Thus the pick of grabage collection is distributed, and you got twice more
+cpu power. So all in all, i found myself spending quite some time debugging webworker, so i
+wrote console4Worker to spend less time next time :)</p>
+
+<h2>Conclusion</h2>
+
+<p>How does it work ? a console object is declared in the worker. It intercepts
+all console calls and pass them to the page thread. a direct approach.
+I plan to add stacktrace and thus provide more accurate informations about the
+location of the call.</p>
+
+<p>The code is available on <a href="https://github.com/jeromeetienne/console4Worker">github</a>
+under MIT license.
+If you hit bugs, fill issues on github. Feel free to fork, modify and have fun with it :)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jerome Etienne</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-12T09:17:00+02:00" pubdate data-updated="true">Sep 12<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jeromeetienne.github.com/blog/blog/2011/09/12/console4worker/" data-via="jerome_etienne" data-counturl="http://jeromeetienne.github.com/blog/blog/2011/09/12/console4worker/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/09/10/pacmaze-update/" title="Previous Post: Pacmaze Update">&laquo; Pacmaze Update</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/12/08/debug-dot-js-assertwhichstop-dot-js/" title="Next Post: Debug.js: assertWhichStop.js">Debug.js: assertWhichStop.js &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/08/debug-dot-js-assertwhichstop-dot-js/">Debug.js: assertWhichStop.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/12/console4worker/">console4Worker - console API for worker</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/10/pacmaze-update/">Pacmaze Update</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/05/microcache.js/">MicroCache.js - Cache Micro Library</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch/">GoWithTheFlow.js - async flow control with a zen touch</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jerome_etienne", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jerome_etienne" class="twitter-follow-button" data-show-count="false">Follow @jerome_etienne</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Jerome Etienne -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'blogjetiennecom';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jeromeetienne.github.com/blog/blog/2011/09/12/console4worker/';
+        var disqus_url = 'http://jeromeetienne.github.com/blog/blog/2011/09/12/console4worker/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

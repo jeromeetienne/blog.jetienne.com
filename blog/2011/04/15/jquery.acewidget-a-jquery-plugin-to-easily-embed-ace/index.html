@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>jquery.acewidget - a jQuery plugin to easily embed ace - Jerome Etienne.js Blog</title>
+  <meta name="author" content="Jerome Etienne">
+
+  
+  <meta name="description" content="AceWidget jQuery Plugin jquery.acewidget.js is a
+jQuery plugin for acewidget.
+AceWidget is a widget which make ace
+/bespin trivial to embed in your &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jeromeetienne.github.com/blog/blog/2011/04/15/jquery.acewidget-a-jquery-plugin-to-easily-embed-ace/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/blogjetiennecom" rel="alternate" title="Jerome Etienne.js Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Jerome Etienne.js Blog</a></h1>
+  
+    <h2>Around JavaScript, node.js, WebGL and cool HTML5 game stuff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/blogjetiennecom" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:jeromeetienne.github.com/blog" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">jquery.acewidget - a jQuery Plugin to Easily Embed Ace</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-15T00:00:00+02:00" pubdate data-updated="true">Apr 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>AceWidget jQuery Plugin</h1>
+
+<p><a href="https://github.com/jeromeetienne/acewidget/tree/master/contrib/jquery.acewidget">jquery.acewidget.js</a> is a
+jQuery plugin for <a href="https://github.com/jeromeetienne/acewidget">acewidget</a>.
+AceWidget is a widget which make <a href="http://mozillalabs.com/skywriter/2011/01/18/mozilla-skywriter-has-been-merged-into-ace/">ace</a>
+/<a href="https://mozillalabs.com/blog/2009/02/introducing-bespin/">bespin</a> trivial to embed in your pages. The Vision is to be
+super simple to embed and have no server to setup. It provides the whole official embeded api. The
+code is available on github under MIT license. That&#8217;s it. No fuss no muss.</p>
+
+<p>Show dont tell, a <a href="http://jeromeetienne.github.com/acewidget/demo.html">demo of acewidget</a> and a
+<a href="http://jeromeetienne.github.com/acewidget/contrib/jquery.acewidget/test.html">example of jquery.acewidget</a></p>
+
+<h2>How to use it</h2>
+
+<p>First you include the plugin itself in a usual script</p>
+
+<pre><code>&lt;script type="text/javascript" src='jquery.acewidget.js'&gt;&lt;/script&gt; 
+</code></pre>
+
+<p>Then create a DOM element which gonna contains ace widget, say a div</p>
+
+<pre><code>&lt;div id="editor"&gt;&lt;/div&gt;
+</code></pre>
+
+<p>Then you create the ace widget in this container by</p>
+
+<pre><code>var acewidget = jQuery('#editor').acewidget();
+</code></pre>
+
+<!-- more -->
+
+
+<p>You wait until it is loaded in your DOM</p>
+
+<pre><code>acewidget.bind('load', function(){
+    /* you start using it here */
+})
+</code></pre>
+
+<p>After that you use it with the normal ace API</p>
+
+<h2>API</h2>
+
+<h3>to set a new text</h3>
+
+<pre><code>acewidget.setValue("foobar", function(){
+alert("setValue "+result.status)
+})
+</code></pre>
+
+<p>The callback is optional&#8217; and notified when the action is completed.
+It is <a href="http://labs.omniti.com/labs/jsend/wiki">jsend compatible</a>.</p>
+
+<h3>to get the current text</h3>
+
+<pre><code>acewidget.getValue(function(result){
+    alert("getValue "+result.status+" text:"+result.data.data)
+})
+</code></pre>
+
+<h3>to set the tab size</h3>
+
+<pre><code>acewidget.setTabSize(8, function(result){
+    alert("setTabSize "+result.status)
+})
+</code></pre>
+
+<h3>to be notified when the acewidget is loaded</h3>
+
+<pre><code>acewidget.bind('load', function(){
+    alert('acewidget is loaded')
+})
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jerome Etienne</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-15T00:00:00+02:00" pubdate data-updated="true">Apr 15<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ace/'>ace</a>, <a class='category' href='/blog/categories/browser/'>browser</a>, <a class='category' href='/blog/categories/jquery/'>jquery</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jeromeetienne.github.com/blog/blog/2011/04/15/jquery.acewidget-a-jquery-plugin-to-easily-embed-ace/" data-via="jerome_etienne" data-counturl="http://jeromeetienne.github.com/blog/blog/2011/04/15/jquery.acewidget-a-jquery-plugin-to-easily-embed-ace/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/04/13/pacmaze-v1-release/" title="Previous Post: Pacmaze V1 - a Pacman in WebGL">&laquo; Pacmaze V1 - a Pacman in WebGL</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/04/15/wget-thinks-github.com-is-a-threat/" title="Next Post: wget thinks github.com is a threat">wget thinks github.com is a threat &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/08/debug-dot-js-assertwhichstop-dot-js/">Debug.js: assertWhichStop.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/12/console4worker/">console4Worker - console API for worker</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/10/pacmaze-update/">Pacmaze Update</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/05/microcache.js/">MicroCache.js - Cache Micro Library</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch/">GoWithTheFlow.js - async flow control with a zen touch</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jerome_etienne", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jerome_etienne" class="twitter-follow-button" data-show-count="false">Follow @jerome_etienne</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Jerome Etienne -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'blogjetiennecom';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
