@@ -4,7 +4,7 @@
   <title><![CDATA[Category: debugjs | Jerome Etienne.js Blog]]></title>
   <link href="http://jeromeetienne.github.com/blog/blog/categories/debugjs/atom.xml" rel="self"/>
   <link href="http://jeromeetienne.github.com/blog/"/>
-  <updated>2013-04-18T15:03:13+02:00</updated>
+  <updated>2013-04-23T14:19:17+02:00</updated>
   <id>http://jeromeetienne.github.com/blog/</id>
   <author>
     <name><![CDATA[Jerome Etienne]]></name>
@@ -12,6 +12,226 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Debug.js: Globals Detection]]></title>
+    <link href="http://jeromeetienne.github.com/blog/blog/2013/04/23/debug-dot-js-global-detection/"/>
+    <updated>2013-04-23T07:43:00+02:00</updated>
+    <id>http://jeromeetienne.github.com/blog/blog/2013/04/23/debug-dot-js-global-detection</id>
+    <content type="html"><![CDATA[<p>This post is about detecting global variables in javascript and eradicating them :)
+This is a first post about <a href="https://github.com/jeromeetienne/debug.js">debug.js</a>,
+a library to make javascript easier to debug.
+Global Detection is one of the features of this library.
+I came up with the idea back in May 2012 at
+<a href="https://twitter.com/web_rebels">Web Rebels</a> at Oslo.
+So i was quite enthusiatic and started coding right away on the plane back home.
+Now, <a href="https://github.com/jeromeetienne/debug.js">debug.js</a> has quite a bit of features.
+In future posts, we will detail them and explain how they can be useful in your own code.</p>
+
+<iframe width="420" height="315" src="http://www.youtube.com/embed/dZzs4q3NFu8" frameborder="0" allowfullscreen></iframe>
+
+
+
+
+<!-- more -->
+
+
+<h2>Debug.js Overview</h2>
+
+<p><a href="https://github.com/jeromeetienne/debug.js">debug.js</a> addresses various known issues which make javascript hard to debug.
+For example, <a href="https://github.com/jeromeetienne/debug.js">debug.js</a> implements strong type checking,
+for object properties and for function parameters. So you can check that a function is
+called the way you expect, with the precise number of parameters, for each parameter you
+can specify the allowed types: number, string.. for instance of your own classes
+like <code>THREE.Vector3</code>.</p>
+
+<p>It implements value bound checking, to ensure a value of variable remains in the range
+you expect (<a href="http://en.wikipedia.org/wiki/Bounds_checking">read more</a>).
+It implements NaN checking to be sure your math computation
+doesn't end up with <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/NaN">NaN</a>.
+With plain js, it is silently ignored, with <a href="https://github.com/jeromeetienne/debug.js">debug.js</a>, you are warned immediatly.
+Many other feature are like that.</p>
+
+<p>Oh and an <em>important feature</em>,
+<a href="https://github.com/jeromeetienne/debug.js">debug.js</a>
+is javascript.
+It works in browser and node.js.
+It isnt another language which is compiled to javascript.
+You can keep your current code, your current developpers and their current knowledge.
+Now that you got a better idea of what is <a href="https://github.com/jeromeetienne/debug.js">debug.js</a>.
+Let's go deeper on a specific part: the global detection</p>
+
+<h1>Globals Detection</h1>
+
+<p>Ok, so let's detect some globals.
+You first need to get the files which contain the code.
+As for the rest of debug.js, the global detection works in browsers and in node.js.
+If you are in node.js, you do the usual <code>require()</code>
+(see <a href="http://nodejs.org/api/globals.html#globals_require">more</a>).</p>
+
+<p><code>javascript
+var GlobalDetector = require('globaldetector.js');
+</code></p>
+
+<p>If you are in a browser, just add a <code>&lt;script&gt;</code></p>
+
+<p>```html</p>
+
+<script src='debug-bundle.js'></script>
+
+
+<p>```</p>
+
+<p>Now that we got the code, let's get started!</p>
+
+<h2>Start Detecting Globals</h2>
+
+<p>The principle behind global detection is simple.
+The global object is monitored, so <code>window</code> in a browser and <code>global</code> in node.js.
+The monitoring is tuned to detect any new property attached to it.
+So any new global defined will be attached to the global object and detected on the next run
+of the global detector.
+To start the global detector, just add the following lines.</p>
+
+<p><code>javascript
+// instanciate the object
+var globalDetector = new GlobalDetector();
+// start monitoring globals
+globalDetector.start();
+</code></p>
+
+<p>By default, it monitors the globals once per second
+and reports any new ones via <code>console.warn()</code>.
+If you wish another behavior, see the <a href="http://jeromeetienne.github.com/debug.js/docs/jsdocs/">API documentation</a>
+and tune the parameters.
+If the variable <code>foo</code> is detected, you will see something like this.</p>
+
+<p><code>
+Thu Dec 06 2012 19:10:15 GMT+0100 (CET) -- Warning Global Detected!!! window['foo'] === bar
+</code></p>
+
+<h2>How To Allow Globals</h2>
+
+<p>Nevertheless, sometimes it is ok to have globals.
+For example, if you use <a href="http://example.com">jQuery</a>, a <code>jQuery</code> global will be defined.
+No need for GlobalDetector to report this one.
+Just use the following line to warn the library to ignore this particular property.</p>
+
+<p><code>javascript
+GlobalDetector.ignoreList.push('jQuery');
+</code></p>
+
+<h1>Globals Removal</h1>
+
+<p>To detect the presence and name of global variables is nice, but it doesn't fix the issue.
+The globals are still here.
+debug.js goes further and helps you track where those globals are used.
+Thus you can change your code to avoid globals and be sure you don't miss any spot.</p>
+
+<p>Tracking the usage of globals is a 2 step process: you have to launch the application twice.
+First you detect the globals as described above and you generate the code needed
+for the usage tracker, then second, you relaunch to collect where those globals are used.</p>
+
+<h2>Step 1: Generating the Code Needed for Usage Tracker</h2>
+
+<p>So on the first run, you include and start the global detector as described above.
+You let it run for a while, and then you generate the code for the usage tracker.
+Just use the following line.
+It will dump the code you need to include in the second pass.
+It is as simple as that.</p>
+
+<p><code>javascript
+globalDetector.usageTrackerCodeConsole();
+</code></p>
+
+<p>This one will output the code in the javascript console.
+If you want to output the code in another window, just use <code>.usageTrackerCodeWindow()</code>.
+Include this tracking code in your application, and you are all
+set for the second pass.</p>
+
+<p><code>javascript
+PropertyAttr.define(window, 'foo').trackUsage('window.foo');
+</code></p>
+
+<h2>Step 2: Actually Tracking Usage of Globals</h2>
+
+<p>So on the second run, you included the tracking code.
+So you let your application run, and the usage location of each global will be recorded.
+To know where your globals are used, just use this line in your javascript console.</p>
+
+<p><code>javascript
+globalDetector.usageTrackerDump();
+</code></p>
+
+<p>It will dump where it is used and how many times.
+You will see something quite similar to the following.
+It is possible to fine tune the report, see <code>Stacktrace.Tracker</code> in the
+<a href="http://jeromeetienne.github.com/debug.js/docs/jsdocs/">API documentation</a>.</p>
+
+<p>```
+window.foo: total 2 times</p>
+
+<pre><code>aClass.aMethod@http://example.com/index.html:30 - 1 times
+aClass.anotherMethod@http://example.com/index.html:32 - 1 times 
+</code></pre>
+
+<p>```</p>
+
+<p>So you got where the globals are used and can start fixing your code to remove
+the globals.</p>
+
+<h2>Why globals are bad</h2>
+
+<p>Wait... why is this needed ?
+A legitimate question to ask.
+So Why globals are bad ?
+Because <strong>Globals are considered harmful</strong> by most people and it is so in any language.
+Globals are bad in javascript, globals are bad in C++, globals are bad in perl etc...
+You got the picture.
+Why is that ? Because globals got:</p>
+
+<p><strong>Non-locality</strong> Source code is easiest to understand when the scope of its individual elements are limited. Global variables can be read or modified by any part of the program, making it difficult to remember or reason about every possible use.</p>
+
+<p><strong>No Access Control</strong> A global variable can be get or set by any part of the program, and any rules regarding its use can be easily broken or forgotten. (In other words, get/set accessors are generally preferable over direct data access, and this is even more so for global data.)</p>
+
+<p><strong>Implicit coupling</strong> A program with many global variables often has tight couplings between some of those variables, and couplings between variables and functions. Grouping coupled items into cohesive units usually leads to better programs.</p>
+
+<p><strong>Namespace pollution</strong> Global names are available everywhere. You may unknowingly end up using a global when you think you are using a local (by misspelling or forgetting to declare the local) or vice versa.</p>
+
+<p>Those rules are quoted directly from a very good paper on this exact subject
+"<a href="http://c2.com/cgi/wiki?GlobalVariablesAreBad">why globals are bad</a>".</p>
+
+<h2>Conclusion</h2>
+
+<p>This post is the first on
+<a href="https://github.com/jeromeetienne/debug.js">debug.js</a>.
+It explains a specific part of it
+: the global detection.
+We first explained how to detect the presence of globals, and their names.
+Then we detailed how to track their usage to better remove them.
+So with <a href="https://github.com/jeromeetienne/debug.js">debug.js</a>
+, you can find out the globals used in your application and then remove it.</p>
+
+<p>We think this feature is quite important when you have a large
+codebase and need to maintain it over a long time, like
+it is usual in software companies.
+In this case, it is best to monitor such a thing and keep it under control.
+Companies got to have processes for that... things people call
+<a href="http://en.wikipedia.org/wiki/Quality_assurance">Quality Assurance or Q/A</a>.
+debug.js and its global detection has been designed to fit nicely in a Q/A process.</p>
+
+<p>In our next posts about debug.js, we will see other important parts of the library,
+such as
+how to reduce garbage collection via monitoring+object pooling,
+how to have private/public members in your javascript classes,
+or
+strong type checking.
+Additionaly, debug.js works real well when coupled with jsdoc information.
+Stay tuned.</p>
+
+<p>That's all folks, have fun :)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Debug.js: assertWhichStop.js]]></title>

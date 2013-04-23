@@ -1,0 +1,537 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Debug.js: Globals Detection - Jerome Etienne.js Blog</title>
+  <meta name="author" content="Jerome Etienne">
+
+  
+  <meta name="description" content="This post is about detecting global variables in javascript and eradicating them :)
+This is a first post about debug.js,
+a library to make javascript &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jeromeetienne.github.com/blog/blog/2013/04/23/debug-dot-js-global-detection/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/blogjetiennecom" rel="alternate" title="Jerome Etienne.js Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-4037844-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Jerome Etienne.js Blog</a></h1>
+  
+    <h2>Around JavaScript, node.js, WebGL and cool HTML5 game stuff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/blogjetiennecom" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:jeromeetienne.github.com/blog" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Debug.js: Globals Detection</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-23T07:43:00+02:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This post is about detecting global variables in javascript and eradicating them :)
+This is a first post about <a href="https://github.com/jeromeetienne/debug.js">debug.js</a>,
+a library to make javascript easier to debug.
+Global Detection is one of the features of this library.
+I came up with the idea back in May 2012 at
+<a href="https://twitter.com/web_rebels">Web Rebels</a> at Oslo.
+So i was quite enthusiatic and started coding right away on the plane back home.
+Now, <a href="https://github.com/jeromeetienne/debug.js">debug.js</a> has quite a bit of features.
+In future posts, we will detail them and explain how they can be useful in your own code.</p>
+
+<iframe width="420" height="315" src="http://www.youtube.com/embed/dZzs4q3NFu8" frameborder="0" allowfullscreen></iframe>
+
+
+
+
+<!-- more -->
+
+
+<h2>Debug.js Overview</h2>
+
+<p><a href="https://github.com/jeromeetienne/debug.js">debug.js</a> addresses various known issues which make javascript hard to debug.
+For example, <a href="https://github.com/jeromeetienne/debug.js">debug.js</a> implements strong type checking,
+for object properties and for function parameters. So you can check that a function is
+called the way you expect, with the precise number of parameters, for each parameter you
+can specify the allowed types: number, string.. for instance of your own classes
+like <code>THREE.Vector3</code>.</p>
+
+<p>It implements value bound checking, to ensure a value of variable remains in the range
+you expect (<a href="http://en.wikipedia.org/wiki/Bounds_checking">read more</a>).
+It implements NaN checking to be sure your math computation
+doesn&#8217;t end up with <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/NaN">NaN</a>.
+With plain js, it is silently ignored, with <a href="https://github.com/jeromeetienne/debug.js">debug.js</a>, you are warned immediatly.
+Many other feature are like that.</p>
+
+<p>Oh and an <em>important feature</em>,
+<a href="https://github.com/jeromeetienne/debug.js">debug.js</a>
+is javascript.
+It works in browser and node.js.
+It isnt another language which is compiled to javascript.
+You can keep your current code, your current developpers and their current knowledge.
+Now that you got a better idea of what is <a href="https://github.com/jeromeetienne/debug.js">debug.js</a>.
+Let&#8217;s go deeper on a specific part: the global detection</p>
+
+<h1>Globals Detection</h1>
+
+<p>Ok, so let&#8217;s detect some globals.
+You first need to get the files which contain the code.
+As for the rest of debug.js, the global detection works in browsers and in node.js.
+If you are in node.js, you do the usual <code>require()</code>
+(see <a href="http://nodejs.org/api/globals.html#globals_require">more</a>).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">GlobalDetector</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;globaldetector.js&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you are in a browser, just add a <code>&lt;script&gt;</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&#39;debug-bundle.js&#39;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now that we got the code, let&#8217;s get started!</p>
+
+<h2>Start Detecting Globals</h2>
+
+<p>The principle behind global detection is simple.
+The global object is monitored, so <code>window</code> in a browser and <code>global</code> in node.js.
+The monitoring is tuned to detect any new property attached to it.
+So any new global defined will be attached to the global object and detected on the next run
+of the global detector.
+To start the global detector, just add the following lines.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// instanciate the object</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">globalDetector</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">GlobalDetector</span><span class="p">();</span>
+</span><span class='line'><span class="c1">// start monitoring globals </span>
+</span><span class='line'><span class="nx">globalDetector</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By default, it monitors the globals once per second
+and reports any new ones via <code>console.warn()</code>.
+If you wish another behavior, see the <a href="http://jeromeetienne.github.com/debug.js/docs/jsdocs/">API documentation</a>
+and tune the parameters.
+If the variable <code>foo</code> is detected, you will see something like this.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Thu</span> <span class="nx">Dec</span> <span class="mi">06</span> <span class="mi">2012</span> <span class="mi">19</span><span class="o">:</span><span class="mi">10</span><span class="o">:</span><span class="mi">15</span> <span class="nx">GMT</span><span class="o">+</span><span class="mi">0100</span> <span class="p">(</span><span class="nx">CET</span><span class="p">)</span> <span class="o">--</span> <span class="nx">Warning</span> <span class="nx">Global</span> <span class="nx">Detected</span><span class="o">!!!</span> <span class="nb">window</span><span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]</span> <span class="o">===</span> <span class="nx">bar</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>How To Allow Globals</h2>
+
+<p>Nevertheless, sometimes it is ok to have globals.
+For example, if you use <a href="http://example.com">jQuery</a>, a <code>jQuery</code> global will be defined.
+No need for GlobalDetector to report this one.
+Just use the following line to warn the library to ignore this particular property.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">GlobalDetector</span><span class="p">.</span><span class="nx">ignoreList</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;jQuery&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>Globals Removal</h1>
+
+<p>To detect the presence and name of global variables is nice, but it doesn&#8217;t fix the issue.
+The globals are still here.
+debug.js goes further and helps you track where those globals are used.
+Thus you can change your code to avoid globals and be sure you don&#8217;t miss any spot.</p>
+
+<p>Tracking the usage of globals is a 2 step process: you have to launch the application twice.
+First you detect the globals as described above and you generate the code needed
+for the usage tracker, then second, you relaunch to collect where those globals are used.</p>
+
+<h2>Step 1: Generating the Code Needed for Usage Tracker</h2>
+
+<p>So on the first run, you include and start the global detector as described above.
+You let it run for a while, and then you generate the code for the usage tracker.
+Just use the following line.
+It will dump the code you need to include in the second pass.
+It is as simple as that.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">globalDetector</span><span class="p">.</span><span class="nx">usageTrackerCodeConsole</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This one will output the code in the javascript console.
+If you want to output the code in another window, just use <code>.usageTrackerCodeWindow()</code>.
+Include this tracking code in your application, and you are all
+set for the second pass.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">PropertyAttr</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">).</span><span class="nx">trackUsage</span><span class="p">(</span><span class="s1">&#39;window.foo&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Step 2: Actually Tracking Usage of Globals</h2>
+
+<p>So on the second run, you included the tracking code.
+So you let your application run, and the usage location of each global will be recorded.
+To know where your globals are used, just use this line in your javascript console.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">globalDetector</span><span class="p">.</span><span class="nx">usageTrackerDump</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It will dump where it is used and how many times.
+You will see something quite similar to the following.
+It is possible to fine tune the report, see <code>Stacktrace.Tracker</code> in the
+<a href="http://jeromeetienne.github.com/debug.js/docs/jsdocs/">API documentation</a>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">foo</span><span class="o">:</span> <span class="nx">total</span> <span class="mi">2</span> <span class="nx">times</span>
+</span><span class='line'>  <span class="nx">aClass</span><span class="p">.</span><span class="nx">aMethod</span><span class="err">@</span><span class="nx">http</span><span class="o">:</span><span class="c1">//example.com/index.html:30 - 1 times</span>
+</span><span class='line'>  <span class="nx">aClass</span><span class="p">.</span><span class="nx">anotherMethod</span><span class="err">@</span><span class="nx">http</span><span class="o">:</span><span class="c1">//example.com/index.html:32 - 1 times </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So you got where the globals are used and can start fixing your code to remove
+the globals.</p>
+
+<h2>Why globals are bad</h2>
+
+<p>Wait&#8230; why is this needed ?
+A legitimate question to ask.
+So Why globals are bad ?
+Because <strong>Globals are considered harmful</strong> by most people and it is so in any language.
+Globals are bad in javascript, globals are bad in C++, globals are bad in perl etc&#8230;
+You got the picture.
+Why is that ? Because globals got:</p>
+
+<p><strong>Non-locality</strong> Source code is easiest to understand when the scope of its individual elements are limited. Global variables can be read or modified by any part of the program, making it difficult to remember or reason about every possible use.</p>
+
+<p><strong>No Access Control</strong> A global variable can be get or set by any part of the program, and any rules regarding its use can be easily broken or forgotten. (In other words, get/set accessors are generally preferable over direct data access, and this is even more so for global data.)</p>
+
+<p><strong>Implicit coupling</strong> A program with many global variables often has tight couplings between some of those variables, and couplings between variables and functions. Grouping coupled items into cohesive units usually leads to better programs.</p>
+
+<p><strong>Namespace pollution</strong> Global names are available everywhere. You may unknowingly end up using a global when you think you are using a local (by misspelling or forgetting to declare the local) or vice versa.</p>
+
+<p>Those rules are quoted directly from a very good paper on this exact subject
+&#8221;<a href="http://c2.com/cgi/wiki?GlobalVariablesAreBad">why globals are bad</a>&#8221;.</p>
+
+<h2>Conclusion</h2>
+
+<p>This post is the first on
+<a href="https://github.com/jeromeetienne/debug.js">debug.js</a>.
+It explains a specific part of it
+: the global detection.
+We first explained how to detect the presence of globals, and their names.
+Then we detailed how to track their usage to better remove them.
+So with <a href="https://github.com/jeromeetienne/debug.js">debug.js</a>
+, you can find out the globals used in your application and then remove it.</p>
+
+<p>We think this feature is quite important when you have a large
+codebase and need to maintain it over a long time, like
+it is usual in software companies.
+In this case, it is best to monitor such a thing and keep it under control.
+Companies got to have processes for that&#8230; things people call
+<a href="http://en.wikipedia.org/wiki/Quality_assurance">Quality Assurance or Q/A</a>.
+debug.js and its global detection has been designed to fit nicely in a Q/A process.</p>
+
+<p>In our next posts about debug.js, we will see other important parts of the library,
+such as
+how to reduce garbage collection via monitoring+object pooling,
+how to have private/public members in your javascript classes,
+or
+strong type checking.
+Additionaly, debug.js works real well when coupled with jsdoc information.
+Stay tuned.</p>
+
+<p>That&#8217;s all folks, have fun :)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jerome Etienne</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-23T07:43:00+02:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/debugjs/'>debugjs</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jeromeetienne.github.com/blog/blog/2013/04/23/debug-dot-js-global-detection/" data-via="jerome_etienne" data-counturl="http://jeromeetienne.github.com/blog/blog/2013/04/23/debug-dot-js-global-detection/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/04/18/debug-dot-js-assertwhichstop-dot-js/" title="Previous Post: Debug.js: assertWhichStop.js">&laquo; Debug.js: assertWhichStop.js</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/04/23/debug-dot-js-global-detection/">Debug.js: Globals Detection</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/18/debug-dot-js-assertwhichstop-dot-js/">Debug.js: assertWhichStop.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/12/console4worker/">console4Worker - console API for worker</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/10/pacmaze-update/">Pacmaze Update</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/05/microcache.js/">MicroCache.js - Cache Micro Library</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jerome_etienne", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jerome_etienne" class="twitter-follow-button" data-show-count="false">Follow @jerome_etienne</a>
+  
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/jeromeetienne">@jeromeetienne</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jeromeetienne',
+            count: 2,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/102848659911729905069?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Jerome Etienne -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'blogjetiennecom';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jeromeetienne.github.com/blog/blog/2013/04/23/debug-dot-js-global-detection/';
+        var disqus_url = 'http://jeromeetienne.github.com/blog/blog/2013/04/23/debug-dot-js-global-detection/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

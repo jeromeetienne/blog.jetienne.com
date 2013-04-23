@@ -93,16 +93,22 @@
         <lastmod>2013-04-18T14:36:24+02:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://jeromeetienne.github.com/blog/blog/2013/04/23/debug-dot-js-global-detection/
+        </loc>
+        <lastmod>2013-04-23T14:19:04+02:00</lastmod>
+    </url>
+    <url>
         <loc>http://jeromeetienne.github.com/blog/about/</loc>
         <lastmod>2013-03-04T20:10:49+01:00</lastmod>
     </url>
     <url>
         <loc>http://jeromeetienne.github.com/blog/blog/archives/</loc>
-        <lastmod>2013-04-18T14:36:24+02:00</lastmod>
+        <lastmod>2013-04-23T14:19:04+02:00</lastmod>
     </url>
     <url>
         <loc>http://jeromeetienne.github.com/blog/</loc>
-        <lastmod>2013-04-18T14:36:24+02:00</lastmod>
+        <lastmod>2013-04-23T14:19:04+02:00</lastmod>
     </url>
     <url>
         <loc>http://jeromeetienne.github.com/blog/robots.txt</loc>
