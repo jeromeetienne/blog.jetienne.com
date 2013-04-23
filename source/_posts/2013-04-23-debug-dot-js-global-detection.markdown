@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Debug.js: Globals Detection"
+title: "Debug.js: Automatic Globals Detection in Javascript"
 date: 2013-04-23 07:43
 comments: true
 published: true
@@ -201,7 +201,7 @@ such as
 how to reduce garbage collection via monitoring+object pooling,
 how to have private/public members in your javascript classes,
 or 
-strong type checking.
+strong type checking. 
 Additionaly, debug.js works real well when coupled with jsdoc information.
 Stay tuned.
 
