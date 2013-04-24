@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Jerome Etienne.js Blog]]></title>
-  <link href="http://jeromeetienne.github.com/atom.xml" rel="self"/>
-  <link href="http://jeromeetienne.github.com/"/>
-  <updated>2013-04-24T05:57:49+02:00</updated>
-  <id>http://jeromeetienne.github.com/</id>
+  <link href="http://blog.jetienne.com/atom.xml" rel="self"/>
+  <link href="http://blog.jetienne.com/"/>
+  <updated>2013-04-24T06:00:26+02:00</updated>
+  <id>http://blog.jetienne.com/</id>
   <author>
     <name><![CDATA[Jerome Etienne]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Debug.js: Automatic Globals Detection in Javascript]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2013/04/23/debug-dot-js-global-detection/"/>
+    <link href="http://blog.jetienne.com/blog/2013/04/23/debug-dot-js-global-detection/"/>
     <updated>2013-04-23T07:43:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2013/04/23/debug-dot-js-global-detection</id>
+    <id>http://blog.jetienne.com/blog/2013/04/23/debug-dot-js-global-detection</id>
     <content type="html"><![CDATA[<p>This post is about detecting global variables in javascript and eradicating them :)
 This is a first post about <a href="https://github.com/jeromeetienne/debug.js">debug.js</a>,
 a library to make javascript easier to debug.
@@ -243,9 +243,9 @@ Stay tuned.</p>
   
   <entry>
     <title type="html"><![CDATA[Debug.js: assertWhichStop.js]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2013/04/18/debug-dot-js-assertwhichstop-dot-js/"/>
+    <link href="http://blog.jetienne.com/blog/2013/04/18/debug-dot-js-assertwhichstop-dot-js/"/>
     <updated>2013-04-18T15:15:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2013/04/18/debug-dot-js-assertwhichstop-dot-js</id>
+    <id>http://blog.jetienne.com/blog/2013/04/18/debug-dot-js-assertwhichstop-dot-js</id>
     <content type="html"><![CDATA[<p>This is post presents <em>assertWhichStop.js</em>.
 <a href="https://github.com/jeromeetienne/debug.js/tree/master/src">assertWhichStop.js</a>
 is a simple library which provide an <code>assert()</code> which stops&#8230;
@@ -260,7 +260,7 @@ will make your assert stop even in your browser.</p>
 <p><a href="https://github.com/jeromeetienne/debug.js/tree/master/src">assertWhichStop.js</a>
 is a part of
 <a href="https://github.com/jeromeetienne/debug.js">debug.js</a> library,
-which we talked about in <a href="http://jeromeetienne.github.com/blog/categories/debugjs/">previous posts</a>.
+which we talked about in <a href="http://blog.jetienne.com/blog/categories/debugjs/">previous posts</a>.
 This post will explain why it is usefull to stop and how to use <em>assertWhichStop.js</em>.
 This library is
 <a href="https://github.com/jeromeetienne/debug.js/blob/master/src/assertwhichstop.js">very small</a>
@@ -401,9 +401,9 @@ All that in a backward compatible fashion&#8230; rather cool if you ask me :)</p
   
   <entry>
     <title type="html"><![CDATA[console4Worker - console API for worker]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/09/12/console4worker/"/>
+    <link href="http://blog.jetienne.com/blog/2011/09/12/console4worker/"/>
     <updated>2011-09-12T09:17:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/09/12/console4worker</id>
+    <id>http://blog.jetienne.com/blog/2011/09/12/console4worker</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/jeromeetienne/console4Worker">console4Worker</a> is console API for WebWorkers.
 WebWorkers are hard to debug. On top of that, <a href="http://getfirebug.com/wiki/index.php/Console_API">console API</a>
 is unavailable
@@ -512,9 +512,9 @@ If you hit bugs, fill issues on github. Feel free to fork, modify and have fun w
   
   <entry>
     <title type="html"><![CDATA[Pacmaze Update]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/09/10/pacmaze-update/"/>
+    <link href="http://blog.jetienne.com/blog/2011/09/10/pacmaze-update/"/>
     <updated>2011-09-10T12:12:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/09/10/pacmaze-update</id>
+    <id>http://blog.jetienne.com/blog/2011/09/10/pacmaze-update</id>
     <content type="html"><![CDATA[<p>Pacmaze just got an <a href="http://pacmaze.com">update</a>.
 it was long overdue, i admit, other matters distracted me from it.
 It is good to be back on it tho.
@@ -563,9 +563,9 @@ and the average fps is close to 45fps.</p>
   
   <entry>
     <title type="html"><![CDATA[MicroCache.js - Cache Micro Library]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/09/05/microcache.js/"/>
+    <link href="http://blog.jetienne.com/blog/2011/09/05/microcache.js/"/>
     <updated>2011-09-05T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/09/05/microcache.js</id>
+    <id>http://blog.jetienne.com/blog/2011/09/05/microcache.js</id>
     <content type="html"><![CDATA[<p><strong>microcache.js</strong> is a micro library to handle in-memory cache. It is less than
 20 lines and works in node and browser.
 It is available on github <a href='https://github.com/jeromeetienne/microcache.js'>here</a>
@@ -661,9 +661,9 @@ key to identify it.</p>
   
   <entry>
     <title type="html"><![CDATA[GoWithTheFlow.js - async flow control with a zen touch]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch/"/>
+    <link href="http://blog.jetienne.com/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch/"/>
     <updated>2011-07-17T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch</id>
+    <id>http://blog.jetienne.com/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch</id>
     <content type="html"><![CDATA[<p>GoWithTheFlow.js is a javascript asynchronous flow-control micro library which works <strong>in
 node.js and in browser</strong>. It allow to control how your
 asynchronous code is executed, sequentially or in parallel.
@@ -792,9 +792,9 @@ Feel free to fork, modify and have fun with it :)</p>
   
   <entry>
     <title type="html"><![CDATA[Javascript Class Inheritance ala vapor.js in 3 lines]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/07/10/javascript-class-inheritance-ala-vaporjs-in-3-lines/"/>
+    <link href="http://blog.jetienne.com/blog/2011/07/10/javascript-class-inheritance-ala-vaporjs-in-3-lines/"/>
     <updated>2011-07-10T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/07/10/javascript-class-inheritance-ala-vaporjs-in-3-lines</id>
+    <id>http://blog.jetienne.com/blog/2011/07/10/javascript-class-inheritance-ala-vaporjs-in-3-lines</id>
     <content type="html"><![CDATA[<p>This post describes a standalone way to add class inheritance in your javascript code.
 We will do that ala <a href="https://github.com/madrobby/vapor.js">vapor.js</a>, so no
 dependancy or external framework. A vaporjs inheritance is only 3 lines!</p>
@@ -873,9 +873,9 @@ semantic for <em>instanceOf</em>.</p>
   
   <entry>
     <title type="html"><![CDATA[Parisjs 7 slides]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/05/26/Parisjs-7-slides/"/>
+    <link href="http://blog.jetienne.com/blog/2011/05/26/Parisjs-7-slides/"/>
     <updated>2011-05-26T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/05/26/Parisjs-7-slides</id>
+    <id>http://blog.jetienne.com/blog/2011/05/26/Parisjs-7-slides</id>
     <content type="html"><![CDATA[<p><a href="http://parisjs.org">parisjs #7</a> was fun as always. I did a flash talk
 on <a href="https://github.com/jeromeetienne/shorttag.js">shorttag.js</a> and presented what
 i did on <a href="http://pacmaze.com">pacmaze</a> <a href="http://buddymaze.com">experiment</a> this month. Here
@@ -892,9 +892,9 @@ are the slides i used.</p>
   
   <entry>
     <title type="html"><![CDATA[Webgl London Meeting]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/05/25/Webgl-london-meeting/"/>
+    <link href="http://blog.jetienne.com/blog/2011/05/25/Webgl-london-meeting/"/>
     <updated>2011-05-25T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/05/25/Webgl-london-meeting</id>
+    <id>http://blog.jetienne.com/blog/2011/05/25/Webgl-london-meeting</id>
     <content type="html"><![CDATA[<p>Yesterday, the first london webgl meeting happened!
 people interested in webgl all in a same place and time, it was nice.
 see reports <a href="http://learningwebgl.com/blog/?p=3770">here</a>
@@ -920,9 +920,9 @@ audience :) reccursive gamification ftw!</p>
   
   <entry>
     <title type="html"><![CDATA[cancelRequestAnimationFrame() For Paul Irish requestAnimationFrame()]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/05/18/cancelRequestAnimFrame-for-paul-irish-requestAnimFrame/"/>
+    <link href="http://blog.jetienne.com/blog/2011/05/18/cancelRequestAnimFrame-for-paul-irish-requestAnimFrame/"/>
     <updated>2011-05-18T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/05/18/cancelRequestAnimFrame-for-paul-irish-requestAnimFrame</id>
+    <id>http://blog.jetienne.com/blog/2011/05/18/cancelRequestAnimFrame-for-paul-irish-requestAnimFrame</id>
     <content type="html"><![CDATA[<p><a href="http://paulirish.com/">Paul Irish</a> recently
 wrote <a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/">requestAnimationFrame for smart animating</a>.
 It is a polyfill so people can start use requestAnimationFrame() today and still be future proof.</p>
@@ -1034,12 +1034,12 @@ progress, and <a href="http://dev.chromium.org/developers/design-documents/reque
   
   <entry>
     <title type="html"><![CDATA[a trip to html5 and game - talk at parisjs]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/04/28/trip-to-html5-and-game-talk-at-parisjs-6/"/>
+    <link href="http://blog.jetienne.com/blog/2011/04/28/trip-to-html5-and-game-talk-at-parisjs-6/"/>
     <updated>2011-04-28T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/04/28/trip-to-html5-and-game-talk-at-parisjs-6</id>
+    <id>http://blog.jetienne.com/blog/2011/04/28/trip-to-html5-and-game-talk-at-parisjs-6</id>
     <content type="html"><![CDATA[<p>Yesterday i was at <a href="http://parisjs.org">parisjs</a> talking about html5 and game.
-I presented games from the <a href="http://jeromeetienne.github.com/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html">Pacmaze</a>
-<a href="http://jeromeetienne.github.com/2011/04/13/pacmaze-v1-release.html">Experiment</a> and talked about html5 technology in it.
+I presented games from the <a href="http://blog.jetienne.com/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html">Pacmaze</a>
+<a href="http://blog.jetienne.com/2011/04/13/pacmaze-v1-release.html">Experiment</a> and talked about html5 technology in it.
 Here are the slides i used.</p>
 
 <center>
@@ -1051,15 +1051,15 @@ Here are the slides i used.</p>
   
   <entry>
     <title type="html"><![CDATA[Buddymaze - First Personn Shooter in WebGL]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/04/28/buddymaze-fps-in-webgl/"/>
+    <link href="http://blog.jetienne.com/blog/2011/04/28/buddymaze-fps-in-webgl/"/>
     <updated>2011-04-28T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/04/28/buddymaze-fps-in-webgl</id>
+    <id>http://blog.jetienne.com/blog/2011/04/28/buddymaze-fps-in-webgl</id>
     <content type="html"><![CDATA[<p><a href="http://buddymaze.com">Buddymaze</a> is a clone of
 <a href="http://en.wikipedia.org/wiki/MIDI_Maze">midimaze</a>, an old game
 where people shoot at each other.
 You can find it as <a href="http://buddymaze.com">standalone webapp</a> or in
 <a href="https://chrome.google.com/webstore/detail/hpplggoofiffhijgnmnbgcppfafcmljp">chrome web store</a>.
-This is the second game in the <a href="http://jeromeetienne.github.com/2011/04/13/pacmaze-v1-release.html">pacmaze experiment announced here</a></a>,
+This is the second game in the <a href="http://blog.jetienne.com/2011/04/13/pacmaze-v1-release.html">pacmaze experiment announced here</a></a>,
 the first one being <a href="http://pacmaze.com">pacmaze</a>.
 This version is rather rought, i will keep you updated. Considere it as a early beta.</p>
 
@@ -1074,11 +1074,11 @@ This version is rather rought, i will keep you updated. Considere it as a early 
   
   <entry>
     <title type="html"><![CDATA[Pacmaze v2 - Event More WebGL in Pacman]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman/"/>
+    <link href="http://blog.jetienne.com/blog/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman/"/>
     <updated>2011-04-20T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman</id>
+    <id>http://blog.jetienne.com/blog/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman</id>
     <content type="html"><![CDATA[<p><a href='http://pacmaze.com' target='_blank'>Pacmaze</a> v2 is the second version of pacmaze
-in the <a href='http://jeromeetienne.github.com/2011/04/13/pacmaze-v1-release.html'>pacmaze experiment announced here</a>.</p>
+in the <a href='http://blog.jetienne.com/2011/04/13/pacmaze-v1-release.html'>pacmaze experiment announced here</a>.</p>
 
 <p>Compared to <a href='http://pacmaze1.jetienne.com' target='_blank'>pacmaze v1</a>, it provides <strong>much nicer 3D effects</strong> with
 lot of camera moves. Use <em>pageUp/pageDown</em> or <em>C/V</em> keys to change the camera positions. It is a little easier
@@ -1091,7 +1091,7 @@ with a alert(), couch :) Show, dont tell, here is the screencast</p>
 
 
 <p>Other improvements were done this week, but they were either not yet ready or not visible on the screen&#8230;
-According to <em>pacmaze experiment</em> <a href='http://jeromeetienne.github.com/2011/04/13/pacmaze-v1-release.html'>schedule</a>, i should
+According to <em>pacmaze experiment</em> <a href='http://blog.jetienne.com/2011/04/13/pacmaze-v1-release.html'>schedule</a>, i should
 release a new game every 2 weeks, so another game is due next wednesday.
 <a href='http://pacmaze.com' target='_blank'>Pacmaze</a> v2 is just an improvement of last week
 release.</p>
@@ -1108,9 +1108,9 @@ You can find it as <a href="http://pacmaze.com">standalone webapp</a> or in
   
   <entry>
     <title type="html"><![CDATA[wget thinks github.com is a threat]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/04/15/wget-thinks-github.com-is-a-threat/"/>
+    <link href="http://blog.jetienne.com/blog/2011/04/15/wget-thinks-github.com-is-a-threat/"/>
     <updated>2011-04-15T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/04/15/wget-thinks-github.com-is-a-threat</id>
+    <id>http://blog.jetienne.com/blog/2011/04/15/wget-thinks-github.com-is-a-threat</id>
     <content type="html"><![CDATA[<p>This is just a little post on a oddity. As a coder, i use <a href="http://github.com">github</a>
 and <a href="http://www.gnu.org/software/wget/">wget</a> everyday or close. When i do, i
 see this message.</p>
@@ -1153,9 +1153,9 @@ as a <code>symptom of communication issue</code> in the opensource community.</p
   
   <entry>
     <title type="html"><![CDATA[jquery.acewidget - a jQuery plugin to easily embed ace]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/04/15/jquery.acewidget-a-jquery-plugin-to-easily-embed-ace/"/>
+    <link href="http://blog.jetienne.com/blog/2011/04/15/jquery.acewidget-a-jquery-plugin-to-easily-embed-ace/"/>
     <updated>2011-04-15T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/04/15/jquery.acewidget-a-jquery-plugin-to-easily-embed-ace</id>
+    <id>http://blog.jetienne.com/blog/2011/04/15/jquery.acewidget-a-jquery-plugin-to-easily-embed-ace</id>
     <content type="html"><![CDATA[<h1>AceWidget jQuery Plugin</h1>
 
 <p><a href="https://github.com/jeromeetienne/acewidget/tree/master/contrib/jquery.acewidget">jquery.acewidget.js</a> is a
@@ -1234,9 +1234,9 @@ It is <a href="http://labs.omniti.com/labs/jsend/wiki">jsend compatible</a>.</p>
   
   <entry>
     <title type="html"><![CDATA[Pacmaze V1 - a Pacman in WebGL]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/04/13/pacmaze-v1-release/"/>
+    <link href="http://blog.jetienne.com/blog/2011/04/13/pacmaze-v1-release/"/>
     <updated>2011-04-13T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/04/13/pacmaze-v1-release</id>
+    <id>http://blog.jetienne.com/blog/2011/04/13/pacmaze-v1-release</id>
     <content type="html"><![CDATA[<h2>tl;dr;</h2>
 
 <p>Pacmaze v1 is a pacman in WebGL. You are a pacman trapped in a maze.
@@ -1273,7 +1273,7 @@ is part of the challenge. We will see how it goes along the road.</p>
 <a href="http://en.wikipedia.org/wiki/First-person_shooter#Multiplayer">multi-player first person shooter</a>
 using html5 power with <a href="http://en.wikipedia.org/wiki/WebGL">WebGL</a>
 and <a href="http://en.wikipedia.org/wiki/WebSockets">WebSockets</a>.
-It started on 14 march 2011 with a <a href="http://jeromeetienne.github.com/Pacmaze%20Experiment/2011/03/21/pacmaze-v0-origin.html">36h code rush</a>.
+It started on 14 march 2011 with a <a href="http://blog.jetienne.com/Pacmaze%20Experiment/2011/03/21/pacmaze-v0-origin.html">36h code rush</a>.
 It was a <a href="http://en.wikipedia.org/wiki/Proof_of_concept">proof-of-concept</a>.
 Its purpose was to know if the needed technology was available on today browsers.
 <em>Good news! it is</em> :)</p>
@@ -1293,9 +1293,9 @@ you got <a href="http://pacmaze.com">Pacmaze v1</a>. have fun :)</p>
   
   <entry>
     <title type="html"><![CDATA[jquery.qrcode - jquery plugin for pure browser qrcode generation]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/04/07/jquery-qrcode/"/>
+    <link href="http://blog.jetienne.com/blog/2011/04/07/jquery-qrcode/"/>
     <updated>2011-04-07T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/04/07/jquery-qrcode</id>
+    <id>http://blog.jetienne.com/blog/2011/04/07/jquery-qrcode</id>
     <content type="html"><![CDATA[<p><a href='http://jeromeetienne.github.com/jquery-qrcode'>jquery.qrcode.js</a>
 is <em>jquery plugin for a pure browser qrcode generation</em>.
 It allow you to easily add qrcode to your webpages.
@@ -1342,9 +1342,9 @@ Feel free to fork, modify and have fun with it :)</p>
   
   <entry>
     <title type="html"><![CDATA[MicroEvent.js - micro event emitter in 20 lines]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/03/22/microeventjs/"/>
+    <link href="http://blog.jetienne.com/blog/2011/03/22/microeventjs/"/>
     <updated>2011-03-22T00:00:00+01:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/03/22/microeventjs</id>
+    <id>http://blog.jetienne.com/blog/2011/03/22/microeventjs</id>
     <content type="html"><![CDATA[<p><em>MicroEvent.js</em> is a event emitter library which provides the
 <a href="http://en.wikipedia.org/wiki/Observer_pattern">observer pattern</a> to javascript objects.
 It works on node.js and browser. It is a single .js file containing
@@ -1457,9 +1457,9 @@ Feel free to fork, modify and have fun with it :)</p>
   
   <entry>
     <title type="html"><![CDATA[Pacmaze V0 - First multi-player first person shooter on html5]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/03/21/pacmaze-v0-origin/"/>
+    <link href="http://blog.jetienne.com/blog/2011/03/21/pacmaze-v0-origin/"/>
     <updated>2011-03-21T00:00:00+01:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/03/21/pacmaze-v0-origin</id>
+    <id>http://blog.jetienne.com/blog/2011/03/21/pacmaze-v0-origin</id>
     <content type="html"><![CDATA[<p>Last week, i started to do gamedev.
 During a code rush, i did pacmaze v0 in <em>36h!!!</em> Then i slept a lot and published it as
 <a href="https://chrome.google.com/webstore/detail/ggeliggglgbhachnoljoieibaneidchi">chrome application</a>
@@ -1480,9 +1480,9 @@ had fun writing it :)</p>
   
   <entry>
     <title type="html"><![CDATA[Initial Post]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/03/10/initial-post/"/>
+    <link href="http://blog.jetienne.com/blog/2011/03/10/initial-post/"/>
     <updated>2011-03-10T00:00:00+01:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/03/10/initial-post</id>
+    <id>http://blog.jetienne.com/blog/2011/03/10/initial-post</id>
     <content type="html"><![CDATA[<p>Trying to blog again. Here is my first post.</p>
 
 <p>Up to now i didnt considere my blogging seriously. My blog posts were kinda PostIts to me, some random texts

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: debugjs | Jerome Etienne.js Blog]]></title>
-  <link href="http://jeromeetienne.github.com/blog/categories/debugjs/atom.xml" rel="self"/>
-  <link href="http://jeromeetienne.github.com/"/>
-  <updated>2013-04-24T05:57:49+02:00</updated>
-  <id>http://jeromeetienne.github.com/</id>
+  <link href="http://blog.jetienne.com/blog/categories/debugjs/atom.xml" rel="self"/>
+  <link href="http://blog.jetienne.com/"/>
+  <updated>2013-04-24T06:00:26+02:00</updated>
+  <id>http://blog.jetienne.com/</id>
   <author>
     <name><![CDATA[Jerome Etienne]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Debug.js: Automatic Globals Detection in Javascript]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2013/04/23/debug-dot-js-global-detection/"/>
+    <link href="http://blog.jetienne.com/blog/2013/04/23/debug-dot-js-global-detection/"/>
     <updated>2013-04-23T07:43:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2013/04/23/debug-dot-js-global-detection</id>
+    <id>http://blog.jetienne.com/blog/2013/04/23/debug-dot-js-global-detection</id>
     <content type="html"><![CDATA[<p>This post is about detecting global variables in javascript and eradicating them :)
 This is a first post about <a href="https://github.com/jeromeetienne/debug.js">debug.js</a>,
 a library to make javascript easier to debug.
@@ -235,9 +235,9 @@ Stay tuned.</p>
   
   <entry>
     <title type="html"><![CDATA[Debug.js: assertWhichStop.js]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2013/04/18/debug-dot-js-assertwhichstop-dot-js/"/>
+    <link href="http://blog.jetienne.com/blog/2013/04/18/debug-dot-js-assertwhichstop-dot-js/"/>
     <updated>2013-04-18T15:15:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2013/04/18/debug-dot-js-assertwhichstop-dot-js</id>
+    <id>http://blog.jetienne.com/blog/2013/04/18/debug-dot-js-assertwhichstop-dot-js</id>
     <content type="html"><![CDATA[<p>This is post presents <em>assertWhichStop.js</em>.
 <a href="https://github.com/jeromeetienne/debug.js/tree/master/src">assertWhichStop.js</a>
 is a simple library which provide an <code>assert()</code> which stops...

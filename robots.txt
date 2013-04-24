@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://jeromeetienne.github.com/sitemap.xml 
+Sitemap: http://blog.jetienne.com/sitemap.xml 

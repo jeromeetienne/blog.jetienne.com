@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: webgl | Jerome Etienne.js Blog]]></title>
-  <link href="http://jeromeetienne.github.com/blog/categories/webgl/atom.xml" rel="self"/>
-  <link href="http://jeromeetienne.github.com/"/>
-  <updated>2013-04-24T05:57:49+02:00</updated>
-  <id>http://jeromeetienne.github.com/</id>
+  <link href="http://blog.jetienne.com/blog/categories/webgl/atom.xml" rel="self"/>
+  <link href="http://blog.jetienne.com/"/>
+  <updated>2013-04-24T06:00:26+02:00</updated>
+  <id>http://blog.jetienne.com/</id>
   <author>
     <name><![CDATA[Jerome Etienne]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Webgl London Meeting]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/05/25/Webgl-london-meeting/"/>
+    <link href="http://blog.jetienne.com/blog/2011/05/25/Webgl-london-meeting/"/>
     <updated>2011-05-25T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/05/25/Webgl-london-meeting</id>
+    <id>http://blog.jetienne.com/blog/2011/05/25/Webgl-london-meeting</id>
     <content type="html"><![CDATA[<p>Yesterday, the first london webgl meeting happened!
 people interested in webgl all in a same place and time, it was nice.
 see reports <a href="http://learningwebgl.com/blog/?p=3770">here</a>
@@ -43,9 +43,9 @@ audience :) reccursive gamification ftw!</p>
   
   <entry>
     <title type="html"><![CDATA[cancelRequestAnimationFrame() For Paul Irish requestAnimationFrame()]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/05/18/cancelRequestAnimFrame-for-paul-irish-requestAnimFrame/"/>
+    <link href="http://blog.jetienne.com/blog/2011/05/18/cancelRequestAnimFrame-for-paul-irish-requestAnimFrame/"/>
     <updated>2011-05-18T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/05/18/cancelRequestAnimFrame-for-paul-irish-requestAnimFrame</id>
+    <id>http://blog.jetienne.com/blog/2011/05/18/cancelRequestAnimFrame-for-paul-irish-requestAnimFrame</id>
     <content type="html"><![CDATA[<p><a href="http://paulirish.com/">Paul Irish</a> recently
 wrote <a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/">requestAnimationFrame for smart animating</a>.
 It is a polyfill so people can start use requestAnimationFrame() today and still be future proof.</p>
@@ -135,9 +135,9 @@ progress, and <a href="http://dev.chromium.org/developers/design-documents/reque
   
   <entry>
     <title type="html"><![CDATA[Buddymaze - First Personn Shooter in WebGL]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/04/28/buddymaze-fps-in-webgl/"/>
+    <link href="http://blog.jetienne.com/blog/2011/04/28/buddymaze-fps-in-webgl/"/>
     <updated>2011-04-28T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/04/28/buddymaze-fps-in-webgl</id>
+    <id>http://blog.jetienne.com/blog/2011/04/28/buddymaze-fps-in-webgl</id>
     <content type="html"><![CDATA[<p><a href="http://buddymaze.com">Buddymaze</a> is a clone of
 <a href="http://en.wikipedia.org/wiki/MIDI_Maze">midimaze</a>, an old game
 where people shoot at each other.
@@ -158,11 +158,11 @@ This version is rather rought, i will keep you updated. Considere it as a early 
   
   <entry>
     <title type="html"><![CDATA[Pacmaze v2 - Event More WebGL in Pacman]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman/"/>
+    <link href="http://blog.jetienne.com/blog/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman/"/>
     <updated>2011-04-20T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman</id>
+    <id>http://blog.jetienne.com/blog/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman</id>
     <content type="html"><![CDATA[<p><a href='http://pacmaze.com' target='_blank'>Pacmaze</a> v2 is the second version of pacmaze
-in the <a href='http://jeromeetienne.github.com/2011/04/13/pacmaze-v1-release.html'>pacmaze experiment announced here</a>.</p>
+in the <a href='http://blog.jetienne.com/2011/04/13/pacmaze-v1-release.html'>pacmaze experiment announced here</a>.</p>
 
 <p>Compared to <a href='http://pacmaze1.jetienne.com' target='_blank'>pacmaze v1</a>, it provides <strong>much nicer 3D effects</strong> with
 lot of camera moves. Use <em>pageUp/pageDown</em> or <em>C/V</em> keys to change the camera positions. It is a little easier
@@ -175,7 +175,7 @@ with a alert(), couch :) Show, dont tell, here is the screencast</p>
 
 
 <p>Other improvements were done this week, but they were either not yet ready or not visible on the screen...
-According to <em>pacmaze experiment</em> <a href='http://jeromeetienne.github.com/2011/04/13/pacmaze-v1-release.html'>schedule</a>, i should
+According to <em>pacmaze experiment</em> <a href='http://blog.jetienne.com/2011/04/13/pacmaze-v1-release.html'>schedule</a>, i should
 release a new game every 2 weeks, so another game is due next wednesday.
 <a href='http://pacmaze.com' target='_blank'>Pacmaze</a> v2 is just an improvement of last week
 release.</p>
@@ -192,9 +192,9 @@ You can find it as <a href="http://pacmaze.com">standalone webapp</a> or in
   
   <entry>
     <title type="html"><![CDATA[Pacmaze V1 - a Pacman in WebGL]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/04/13/pacmaze-v1-release/"/>
+    <link href="http://blog.jetienne.com/blog/2011/04/13/pacmaze-v1-release/"/>
     <updated>2011-04-13T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/04/13/pacmaze-v1-release</id>
+    <id>http://blog.jetienne.com/blog/2011/04/13/pacmaze-v1-release</id>
     <content type="html"><![CDATA[<h2>tl;dr;</h2>
 
 <p>Pacmaze v1 is a pacman in WebGL. You are a pacman trapped in a maze.

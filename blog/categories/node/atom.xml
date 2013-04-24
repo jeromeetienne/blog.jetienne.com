@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: node | Jerome Etienne.js Blog]]></title>
-  <link href="http://jeromeetienne.github.com/blog/categories/node/atom.xml" rel="self"/>
-  <link href="http://jeromeetienne.github.com/"/>
-  <updated>2013-04-24T05:57:49+02:00</updated>
-  <id>http://jeromeetienne.github.com/</id>
+  <link href="http://blog.jetienne.com/blog/categories/node/atom.xml" rel="self"/>
+  <link href="http://blog.jetienne.com/"/>
+  <updated>2013-04-24T06:00:26+02:00</updated>
+  <id>http://blog.jetienne.com/</id>
   <author>
     <name><![CDATA[Jerome Etienne]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[MicroCache.js - Cache Micro Library]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/09/05/microcache.js/"/>
+    <link href="http://blog.jetienne.com/blog/2011/09/05/microcache.js/"/>
     <updated>2011-09-05T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/09/05/microcache.js</id>
+    <id>http://blog.jetienne.com/blog/2011/09/05/microcache.js</id>
     <content type="html"><![CDATA[<p><strong>microcache.js</strong> is a micro library to handle in-memory cache. It is less than
 20 lines and works in node and browser.
 It is available on github <a href='https://github.com/jeromeetienne/microcache.js'>here</a>
@@ -127,9 +127,9 @@ key to identify it.</p>
   
   <entry>
     <title type="html"><![CDATA[GoWithTheFlow.js - async flow control with a zen touch]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch/"/>
+    <link href="http://blog.jetienne.com/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch/"/>
     <updated>2011-07-17T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch</id>
+    <id>http://blog.jetienne.com/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch</id>
     <content type="html"><![CDATA[<p>GoWithTheFlow.js is a javascript asynchronous flow-control micro library which works <strong>in
 node.js and in browser</strong>. It allow to control how your
 asynchronous code is executed, sequentially or in parallel.
@@ -239,9 +239,9 @@ Feel free to fork, modify and have fun with it :)</p>
   
   <entry>
     <title type="html"><![CDATA[MicroEvent.js - micro event emitter in 20 lines]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/03/22/microeventjs/"/>
+    <link href="http://blog.jetienne.com/blog/2011/03/22/microeventjs/"/>
     <updated>2011-03-22T00:00:00+01:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/03/22/microeventjs</id>
+    <id>http://blog.jetienne.com/blog/2011/03/22/microeventjs</id>
     <content type="html"><![CDATA[<p><em>MicroEvent.js</em> is a event emitter library which provides the
 <a href="http://en.wikipedia.org/wiki/Observer_pattern">observer pattern</a> to javascript objects.
 It works on node.js and browser. It is a single .js file containing

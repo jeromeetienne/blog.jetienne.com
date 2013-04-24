@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: events | Jerome Etienne.js Blog]]></title>
-  <link href="http://jeromeetienne.github.com/blog/categories/events/atom.xml" rel="self"/>
-  <link href="http://jeromeetienne.github.com/"/>
-  <updated>2013-04-24T05:57:49+02:00</updated>
-  <id>http://jeromeetienne.github.com/</id>
+  <link href="http://blog.jetienne.com/blog/categories/events/atom.xml" rel="self"/>
+  <link href="http://blog.jetienne.com/"/>
+  <updated>2013-04-24T06:00:26+02:00</updated>
+  <id>http://blog.jetienne.com/</id>
   <author>
     <name><![CDATA[Jerome Etienne]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Parisjs 7 slides]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/05/26/Parisjs-7-slides/"/>
+    <link href="http://blog.jetienne.com/blog/2011/05/26/Parisjs-7-slides/"/>
     <updated>2011-05-26T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/05/26/Parisjs-7-slides</id>
+    <id>http://blog.jetienne.com/blog/2011/05/26/Parisjs-7-slides</id>
     <content type="html"><![CDATA[<p><a href="http://parisjs.org">parisjs #7</a> was fun as always. I did a flash talk
 on <a href="https://github.com/jeromeetienne/shorttag.js">shorttag.js</a> and presented what
 i did on <a href="http://pacmaze.com">pacmaze</a> <a href="http://buddymaze.com">experiment</a> this month. Here
@@ -34,9 +34,9 @@ are the slides i used.</p>
   
   <entry>
     <title type="html"><![CDATA[Webgl London Meeting]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/05/25/Webgl-london-meeting/"/>
+    <link href="http://blog.jetienne.com/blog/2011/05/25/Webgl-london-meeting/"/>
     <updated>2011-05-25T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/05/25/Webgl-london-meeting</id>
+    <id>http://blog.jetienne.com/blog/2011/05/25/Webgl-london-meeting</id>
     <content type="html"><![CDATA[<p>Yesterday, the first london webgl meeting happened!
 people interested in webgl all in a same place and time, it was nice.
 see reports <a href="http://learningwebgl.com/blog/?p=3770">here</a>
@@ -62,9 +62,9 @@ audience :) reccursive gamification ftw!</p>
   
   <entry>
     <title type="html"><![CDATA[a trip to html5 and game - talk at parisjs]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/04/28/trip-to-html5-and-game-talk-at-parisjs-6/"/>
+    <link href="http://blog.jetienne.com/blog/2011/04/28/trip-to-html5-and-game-talk-at-parisjs-6/"/>
     <updated>2011-04-28T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/04/28/trip-to-html5-and-game-talk-at-parisjs-6</id>
+    <id>http://blog.jetienne.com/blog/2011/04/28/trip-to-html5-and-game-talk-at-parisjs-6</id>
     <content type="html"><![CDATA[<p>Yesterday i was at <a href="http://parisjs.org">parisjs</a> talking about html5 and game.
 I presented games from the <a href="/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html">Pacmaze</a>
 <a href="/2011/04/13/pacmaze-v1-release.html">Experiment</a> and talked about html5 technology in it.

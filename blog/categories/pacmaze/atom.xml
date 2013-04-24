@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: pacmaze | Jerome Etienne.js Blog]]></title>
-  <link href="http://jeromeetienne.github.com/blog/categories/pacmaze/atom.xml" rel="self"/>
-  <link href="http://jeromeetienne.github.com/"/>
-  <updated>2013-04-24T05:57:49+02:00</updated>
-  <id>http://jeromeetienne.github.com/</id>
+  <link href="http://blog.jetienne.com/blog/categories/pacmaze/atom.xml" rel="self"/>
+  <link href="http://blog.jetienne.com/"/>
+  <updated>2013-04-24T06:00:26+02:00</updated>
+  <id>http://blog.jetienne.com/</id>
   <author>
     <name><![CDATA[Jerome Etienne]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Pacmaze Update]]></title>
-    <link href="http://jeromeetienne.github.com/blog/2011/09/10/pacmaze-update/"/>
+    <link href="http://blog.jetienne.com/blog/2011/09/10/pacmaze-update/"/>
     <updated>2011-09-10T12:12:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/2011/09/10/pacmaze-update</id>
+    <id>http://blog.jetienne.com/blog/2011/09/10/pacmaze-update</id>
     <content type="html"><![CDATA[<p>Pacmaze just got an <a href="http://pacmaze.com">update</a>.
 it was long overdue, i admit, other matters distracted me from it.
 It is good to be back on it tho.
