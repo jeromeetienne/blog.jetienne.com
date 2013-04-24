@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: flowcontrol | Jerome Etienne.js Blog]]></title>
-  <link href="http://jeromeetienne.github.com/blog/blog/categories/flowcontrol/atom.xml" rel="self"/>
-  <link href="http://jeromeetienne.github.com/blog/"/>
-  <updated>2013-04-23T14:41:14+02:00</updated>
-  <id>http://jeromeetienne.github.com/blog/</id>
+  <link href="http://jeromeetienne.github.com/blog/categories/flowcontrol/atom.xml" rel="self"/>
+  <link href="http://jeromeetienne.github.com/"/>
+  <updated>2013-04-24T05:57:49+02:00</updated>
+  <id>http://jeromeetienne.github.com/</id>
   <author>
     <name><![CDATA[Jerome Etienne]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[GoWithTheFlow.js - async flow control with a zen touch]]></title>
-    <link href="http://jeromeetienne.github.com/blog/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch/"/>
+    <link href="http://jeromeetienne.github.com/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch/"/>
     <updated>2011-07-17T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch</id>
+    <id>http://jeromeetienne.github.com/blog/2011/07/17/gowiththeflow.js-async-flow-control-with-a-zen-touch</id>
     <content type="html"><![CDATA[<p>GoWithTheFlow.js is a javascript asynchronous flow-control micro library which works <strong>in
 node.js and in browser</strong>. It allow to control how your
 asynchronous code is executed, sequentially or in parallel.

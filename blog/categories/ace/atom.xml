@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ace | Jerome Etienne.js Blog]]></title>
-  <link href="http://jeromeetienne.github.com/blog/blog/categories/ace/atom.xml" rel="self"/>
-  <link href="http://jeromeetienne.github.com/blog/"/>
-  <updated>2013-04-23T14:41:14+02:00</updated>
-  <id>http://jeromeetienne.github.com/blog/</id>
+  <link href="http://jeromeetienne.github.com/blog/categories/ace/atom.xml" rel="self"/>
+  <link href="http://jeromeetienne.github.com/"/>
+  <updated>2013-04-24T05:57:49+02:00</updated>
+  <id>http://jeromeetienne.github.com/</id>
   <author>
     <name><![CDATA[Jerome Etienne]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[jquery.acewidget - a jQuery plugin to easily embed ace]]></title>
-    <link href="http://jeromeetienne.github.com/blog/blog/2011/04/15/jquery.acewidget-a-jquery-plugin-to-easily-embed-ace/"/>
+    <link href="http://jeromeetienne.github.com/blog/2011/04/15/jquery.acewidget-a-jquery-plugin-to-easily-embed-ace/"/>
     <updated>2011-04-15T00:00:00+02:00</updated>
-    <id>http://jeromeetienne.github.com/blog/blog/2011/04/15/jquery.acewidget-a-jquery-plugin-to-easily-embed-ace</id>
+    <id>http://jeromeetienne.github.com/blog/2011/04/15/jquery.acewidget-a-jquery-plugin-to-easily-embed-ace</id>
     <content type="html"><![CDATA[<h1>AceWidget jQuery Plugin</h1>
 
 <p><a href="https://github.com/jeromeetienne/acewidget/tree/master/contrib/jquery.acewidget">jquery.acewidget.js</a> is a
