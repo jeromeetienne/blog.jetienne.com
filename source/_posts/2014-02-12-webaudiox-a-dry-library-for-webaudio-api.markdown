@@ -3,18 +3,21 @@ layout: post
 title: "WebAudiox.js - a DRY library for Web Audio API"
 date: 2013-04-23 07:43
 comments: true
-published: true
+published: false
 categories: [webaudiox]
 ---
 
 [webaudiox.js](https://github.com/jeromeetienne/webaudiox)
 is a bunch of helpers for 
 [WebAudio API](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html).
-I wrote them a while back. Now i would like to make it the subject of a series to share. This post is the first.
+I wrote them a while back. 
+Now i would like to make a series of posts about it. This post is the first.
 I plan to publish one post per week explaining WebAudiox the marvels you can do with WebAudio API. 
 I hope we will enjoy ourself in the process :)
 
-**TODO** insert screencast here
+<iframe width="420" height="315" src="http://www.youtube.com/embed/3cSAu2mZHqU" frameborder="0" allowfullscreen></iframe>
+
+<!-- more -->
 
 ## What is a DRY library ?
 
@@ -46,7 +49,7 @@ followed by 2 basic helpers,
 Here is a simple example which  load a sound and play it.
 It initializes the AudioContext, downloads a sound with ```WebAudiox.loadBuffer()``` and play it with ```.start(0)```
 
-```
+```javascript
 // create WebAudio API context
 var context	= new AudioContext()
 
@@ -69,13 +72,13 @@ The easiest is to get
 [webaudiox.js](https://raw.github.com/jeromeetienne/webaudiox/master/build/webaudiox.js)
 in ```/build``` directory.
 
-```
+```html
  <script src='webaudiox.js'></script>
 ```
 
 [bower](http://bower.io/) is supported if you want. Just use
 
-```
+```bash
 bower install webaudiox
 ```
 
@@ -85,7 +88,7 @@ bower install webaudiox
 This helper does a [shim](http://en.wikipedia.org/wiki/Shim_\(computing\)) which handle 
 the vendor prefix, so you don't have to. Typically it contains code like 
 
-```
+```javascript
 window.AudioContext	= window.AudioContext || window.webkitAudioContext;
 ```
 
@@ -113,7 +116,7 @@ It shows a basic usage of this helper.
 
 ## Usage
 
-```
+```javascript
 WebAudiox.loadBuffer(context, url, function(buffer){
 	// notified when the url has been downloaded and the sound decoded.
 }, function(){
@@ -132,7 +135,7 @@ you can overload it to fit your need.
 here for an 
 [usage example](https://github.com/jeromeetienne/webaudiox/blob/master/lib/soundsbank.html).
 
-```
+```javascript
 // context is the webaudio API context
 // url is where to download the sound
 // buffer is the just loaded buffer
@@ -151,9 +154,9 @@ it useful to know is all your sounds as been loaded.
 So, now we know how to easily load sounds for web audio api.
 We can even schedule the download. We got rid of the interoperativity issues with the shim. Rather cool for a first post.
 Next post will be about
-[webaudiox.jsfx.js](),
-an helper to use [jsfx.js]() with Web Audio API.
-[jsfx.js]()
+[webaudiox.jsfx.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.jsfx.js),
+an helper to use [jsfx.js](www.egonelbre.com/js/jsfx/) with Web Audio API.
+[jsfx.js](www.egonelbre.com/js/jsfx/)
 is a very fun library which generate retro games sounds.
 The type of sounds heard in 80's aracade :)
 
