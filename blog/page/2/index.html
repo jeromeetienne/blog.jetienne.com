@@ -9,10 +9,9 @@
   <meta name="author" content="Jerome Etienne">
 
   
-  <meta name="description" content="Yesterday i was at parisjs talking about html5 and game.
-I presented games from the Pacmaze
-Experiment and talked about html5 technology in it.
-Here &hellip;">
+  <meta name="description" content="Paul Irish recently
+wrote requestAnimationFrame for smart animating.
+It is a polyfill so people can start use requestAnimationFrame() today and still &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +79,67 @@ Here &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/05/18/cancelRequestAnimFrame-for-paul-irish-requestAnimFrame/">cancelRequestAnimationFrame() for Paul Irish requestAnimationFrame()</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-18T00:00:00+02:00" pubdate data-updated="true">May 18<span>th</span>, 2011</time>
+        
+        
+          <div class="sharing" style='text-align: right;'>
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.jetienne.com/blog/page/2/index.html" data-via="jerome_etienne" data-counturl="http://blog.jetienne.com/blog/page/2/index.html" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://paulirish.com/">Paul Irish</a> recently
+wrote <a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/">requestAnimationFrame for smart animating</a>.
+It is a polyfill so people can start use requestAnimationFrame() today and still be future proof.</p>
+
+<p>This post is about its counterpart,
+<a href="http://webstuff.nfshost.com/anim-timing/Overview.html#cancelRequestAnimationFrame">cancelRequestAnimFrame()</a>.
+It cancels a <a href="http://webstuff.nfshost.com/anim-timing/Overview.html#requestAnimationFrame">requestAnimationFrame()</a>,
+like <a href="https://developer.mozilla.org/en/DOM/window.clearTimeout">clearTimeout</a>
+cancels a <a href="https://developer.mozilla.org/en/DOM/window.setTimeout">setTimeout</a>.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/05/18/cancelRequestAnimFrame-for-paul-irish-requestAnimFrame/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -721,61 +781,9 @@ had fun writing it :)</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/03/10/initial-post/">Initial Post</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-03-10T00:00:00+01:00" pubdate data-updated="true">Mar 10<span>th</span>, 2011</time>
-        
-        
-          <div class="sharing" style='text-align: right;'>
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.jetienne.com/blog/page/2/index.html" data-via="jerome_etienne" data-counturl="http://blog.jetienne.com/blog/page/2/index.html" >Tweet</a>
-  
-  
-  <div class="g-plusone" data-size="medium"></div>
-  
-  
-</div>
-
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Trying to blog again. Here is my first post.</p>
-
-<p>Up to now i didnt considere my blogging seriously. My blog posts were kinda PostIts to me, some random texts
-that i have written not to forget. So the targeted reader was me, and if it helps people outthere, all for
-the best, but not the primary purpose.</p>
-
-<p>This blog is using <a href="http://jekyllrb.com/">jekyll</a> and will be hosted at <a href="http://notes.jetienne.com">notes.jetienne.com</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/3/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -788,6 +796,10 @@ the best, but not the primary purpose.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/04/23/webaudiox-a-dry-library-for-webaudio-api/">WebAudiox.js - a DRY library for Web Audio API</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/04/23/debug-dot-js-global-detection/">Debug.js: Automatic Globals Detection in Javascript</a>
@@ -803,10 +815,6 @@ the best, but not the primary purpose.</p>
     
       <li class="post">
         <a href="/blog/2011/09/10/pacmaze-update/">Pacmaze Update</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/09/05/microcache.js/">MicroCache.js - Cache Micro Library</a>
       </li>
     
   </ul>

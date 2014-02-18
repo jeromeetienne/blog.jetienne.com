@@ -1,0 +1,520 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>WebAudiox.js - a DRY library for Web Audio API - Jerome Etienne.js Blog</title>
+  <meta name="author" content="Jerome Etienne">
+
+  
+  <meta name="description" content="Webaudiox.js
+is a bunch of helpers for
+WebAudio API.
+I wrote them a while back.
+Now I would like to make a series of posts about it. This post is the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.jetienne.com/blog/2013/04/23/webaudiox-a-dry-library-for-webaudio-api/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/blogjetiennecom" rel="alternate" title="Jerome Etienne.js Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-4037844-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Jerome Etienne.js Blog</a></h1>
+  
+    <h2>Around JavaScript, node.js, WebGL and cool HTML5 game stuff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/blogjetiennecom" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.jetienne.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">WebAudiox.js - a DRY Library for Web Audio API</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-23T07:43:00+02:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2013</time>
+        
+        
+          <div class="sharing" style='text-align: right;'>
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.jetienne.com/blog/2013/04/23/webaudiox-a-dry-library-for-webaudio-api/" data-via="jerome_etienne" data-counturl="http://blog.jetienne.com/blog/2013/04/23/webaudiox-a-dry-library-for-webaudio-api/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="https://github.com/jeromeetienne/webaudiox">Webaudiox.js</a>
+is a bunch of helpers for
+<a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html">WebAudio API</a>.
+I wrote them a while back.
+Now I would like to make a series of posts about it. This post is the first.
+I plan to publish one post per week explaining WebAudiox the marvels you can do with WebAudio API.
+I hope we will enjoy yourselves in the process :)</p>
+
+<iframe width="420" height="315" src="http://www.youtube.com/embed/3cSAu2mZHqU" frameborder="0" allowfullscreen></iframe>
+
+
+
+
+<!-- more -->
+
+
+<h2>What is a DRY library ?</h2>
+
+<p><a href="https://github.com/jeromeetienne/webaudiox">Webaudiox.js</a>
+is a DRY library, as in <strong>Dont Repeat Yourself</strong> library.
+It isn&#8217;t a library per se.
+I took the tasks I kept repeating when doing Web Audio API and put each of them in its own little helper file.
+WebAudiox has more than 10 of them.
+Each of them got a single pupose and try to do it well.
+Most of them are very small, 50 lines on average, so you can easily look at the code. Additionaly, they have no dependancies so it is easier and faster to understand.</p>
+
+<p>You can use any of them independantly.
+It makes it very light to include these in your own code.
+There is a
+<a href="https://github.com/jeromeetienne/webaudiox/build/">webaudiox build</a>
+which bundles them though.
+This is provided for convenience.
+It is just the concatenation of all the helpers.</p>
+
+<h2>Let&#8217;s get Started</h2>
+
+<p>We will start by a short intro of the library,
+followed by 2 basic helpers,
+<a href="https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.shim.js">webaudiox.shim.js</a> to handle vendor prefix for you
+, and
+<a href="https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.loadbuffer.js">webaudiox.loadbuffer.js</a> to load and decode sounds.</p>
+
+<p>Here is a simple example which loads a sound and plays it.
+It initializes the AudioContext, downloads a sound with <code>WebAudiox.loadBuffer()</code> and plays it with <code>.start(0)</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// create WebAudio API context</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">context</span>   <span class="o">=</span> <span class="k">new</span> <span class="nx">AudioContext</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// load a sound and play it immediatly</span>
+</span><span class='line'><span class="nx">WebAudiox</span><span class="p">.</span><span class="nx">loadBuffer</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="s1">&#39;sound.wav&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">buffer</span><span class="p">){</span>
+</span><span class='line'>      <span class="c1">// init AudioBufferSourceNode</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">source</span>  <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createBufferSource</span><span class="p">();</span>
+</span><span class='line'>      <span class="nx">source</span><span class="p">.</span><span class="nx">buffer</span>    <span class="o">=</span> <span class="nx">buffer</span>
+</span><span class='line'>      <span class="nx">source</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nx">destination</span><span class="p">)</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="c1">// start the sound now</span>
+</span><span class='line'>      <span class="nx">source</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>How To Install It ?</h2>
+
+<p>You can download the build with a usual <code>&lt;script&gt;</code>.
+The easiest is to get
+<a href="https://raw.github.com/jeromeetienne/webaudiox/master/build/webaudiox.js">webaudiox.js</a>
+in <code>/build</code> directory.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'> <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&#39;webaudiox.js&#39;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://bower.io/">bower</a> is supported if you want. Just use</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bower install webaudiox
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>webaudiox.shim.js</h1>
+
+<p>This helper does a <a href="http://en.wikipedia.org/wiki/Shim_(computing)">shim</a> which handles
+the vendor prefix, so you don&#8217;t have to. Typically it contains code like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">AudioContext</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">AudioContext</span> <span class="o">||</span> <span class="nb">window</span><span class="p">.</span><span class="nx">webkitAudioContext</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Show Don&#8217;t Tell</h3>
+
+<ul>
+<li><a href="https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.shim.js">webaudiox.shim.js</a>
+the source itself.</li>
+<li><a href="http://jeromeetienne.github.io/webaudiox/examples/jsfx.html">examples/jsfx.html</a>
+[<a href="https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html">view source</a>] :
+It shows a basic usage of this helper.</li>
+</ul>
+
+
+<h1>webaudiox.loadbuffer.js</h1>
+
+<p>This helper loads sound.
+It is a function which loads the sound from an <code>url</code> and decodes it.</p>
+
+<h2>Show Don&#8217;t Tell</h2>
+
+<ul>
+<li><a href="https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.loadbuffer.js">webaudiox.loadbuffer.js</a>
+the source itself.</li>
+<li><a href="http://jeromeetienne.github.io/webaudiox/examples/lineout.html">examples/lineout.html</a>
+[<a href="https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html">view source</a>] :
+It shows a basic usage of this helper.</li>
+</ul>
+
+
+<h2>Usage</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">WebAudiox</span><span class="p">.</span><span class="nx">loadBuffer</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">buffer</span><span class="p">){</span>
+</span><span class='line'>  <span class="c1">// notified when the url has been downloaded and the sound decoded.</span>
+</span><span class='line'><span class="p">},</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="c1">// notified if an error occurs</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Scheduling Download</h2>
+
+<p>In real-life cases, like games, you want to be sure all your sounds
+are ready to play before the user starts playing.
+So here is a way to schedule your sound downloads simply.
+There is global onLoad callback <code>WebAudiox.loadBuffer.onLoad</code>
+This function is notified everytime .loadBuffer() load something.
+You can overload it to fit your need.
+Go here for an
+<a href="https://github.com/jeromeetienne/webaudiox/blob/master/lib/soundsbank.html">usage example</a>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// context is the webaudio API context</span>
+</span><span class='line'><span class="c1">// url is where to download the sound</span>
+</span><span class='line'><span class="c1">// buffer is the just loaded buffer</span>
+</span><span class='line'><span class="nx">WebAudiox</span><span class="p">.</span><span class="nx">loadBuffer</span><span class="p">.</span><span class="nx">onLoad</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="nx">buffer</span><span class="p">){</span>
+</span><span class='line'>  <span class="c1">// put your own stuff here </span>
+</span><span class='line'>  <span class="c1">// ... </span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Additionally there is <code>WebAudiox.loadBuffer.inProgressCount</code>.
+It is counter of all the .loadBuffer in progress.
+It is useful to know that all your sounds have been loaded.</p>
+
+<h1>Conclusion</h1>
+
+<p>So, now we know how to easily load sounds for web audio api.
+We can even schedule the download. We got rid of the interoperativity issues with the shim. Rather cool for a first post.
+Next post will be about
+<a href="https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.jsfx.js">webaudiox.jsfx.js</a>,
+a helper to use <a href="http://www.egonelbre.com/js/jsfx/">jsfx.js</a> with Web Audio API.
+<a href="http://www.egonelbre.com/js/jsfx/">jsfx.js</a>
+is a very fun library which generates retro games sounds.
+The type of sounds heard in 80&#8217;s arcades :)</p>
+
+<p>That&#8217;s all folk, have fun!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jerome Etienne</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-23T07:43:00+02:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/webaudiox/'>webaudiox</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing" style='text-align: right;'>
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.jetienne.com/blog/2013/04/23/webaudiox-a-dry-library-for-webaudio-api/" data-via="jerome_etienne" data-counturl="http://blog.jetienne.com/blog/2013/04/23/webaudiox-a-dry-library-for-webaudio-api/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/04/23/debug-dot-js-global-detection/" title="Previous Post: Debug.js: Automatic Globals Detection in Javascript">&laquo; Debug.js: Automatic Globals Detection in Javascript</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/04/23/webaudiox-a-dry-library-for-webaudio-api/">WebAudiox.js - a DRY library for Web Audio API</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/23/debug-dot-js-global-detection/">Debug.js: Automatic Globals Detection in Javascript</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/18/debug-dot-js-assertwhichstop-dot-js/">Debug.js: assertWhichStop.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/12/console4worker/">console4Worker - console API for worker</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/10/pacmaze-update/">Pacmaze Update</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jerome_etienne", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jerome_etienne" class="twitter-follow-button" data-show-count="false">Follow @jerome_etienne</a>
+  
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/jeromeetienne">@jeromeetienne</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jeromeetienne',
+            count: 2,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/102848659911729905069?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jerome Etienne -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'blogjetiennecom';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.jetienne.com/blog/2013/04/23/webaudiox-a-dry-library-for-webaudio-api/';
+        var disqus_url = 'http://blog.jetienne.com/blog/2013/04/23/webaudiox-a-dry-library-for-webaudio-api/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
