@@ -1,18 +1,18 @@
 ---
 layout: post
 title: "WebAudiox.js - a DRY library for Web Audio API"
-date: 2013-04-23 07:43
+date: 2014-02-18 07:43
 comments: true
-published: false
+published: true
 categories: [webaudiox]
 ---
 
 [Webaudiox.js](https://github.com/jeromeetienne/webaudiox)
-is a bunch of helpers for 
+is a bunch of helpers for
 [WebAudio API](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html).
-I wrote them a while back. 
+I wrote them a while back.
 Now I would like to make a series of posts about it. This post is the first.
-I plan to publish one post per week explaining WebAudiox the marvels you can do with WebAudio API. 
+I plan to publish one post per week explaining WebAudiox the marvels you can do with WebAudio API.
 I hope we will enjoy yourselves in the process :)
 
 <iframe width="420" height="315" src="http://www.youtube.com/embed/3cSAu2mZHqU" frameborder="0" allowfullscreen></iframe>
@@ -25,13 +25,13 @@ I hope we will enjoy yourselves in the process :)
 is a DRY library, as in **Dont Repeat Yourself** library.
 It isn't a library per se.
 I took the tasks I kept repeating when doing Web Audio API and put each of them in its own little helper file.
-WebAudiox has more than 10 of them. 
+WebAudiox has more than 10 of them.
 Each of them got a single pupose and try to do it well.
 Most of them are very small, 50 lines on average, so you can easily look at the code. Additionaly, they have no dependancies so it is easier and faster to understand.
 
 You can use any of them independantly.
 It makes it very light to include these in your own code.
-There is a 
+There is a
 [webaudiox build](https://github.com/jeromeetienne/webaudiox/build/)
 which bundles them though.
 This is provided for convenience.
@@ -40,8 +40,8 @@ It is just the concatenation of all the helpers.
 
 ## Let's get Started
 
-We will start by a short intro of the library, 
-followed by 2 basic helpers, 
+We will start by a short intro of the library,
+followed by 2 basic helpers,
 [webaudiox.shim.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.shim.js) to handle vendor prefix for you
 , and
 [webaudiox.loadbuffer.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.loadbuffer.js) to load and decode sounds.
@@ -59,7 +59,7 @@ WebAudiox.loadBuffer(context, 'sound.wav', function(buffer){
 		var source	= context.createBufferSource();
 		source.buffer	= buffer
 		source.connect(context.destination)
-		
+
 		// start the sound now
 		source.start(0);
 });
@@ -67,8 +67,8 @@ WebAudiox.loadBuffer(context, 'sound.wav', function(buffer){
 
 ## How To Install It ?
 
-You can download the build with a usual ```<script>```. 
-The easiest is to get 
+You can download the build with a usual ```<script>```.
+The easiest is to get
 [webaudiox.js](https://raw.github.com/jeromeetienne/webaudiox/master/build/webaudiox.js)
 in ```/build``` directory.
 
@@ -85,8 +85,8 @@ bower install webaudiox
 
 # webaudiox.shim.js
 
-This helper does a [shim](http://en.wikipedia.org/wiki/Shim_\(computing\)) which handles 
-the vendor prefix, so you don't have to. Typically it contains code like 
+This helper does a [shim](http://en.wikipedia.org/wiki/Shim_\(computing\)) which handles
+the vendor prefix, so you don't have to. Typically it contains code like
 
 ```javascript
 window.AudioContext	= window.AudioContext || window.webkitAudioContext;
@@ -102,7 +102,7 @@ It shows a basic usage of this helper.
 
 # webaudiox.loadbuffer.js
 
-This helper loads sound. 
+This helper loads sound.
 It is a function which loads the sound from an ```url``` and decodes it.
 
 ## Show Don't Tell
@@ -132,7 +132,7 @@ So here is a way to schedule your sound downloads simply.
 There is global onLoad callback ```WebAudiox.loadBuffer.onLoad```
 This function is notified everytime .loadBuffer() load something.
 You can overload it to fit your need.
-Go here for an 
+Go here for an
 [usage example](https://github.com/jeromeetienne/webaudiox/blob/master/lib/soundsbank.html).
 
 ```javascript
@@ -140,13 +140,13 @@ Go here for an
 // url is where to download the sound
 // buffer is the just loaded buffer
 WebAudiox.loadBuffer.onLoad = function(context, url, buffer){
-	// put your own stuff here	
-	// ... 
+	// put your own stuff here
+	// ...
 }
 ```
 
 Additionally there is ```WebAudiox.loadBuffer.inProgressCount```.
-It is counter of all the .loadBuffer in progress. 
+It is counter of all the .loadBuffer in progress.
 It is useful to know that all your sounds have been loaded.
 
 # Conclusion
@@ -161,4 +161,3 @@ is a very fun library which generates retro games sounds.
 The type of sounds heard in 80's arcades :)
 
 That's all folk, have fun!
-
