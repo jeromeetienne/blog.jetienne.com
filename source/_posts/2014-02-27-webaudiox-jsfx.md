@@ -20,7 +20,7 @@ with your Web Audio API games.
 
 <a href='http://jeromeetienne.github.io/webaudiox/examples/jsfx.html' target='_blank'><input type="button" value='Try Demo Now' style='font-size:400%;' /></a>
 
-<iframe width="420" height="315" src="http://www.youtube.com/embed/3cSAu2mZHqU" frameborder="0" allowfullscreen></iframe>
+<iframe width="420" height="315" src="http://www.youtube.com/embed/-Lo433Bk2RY" frameborder="0" allowfullscreen></iframe>
 
 <!-- more -->
 
