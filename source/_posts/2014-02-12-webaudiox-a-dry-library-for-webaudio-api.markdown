@@ -7,6 +7,9 @@ published: true
 categories: [webaudiox]
 ---
 
+**This post is part of a series about Webaudiox.js.
+[Check It Out](/blog/categories/webaudiox/)**
+
 [Webaudiox.js](https://github.com/jeromeetienne/webaudiox)
 is a bunch of helpers for
 [WebAudio API](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html).

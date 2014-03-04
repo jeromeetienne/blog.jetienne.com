@@ -7,6 +7,10 @@ published: true
 categories: [webaudiox]
 ---
 
+
+**This post is part of a series about Webaudiox.js.
+[Check It Out](/blog/categories/webaudiox/)**
+
 Last week we started talking about
 [webaudiox](https://github.com/jeromeetienne/webaudiox).
 In this
