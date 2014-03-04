@@ -1,0 +1,437 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>WebAudiox.jsfx.js - 8 bit procedural sound generation with Web Audio API - Jerome Etienne.js Blog</title>
+  <meta name="author" content="Jerome Etienne">
+
+  
+  <meta name="description" content="Last week we started talking about
+webaudiox.
+In this
+first post,
+we talked about the project and started to explain the helpers webaudiox.shim.js &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.jetienne.com/blog/2014/02/27/webaudiox-jsfx/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/blogjetiennecom" rel="alternate" title="Jerome Etienne.js Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-4037844-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Jerome Etienne.js Blog</a></h1>
+  
+    <h2>Around JavaScript, node.js, WebGL and cool HTML5 game stuff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/blogjetiennecom" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.jetienne.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">WebAudiox.jsfx.js - 8 Bit Procedural Sound Generation With Web Audio API</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-27T07:43:00+01:00" pubdate data-updated="true">Feb 27<span>th</span>, 2014</time>
+        
+        
+          <div class="sharing" style='text-align: right;'>
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.jetienne.com/blog/2014/02/27/webaudiox-jsfx/" data-via="jerome_etienne" data-counturl="http://blog.jetienne.com/blog/2014/02/27/webaudiox-jsfx/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Last week we started talking about
+<a href="https://github.com/jeromeetienne/webaudiox">webaudiox</a>.
+In this
+<a href="http://blog.jetienne.com/blog/2014/02/18/webaudiox-a-dry-library-for-webaudio-api/">first post</a>,
+we talked about the project and started to explain the helpers <code>webaudiox.shim.js</code>
+and <code>webaudiox.loadbuffer.js</code>.
+This week we are gonna focus on <code>webaudiox.jsfx.js</code>.
+This helper provides you an easy way to use
+<a href="http://www.egonelbre.com/js/jsfx/">jsfx.js</a>
+with your Web Audio API games.</p>
+
+<p><a href='http://jeromeetienne.github.io/webaudiox/examples/jsfx.html' target='_blank'><input type="button" value='Try Demo Now' style='font-size:400%;' /></a></p>
+
+<iframe width="420" height="315" src="http://www.youtube.com/embed/-Lo433Bk2RY" frameborder="0" allowfullscreen></iframe>
+
+
+
+
+<!-- more -->
+
+
+<h2>webaudiox.jsfx.js</h2>
+
+<p><a href="https://github.com/egonelbre/jsfx">jsfx.js</a>
+is a library to generate procedural sound, very 8-bit kindof sound.
+See <a href="http://www.egonelbre.com/js/jsfx/">jsfx demo page</a> for details on this fun library
+by <a href="https://twitter.com/egonelbre/">@egonelbre</a>.
+It is useful because you can generate lots of different sound easily without downloading
+anything.</p>
+
+<h4>Show Don&#8217;t Tell</h4>
+
+<ul>
+<li><a href="https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.jsfx.js">webaudiox.jsfx.js</a>
+the source itself.</li>
+<li><a href="http://jeromeetienne.github.io/webaudiox/examples/jsfx.html">examples/jsfx.html</a>
+[<a href="https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html">view source</a>] :
+It shows a basic usage of this helper</li>
+<li><a href="http://jeromeetienne.github.io/webaudiox/examples/jsfx-basic.html">examples/jsfx-basic.html</a>
+[<a href="https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx-basic.html">view source</a>] :
+It shows a basic usage of this helper</li>
+</ul>
+
+
+<h2>Show It Live</h2>
+
+<iframe width="100%" height="480" src="http://jeromeetienne.github.io/webaudiox/examples/jsfx.html" frameborder="0" allowfullscreen></iframe>
+
+
+<h4>How To Use It ?</h4>
+
+<p>Let&#8217;s see how to use it. First you create a
+<a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioContext-section">Audio Context</a> like this.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>var context  = new AudioContext()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you get the famous <code>lib</code> parameter from
+<a href="https://github.com/egonelbre/jsfx">jsfx</a>. You can generate some on its
+<a href="http://www.egonelbre.com/js/jsfx/">demo page</a>.
+From <code>lib</code>, you will generate a
+<a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioBuffer">Audio Buffer</a>
+.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">lib</span>        <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;square&quot;</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.4000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.3200</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.2780</span><span class="p">,</span><span class="mf">20.0000</span><span class="p">,</span><span class="mf">496.0000</span><span class="p">,</span><span class="mf">2400.0000</span><span class="p">,</span><span class="mf">0.4640</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0100</span><span class="p">,</span><span class="mf">0.0003</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0235</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">1.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">]</span>
+</span><span class='line'><span class="c1">// generate the audio buffer from jsfx.js lib</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">buffer</span>    <span class="o">=</span> <span class="nx">WebAudiox</span><span class="p">.</span><span class="nx">getBufferFromJsfx</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="nx">lib</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we are all ready to play a sound! So let&#8217;s do that.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">source</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createBufferSource</span><span class="p">()</span>
+</span><span class='line'><span class="nx">source</span><span class="p">.</span><span class="nx">buffer</span>  <span class="o">=</span> <span class="nx">buffer</span>
+</span><span class='line'><span class="nx">source</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nx">destination</span><span class="p">)</span>
+</span><span class='line'><span class="nx">source</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Conclusion</h2>
+
+<p>So now you can easily generate procedural 8bit sound for Web Audio API.
+<a href="https://github.com/egonelbre/jsfx">jsfx.js</a> is a very nice library with
+a retro theme that i love :)
+Somehow, it seems a bit strange to do retro sounds with a modern web audio api.
+So now you can play
+<a href="http://en.wikipedia.org/wiki/Nintendo_Entertainment_System">NES</a>
+kind of sound with the dopler and localisation of the webaudio api.
+Go For it!</p>
+
+<p>Next week, i will be talk about sound analysis and how your programm can get to
+know about what is being played.
+so we will talk about
+<a href="https://github.com/jeromeetienne/webaudiox#webaudioxbytetonormalizedfloat32arrayjs">webaudiox.analyser2canvas.js</a>
+and
+<a href="https://github.com/jeromeetienne/webaudiox#webaudioxanalyser2canvasjs">webaudiox.analyser2volume.js</a>.</p>
+
+<p>That&#8217;s all for today folks! Have Fun :)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jerome Etienne</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-27T07:43:00+01:00" pubdate data-updated="true">Feb 27<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/webaudiox/'>webaudiox</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing" style='text-align: right;'>
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.jetienne.com/blog/2014/02/27/webaudiox-jsfx/" data-via="jerome_etienne" data-counturl="http://blog.jetienne.com/blog/2014/02/27/webaudiox-jsfx/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/02/18/webaudiox-a-dry-library-for-webaudio-api/" title="Previous Post: WebAudiox.js - a DRY library for Web Audio API">&laquo; WebAudiox.js - a DRY library for Web Audio API</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/02/27/webaudiox-jsfx/">WebAudiox.jsfx.js - 8 bit procedural sound generation with Web Audio API</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/18/webaudiox-a-dry-library-for-webaudio-api/">WebAudiox.js - a DRY library for Web Audio API</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/23/debug-dot-js-global-detection/">Debug.js: Automatic Globals Detection in Javascript</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/18/debug-dot-js-assertwhichstop-dot-js/">Debug.js: assertWhichStop.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/12/console4worker/">console4Worker - console API for worker</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jerome_etienne", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jerome_etienne" class="twitter-follow-button" data-show-count="false">Follow @jerome_etienne</a>
+  
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/jeromeetienne">@jeromeetienne</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jeromeetienne',
+            count: 2,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/102848659911729905069?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jerome Etienne -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'blogjetiennecom';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.jetienne.com/blog/2014/02/27/webaudiox-jsfx/';
+        var disqus_url = 'http://blog.jetienne.com/blog/2014/02/27/webaudiox-jsfx/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

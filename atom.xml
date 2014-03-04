@@ -4,7 +4,7 @@
   <title><![CDATA[Jerome Etienne.js Blog]]></title>
   <link href="http://blog.jetienne.com/atom.xml" rel="self"/>
   <link href="http://blog.jetienne.com/"/>
-  <updated>2014-02-18T13:49:47+01:00</updated>
+  <updated>2014-03-04T13:58:24+01:00</updated>
   <id>http://blog.jetienne.com/</id>
   <author>
     <name><![CDATA[Jerome Etienne]]></name>
@@ -12,6 +12,120 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[WebAudiox.jsfx.js - 8 bit procedural sound generation with Web Audio API]]></title>
+    <link href="http://blog.jetienne.com/blog/2014/02/27/webaudiox-jsfx/"/>
+    <updated>2014-02-27T07:43:00+01:00</updated>
+    <id>http://blog.jetienne.com/blog/2014/02/27/webaudiox-jsfx</id>
+    <content type="html"><![CDATA[<p>Last week we started talking about
+<a href="https://github.com/jeromeetienne/webaudiox">webaudiox</a>.
+In this
+<a href="http://blog.jetienne.com/blog/2014/02/18/webaudiox-a-dry-library-for-webaudio-api/">first post</a>,
+we talked about the project and started to explain the helpers <code>webaudiox.shim.js</code>
+and <code>webaudiox.loadbuffer.js</code>.
+This week we are gonna focus on <code>webaudiox.jsfx.js</code>.
+This helper provides you an easy way to use
+<a href="http://www.egonelbre.com/js/jsfx/">jsfx.js</a>
+with your Web Audio API games.</p>
+
+<p><a href='http://jeromeetienne.github.io/webaudiox/examples/jsfx.html' target='_blank'><input type="button" value='Try Demo Now' style='font-size:400%;' /></a></p>
+
+<iframe width="420" height="315" src="http://www.youtube.com/embed/-Lo433Bk2RY" frameborder="0" allowfullscreen></iframe>
+
+
+
+
+<!-- more -->
+
+
+<h2>webaudiox.jsfx.js</h2>
+
+<p><a href="https://github.com/egonelbre/jsfx">jsfx.js</a>
+is a library to generate procedural sound, very 8-bit kindof sound.
+See <a href="http://www.egonelbre.com/js/jsfx/">jsfx demo page</a> for details on this fun library
+by <a href="https://twitter.com/egonelbre/">@egonelbre</a>.
+It is useful because you can generate lots of different sound easily without downloading
+anything.</p>
+
+<h4>Show Don&#8217;t Tell</h4>
+
+<ul>
+<li><a href="https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.jsfx.js">webaudiox.jsfx.js</a>
+the source itself.</li>
+<li><a href="http://jeromeetienne.github.io/webaudiox/examples/jsfx.html">examples/jsfx.html</a>
+[<a href="https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html">view source</a>] :
+It shows a basic usage of this helper</li>
+<li><a href="http://jeromeetienne.github.io/webaudiox/examples/jsfx-basic.html">examples/jsfx-basic.html</a>
+[<a href="https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx-basic.html">view source</a>] :
+It shows a basic usage of this helper</li>
+</ul>
+
+
+<h2>Show It Live</h2>
+
+<iframe width="100%" height="480" src="http://jeromeetienne.github.io/webaudiox/examples/jsfx.html" frameborder="0" allowfullscreen></iframe>
+
+
+<h4>How To Use It ?</h4>
+
+<p>Let&#8217;s see how to use it. First you create a
+<a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioContext-section">Audio Context</a> like this.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>var context  = new AudioContext()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you get the famous <code>lib</code> parameter from
+<a href="https://github.com/egonelbre/jsfx">jsfx</a>. You can generate some on its
+<a href="http://www.egonelbre.com/js/jsfx/">demo page</a>.
+From <code>lib</code>, you will generate a
+<a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioBuffer">Audio Buffer</a>
+.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">lib</span>        <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;square&quot;</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.4000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.3200</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.2780</span><span class="p">,</span><span class="mf">20.0000</span><span class="p">,</span><span class="mf">496.0000</span><span class="p">,</span><span class="mf">2400.0000</span><span class="p">,</span><span class="mf">0.4640</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0100</span><span class="p">,</span><span class="mf">0.0003</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0235</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">1.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">,</span><span class="mf">0.0000</span><span class="p">]</span>
+</span><span class='line'><span class="c1">// generate the audio buffer from jsfx.js lib</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">buffer</span>    <span class="o">=</span> <span class="nx">WebAudiox</span><span class="p">.</span><span class="nx">getBufferFromJsfx</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="nx">lib</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we are all ready to play a sound! So let&#8217;s do that.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">source</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createBufferSource</span><span class="p">()</span>
+</span><span class='line'><span class="nx">source</span><span class="p">.</span><span class="nx">buffer</span>  <span class="o">=</span> <span class="nx">buffer</span>
+</span><span class='line'><span class="nx">source</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nx">destination</span><span class="p">)</span>
+</span><span class='line'><span class="nx">source</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Conclusion</h2>
+
+<p>So now you can easily generate procedural 8bit sound for Web Audio API.
+<a href="https://github.com/egonelbre/jsfx">jsfx.js</a> is a very nice library with
+a retro theme that i love :)
+Somehow, it seems a bit strange to do retro sounds with a modern web audio api.
+So now you can play
+<a href="http://en.wikipedia.org/wiki/Nintendo_Entertainment_System">NES</a>
+kind of sound with the dopler and localisation of the webaudio api.
+Go For it!</p>
+
+<p>Next week, i will be talk about sound analysis and how your programm can get to
+know about what is being played.
+so we will talk about
+<a href="https://github.com/jeromeetienne/webaudiox#webaudioxbytetonormalizedfloat32arrayjs">webaudiox.analyser2canvas.js</a>
+and
+<a href="https://github.com/jeromeetienne/webaudiox#webaudioxanalyser2canvasjs">webaudiox.analyser2volume.js</a>.</p>
+
+<p>That&#8217;s all for today folks! Have Fun :)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[WebAudiox.js - a DRY library for Web Audio API]]></title>
@@ -85,7 +199,7 @@ It initializes the AudioContext, downloads a sound with <code>WebAudiox.loadBuff
 </span><span class='line'>      <span class="kd">var</span> <span class="nx">source</span>  <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createBufferSource</span><span class="p">();</span>
 </span><span class='line'>      <span class="nx">source</span><span class="p">.</span><span class="nx">buffer</span>    <span class="o">=</span> <span class="nx">buffer</span>
 </span><span class='line'>      <span class="nx">source</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nx">destination</span><span class="p">)</span>
-</span><span class='line'>      
+</span><span class='line'>
 </span><span class='line'>      <span class="c1">// start the sound now</span>
 </span><span class='line'>      <span class="nx">source</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span><span class='line'><span class="p">});</span>
@@ -185,8 +299,8 @@ Go here for an
 </span><span class='line'><span class="c1">// url is where to download the sound</span>
 </span><span class='line'><span class="c1">// buffer is the just loaded buffer</span>
 </span><span class='line'><span class="nx">WebAudiox</span><span class="p">.</span><span class="nx">loadBuffer</span><span class="p">.</span><span class="nx">onLoad</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="nx">buffer</span><span class="p">){</span>
-</span><span class='line'>  <span class="c1">// put your own stuff here </span>
-</span><span class='line'>  <span class="c1">// ... </span>
+</span><span class='line'>  <span class="c1">// put your own stuff here</span>
+</span><span class='line'>  <span class="c1">// ...</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1649,29 +1763,6 @@ because i could maintain it if needed&#8221;. Now i try to apply those principle
 under <a href='https://github.com/jeromeetienne/microevent.js/blob/master/MIT-LICENSE.txt'>MIT license</a>.
 If you hit bugs, fill issues on github.
 Feel free to fork, modify and have fun with it :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Pacmaze V0 - First multi-player first person shooter on html5]]></title>
-    <link href="http://blog.jetienne.com/blog/2011/03/21/pacmaze-v0-origin/"/>
-    <updated>2011-03-21T00:00:00+01:00</updated>
-    <id>http://blog.jetienne.com/blog/2011/03/21/pacmaze-v0-origin</id>
-    <content type="html"><![CDATA[<p>Last week, i started to do gamedev.
-During a code rush, i did pacmaze v0 in <em>36h!!!</em> Then i slept a lot and published it as
-<a href="https://chrome.google.com/webstore/detail/ggeliggglgbhachnoljoieibaneidchi">chrome application</a>
-(This way, i didnt have to care about cross-browser compatbility out of time and lazyness i admit :)</p>
-
-<p>Pacmaze v0 is a <a href="http://en.wikipedia.org/wiki/First-person_shooter">multi-player first person shooter</a>.
-Everybody joins in the same maze, and they shoot at each other. Lets the best win&#8230; except
-that nobody dies because i forgot to code death :)</p>
-
-<p>To my knowledge, Pacmaze v0 is the first
-<a href="http://en.wikipedia.org/wiki/First-person_shooter#Multiplayer">multi-player first person shooter</a>
-using html5 power with <a href="http://en.wikipedia.org/wiki/WebGL">WebGL</a>
-and <a href="http://en.wikipedia.org/wiki/WebSockets">WebSockets</a>.
-You can find the game as standalone <a href="http://pacmaze0.jetienne.com">here</a>. have fun. I certainly
-had fun writing it :)</p>
 ]]></content>
   </entry>
   

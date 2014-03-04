@@ -4,7 +4,7 @@
   <title><![CDATA[Category: webaudiox | Jerome Etienne.js Blog]]></title>
   <link href="http://blog.jetienne.com/blog/categories/webaudiox/atom.xml" rel="self"/>
   <link href="http://blog.jetienne.com/"/>
-  <updated>2014-02-18T13:49:47+01:00</updated>
+  <updated>2014-03-04T13:58:24+01:00</updated>
   <id>http://blog.jetienne.com/</id>
   <author>
     <name><![CDATA[Jerome Etienne]]></name>
@@ -12,6 +12,113 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[WebAudiox.jsfx.js - 8 bit procedural sound generation with Web Audio API]]></title>
+    <link href="http://blog.jetienne.com/blog/2014/02/27/webaudiox-jsfx/"/>
+    <updated>2014-02-27T07:43:00+01:00</updated>
+    <id>http://blog.jetienne.com/blog/2014/02/27/webaudiox-jsfx</id>
+    <content type="html"><![CDATA[<p>Last week we started talking about
+<a href="https://github.com/jeromeetienne/webaudiox">webaudiox</a>.
+In this
+<a href="http://blog.jetienne.com/blog/2014/02/18/webaudiox-a-dry-library-for-webaudio-api/">first post</a>,
+we talked about the project and started to explain the helpers <code>webaudiox.shim.js</code>
+and <code>webaudiox.loadbuffer.js</code>.
+This week we are gonna focus on <code>webaudiox.jsfx.js</code>.
+This helper provides you an easy way to use
+<a href="http://www.egonelbre.com/js/jsfx/">jsfx.js</a>
+with your Web Audio API games.</p>
+
+<p><a href='http://jeromeetienne.github.io/webaudiox/examples/jsfx.html' target='_blank'><input type="button" value='Try Demo Now' style='font-size:400%;' /></a></p>
+
+<iframe width="420" height="315" src="http://www.youtube.com/embed/-Lo433Bk2RY" frameborder="0" allowfullscreen></iframe>
+
+
+
+
+<!-- more -->
+
+
+<h2>webaudiox.jsfx.js</h2>
+
+<p><a href="https://github.com/egonelbre/jsfx">jsfx.js</a>
+is a library to generate procedural sound, very 8-bit kindof sound.
+See <a href="http://www.egonelbre.com/js/jsfx/">jsfx demo page</a> for details on this fun library
+by <a href="https://twitter.com/egonelbre/">@egonelbre</a>.
+It is useful because you can generate lots of different sound easily without downloading
+anything.</p>
+
+<h4>Show Don't Tell</h4>
+
+<ul>
+<li><a href="https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.jsfx.js">webaudiox.jsfx.js</a>
+the source itself.</li>
+<li><a href="http://jeromeetienne.github.io/webaudiox/examples/jsfx.html">examples/jsfx.html</a>
+[<a href="https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html">view source</a>] :
+It shows a basic usage of this helper</li>
+<li><a href="http://jeromeetienne.github.io/webaudiox/examples/jsfx-basic.html">examples/jsfx-basic.html</a>
+[<a href="https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx-basic.html">view source</a>] :
+It shows a basic usage of this helper</li>
+</ul>
+
+
+<h2>Show It Live</h2>
+
+<iframe width="100%" height="480" src="http://jeromeetienne.github.io/webaudiox/examples/jsfx.html" frameborder="0" allowfullscreen></iframe>
+
+
+<h4>How To Use It ?</h4>
+
+<p>Let's see how to use it. First you create a
+<a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioContext-section">Audio Context</a> like this.</p>
+
+<p><code>
+var context = new AudioContext()
+</code></p>
+
+<p>Now you get the famous <code>lib</code> parameter from
+<a href="https://github.com/egonelbre/jsfx">jsfx</a>. You can generate some on its
+<a href="http://www.egonelbre.com/js/jsfx/">demo page</a>.
+From <code>lib</code>, you will generate a
+<a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioBuffer">Audio Buffer</a>
+.</p>
+
+<p><code>javascript
+var lib     = ["square",0.0000,0.4000,0.0000,0.3200,0.0000,0.2780,20.0000,496.0000,2400.0000,0.4640,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0235,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
+// generate the audio buffer from jsfx.js lib
+var buffer  = WebAudiox.getBufferFromJsfx(context, lib)
+</code></p>
+
+<p>Now we are all ready to play a sound! So let's do that.</p>
+
+<p><code>javascript
+var source  = context.createBufferSource()
+source.buffer   = buffer
+source.connect(context.destination)
+source.start(0)
+</code></p>
+
+<h2>Conclusion</h2>
+
+<p>So now you can easily generate procedural 8bit sound for Web Audio API.
+<a href="https://github.com/egonelbre/jsfx">jsfx.js</a> is a very nice library with
+a retro theme that i love :)
+Somehow, it seems a bit strange to do retro sounds with a modern web audio api.
+So now you can play
+<a href="http://en.wikipedia.org/wiki/Nintendo_Entertainment_System">NES</a>
+kind of sound with the dopler and localisation of the webaudio api.
+Go For it!</p>
+
+<p>Next week, i will be talk about sound analysis and how your programm can get to
+know about what is being played.
+so we will talk about
+<a href="https://github.com/jeromeetienne/webaudiox#webaudioxbytetonormalizedfloat32arrayjs">webaudiox.analyser2canvas.js</a>
+and
+<a href="https://github.com/jeromeetienne/webaudiox#webaudioxanalyser2canvasjs">webaudiox.analyser2volume.js</a>.</p>
+
+<p>That's all for today folks! Have Fun :)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[WebAudiox.js - a DRY library for Web Audio API]]></title>
@@ -168,8 +275,8 @@ Go here for an
 // buffer is the just loaded buffer
 WebAudiox.loadBuffer.onLoad = function(context, url, buffer){</p>
 
-<pre><code>// put your own stuff here  
-// ... 
+<pre><code>// put your own stuff here
+// ...
 </code></pre>
 
 <p>}
