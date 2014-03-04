@@ -4,7 +4,7 @@
   <title><![CDATA[Jerome Etienne.js Blog]]></title>
   <link href="http://blog.jetienne.com/atom.xml" rel="self"/>
   <link href="http://blog.jetienne.com/"/>
-  <updated>2014-03-04T13:58:24+01:00</updated>
+  <updated>2014-03-04T14:01:11+01:00</updated>
   <id>http://blog.jetienne.com/</id>
   <author>
     <name><![CDATA[Jerome Etienne]]></name>
@@ -18,7 +18,10 @@
     <link href="http://blog.jetienne.com/blog/2014/02/27/webaudiox-jsfx/"/>
     <updated>2014-02-27T07:43:00+01:00</updated>
     <id>http://blog.jetienne.com/blog/2014/02/27/webaudiox-jsfx</id>
-    <content type="html"><![CDATA[<p>Last week we started talking about
+    <content type="html"><![CDATA[<p><strong>This post is part of a series about Webaudiox.js.
+<a href="http://blog.jetienne.com/blog/categories/webaudiox/">Check It Out</a></strong></p>
+
+<p>Last week we started talking about
 <a href="https://github.com/jeromeetienne/webaudiox">webaudiox</a>.
 In this
 <a href="http://blog.jetienne.com/blog/2014/02/18/webaudiox-a-dry-library-for-webaudio-api/">first post</a>,
@@ -132,7 +135,10 @@ and
     <link href="http://blog.jetienne.com/blog/2014/02/18/webaudiox-a-dry-library-for-webaudio-api/"/>
     <updated>2014-02-18T07:43:00+01:00</updated>
     <id>http://blog.jetienne.com/blog/2014/02/18/webaudiox-a-dry-library-for-webaudio-api</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/jeromeetienne/webaudiox">Webaudiox.js</a>
+    <content type="html"><![CDATA[<p><strong>This post is part of a series about Webaudiox.js.
+<a href="http://blog.jetienne.com/blog/categories/webaudiox/">Check It Out</a></strong></p>
+
+<p><a href="https://github.com/jeromeetienne/webaudiox">Webaudiox.js</a>
 is a bunch of helpers for
 <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html">WebAudio API</a>.
 I wrote them a while back.
